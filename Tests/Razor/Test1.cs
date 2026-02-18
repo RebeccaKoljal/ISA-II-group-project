@@ -1,4 +1,4 @@
-﻿namespace Abc.Tests.Logic
+﻿namespace Abc.Tests.Razor
 {
     [TestClass]
     public sealed class Test1
