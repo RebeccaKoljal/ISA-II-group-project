@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Aids/Aids.csproj" Id="a1b7860e-ad55-4ca4-be07-88f08d69e378" />
+  <Project Path="Data/Data.csproj" Id="36c42ee5-6afb-4689-8980-ba59e5cf4115" />
 </Solution>
