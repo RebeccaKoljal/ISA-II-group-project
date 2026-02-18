@@ -1,7 +1,11 @@
 <Solution>
-  <Project Path="Aids/Aids.csproj" Id="a1b7860e-ad55-4ca4-be07-88f08d69e378" />
-  <Project Path="Data/Data.csproj" Id="36c42ee5-6afb-4689-8980-ba59e5cf4115" />
-  <Project Path="Infra/Infra.csproj" Id="2897957e-d58c-4713-b9bb-a00ab6c854e7" />
-  <Project Path="Logic/Logic.csproj" Id="baf66e33-db51-4fcf-af33-6222b05af84d" />
-  <Project Path="Razor/Razor.csproj" Id="9ca4f9b0-d379-4452-9e60-53f6bd3572f8" />
+  <Folder Name="/Code/">
+    <Project Path="Code/Aids/Aids.csproj" />
+    <Project Path="Code/Data/Data.csproj" />
+    <Project Path="Code/Infra/Infra.csproj" />
+    <Project Path="Code/Logic/Logic.csproj" />
+    <Project Path="Code/Razor/Razor.csproj" />
+  </Folder>
+  <Folder Name="/Soft/" />
+  <Folder Name="/Tests/" />
 </Solution>
