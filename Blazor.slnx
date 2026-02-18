@@ -3,4 +3,5 @@
   <Project Path="Data/Data.csproj" Id="36c42ee5-6afb-4689-8980-ba59e5cf4115" />
   <Project Path="Infra/Infra.csproj" Id="2897957e-d58c-4713-b9bb-a00ab6c854e7" />
   <Project Path="Logic/Logic.csproj" Id="baf66e33-db51-4fcf-af33-6222b05af84d" />
+  <Project Path="Razor/Razor.csproj" Id="9ca4f9b0-d379-4452-9e60-53f6bd3572f8" />
 </Solution>
