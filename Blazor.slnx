@@ -7,5 +7,7 @@
     <Project Path="Code/Razor/Razor.csproj" />
   </Folder>
   <Folder Name="/Soft/" />
-  <Folder Name="/Tests/" />
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Aids/Tests.Aids.csproj" />
+  </Folder>
 </Solution>
