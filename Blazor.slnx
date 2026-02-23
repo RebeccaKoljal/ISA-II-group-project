@@ -7,6 +7,7 @@
     <Project Path="Code/Jobs/Jobs.csproj" />
     <Project Path="Code/Logic/Logic.csproj" />
     <Project Path="Code/Razor/Razor.csproj" />
+    <Project Path="Code/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/Soft/" />
   <Folder Name="/Soft/Todo/">
