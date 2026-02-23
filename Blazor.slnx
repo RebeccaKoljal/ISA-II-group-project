@@ -13,7 +13,10 @@
   <Folder Name="/Soft/App/" />
   <Folder Name="/Soft/Blazor/" />
   <Folder Name="/Soft/Maui/" />
-  <Folder Name="/Soft/Movie/" />
+  <Folder Name="/Soft/Movie/">
+    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web.Client/Abc.Soft.Web.Client.csproj" />
+    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web/Abc.Soft.Web.csproj" />
+  </Folder>
   <Folder Name="/Soft/Todo/">
     <Project Path="Soft/Todo/Client/Todo.Client.csproj" />
     <Project Path="Soft/Todo/Server/Todo.csproj" />
