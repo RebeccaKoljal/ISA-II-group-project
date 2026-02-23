@@ -18,4 +18,5 @@
     <Project Path="Tests/Logic/Tests.Logic.csproj" />
     <Project Path="Tests/Razor/Tests.Razor.csproj" />
   </Folder>
+  <Project Path="Domain/Domain.csproj" Id="21224ed0-fe47-4b9f-8f3a-c33f6f5d17cd" />
 </Solution>
