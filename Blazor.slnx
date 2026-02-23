@@ -5,8 +5,6 @@
     <Project Path="Code/Domain/Domain.csproj" />
     <Project Path="Code/Infra/Infra.csproj" />
     <Project Path="Code/Jobs/Jobs.csproj" />
-    <Project Path="Code/Logic/Logic.csproj" />
-    <Project Path="Code/Razor/Razor.csproj" />
     <Project Path="Code/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/Soft/" />
@@ -28,7 +26,5 @@
     <Project Path="Tests/Domain/Tests.Domain.csproj" />
     <Project Path="Tests/Infra/Tests.Infra.csproj" />
     <Project Path="Tests/Jobs/Tests.Jobs.csproj" />
-    <Project Path="Tests/Logic/Tests.Logic.csproj" />
-    <Project Path="Tests/Razor/Tests.Razor.csproj" />
   </Folder>
 </Solution>
