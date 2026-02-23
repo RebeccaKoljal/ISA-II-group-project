@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>disable</Nullable>
 	<AssemblyName>Abc.Jobs</AssemblyName>
-	<RootNamespace>Abc.</RootNamespace>
+	<RootNamespace>Abc.Jobs</RootNamespace>
   </PropertyGroup>
 
 </Project>

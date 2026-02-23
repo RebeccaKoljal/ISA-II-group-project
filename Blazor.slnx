@@ -2,7 +2,9 @@
   <Folder Name="/Code/">
     <Project Path="Code/Aids/Aids.csproj" />
     <Project Path="Code/Data/Data.csproj" />
+    <Project Path="Code/Domain/Domain.csproj" />
     <Project Path="Code/Infra/Infra.csproj" />
+    <Project Path="Code/Jobs/Jobs.csproj" />
     <Project Path="Code/Logic/Logic.csproj" />
     <Project Path="Code/Razor/Razor.csproj" />
   </Folder>
@@ -18,6 +20,4 @@
     <Project Path="Tests/Logic/Tests.Logic.csproj" />
     <Project Path="Tests/Razor/Tests.Razor.csproj" />
   </Folder>
-  <Project Path="Domain/Domain.csproj" Id="21224ed0-fe47-4b9f-8f3a-c33f6f5d17cd" />
-  <Project Path="Jobs/Jobs.csproj" Id="a97d0547-a8cc-4a0a-b924-85d7c117be86" />
 </Solution>
