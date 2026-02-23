@@ -8,4 +8,8 @@
 	<RootNamespace>Abc.Jobs</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Infra\Infra.csproj" />
+  </ItemGroup>
+
 </Project>
