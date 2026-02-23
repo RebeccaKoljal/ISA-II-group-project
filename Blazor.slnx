@@ -14,8 +14,8 @@
   <Folder Name="/Soft/Blazor/" />
   <Folder Name="/Soft/Maui/" />
   <Folder Name="/Soft/Movie/">
-    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web.Client/Abc.Soft.Web.Client.csproj" />
-    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web/Abc.Soft.Web.csproj" />
+    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web.Client/Movie.Client.csproj" />
+    <Project Path="Soft/Abc.Soft.Web/Abc.Soft.Web/Movie.csproj" />
   </Folder>
   <Folder Name="/Soft/Todo/">
     <Project Path="Soft/Todo/Client/Todo.Client.csproj" />
