@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContextFactory<AbcSoftWebContext>(options =>
+builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AbcSoftWebContext") ?? throw new InvalidOperationException("Connection string 'AbcSoftWebContext' not found.")));
 
+
+// Kui kuskil on DI-s vaja ApplicationDbContext-i (mitte factory't), võta see factory kaudu
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 // Add services to the container.

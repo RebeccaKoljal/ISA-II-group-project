@@ -4,7 +4,7 @@
 @using Abc.Soft.Web.Model
 @using Abc.Soft.Web.Data
 @implements IAsyncDisposable
-@inject IDbContextFactory<Abc.Soft.Web.Data.AbcSoftWebContext> DbFactory
+@inject IDbContextFactory<Abc.Soft.Web.Data.ApplicationDbContext> DbFactory
 
 <PageTitle>Index</PageTitle>
 
@@ -28,7 +28,7 @@
 </QuickGrid>
 
 @code {
-    private AbcSoftWebContext context = default!;
+    private ApplicationDbContext context = default!;
 
     protected override void OnInitialized()
     {
