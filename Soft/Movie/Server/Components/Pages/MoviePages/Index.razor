@@ -4,7 +4,7 @@
 @using Abc.Soft.Web.Model
 @using Abc.Soft.Web.Data
 @implements IAsyncDisposable
-@inject IDbContextFactory<Abc.Soft.Web.Data.ApplicationDbContext> DbFactory
+@inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
 
 <PageTitle>Index</PageTitle>
 
@@ -28,7 +28,7 @@
 </QuickGrid>
 
 @code {
-    private ApplicationDbContext context = default!;
+    private MovieDbContext context = default!;
 
     protected override void OnInitialized()
     {

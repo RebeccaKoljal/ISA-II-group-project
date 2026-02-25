@@ -1,9 +1,10 @@
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Abc.Soft.Web.Data
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
+    public class MovieDbContext(DbContextOptions<MovieDbContext> options) : IdentityDbContext(options)
     {
         public DbSet<Abc.Soft.Web.Model.Movie> Movie { get; set; } = default!;
     }
