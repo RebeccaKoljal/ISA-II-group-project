@@ -8,6 +8,6 @@
         public string CountryCode { get; set; }
         public int TotalArea { get; set; }
         public int PopulationSize { get; set; }
-
+        public string ISOCode { get; set; }
     }
 }
