@@ -1,7 +1,7 @@
 ﻿@page "/movies/edit"
 @attribute [ExcludeFromInteractiveRouting]
 @using Microsoft.EntityFrameworkCore
-@using Abc.Soft.Web.Model
+@using Abc.Data
 @inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
@@ -58,7 +58,7 @@ else
     private int Id { get; set; }
 
     [SupplyParameterFromForm]
-    private Movie? Movie { get; set; }
+    private Movie Movie { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
