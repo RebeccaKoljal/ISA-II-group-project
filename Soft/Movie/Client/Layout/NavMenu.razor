@@ -13,42 +13,34 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <MyNavLink Href="movies" IconClass="bi-plus-square-fill-nav-menu" Text="Movies"></MyNavLink>
-        <MyNavLink Href="counter" IconClass="bi-plus-square-fill-nav-menu" Text="Counter"></MyNavLink>
-        <MyNavLink Href="weather" IconClass="bi-list-square-fill-nav-menu" Text="Weather"></MyNavLink>
-        <MyNavLink Href="auth" IconClass="bi-lock-nav-menu" Text="Auth Required"></MyNavLink>
+        <MyNavLink Href="" Match="NavLinkMatch.All" IconClass="bi-home-icon" Text="Movies" />
+        <MyNavLink Href="movies" IconClass="bi-movie-icon" Text="Movies" />
+        <MyNavLink Href="counter" IconClass="bi-counter-icon" Text="Counter" />
+        <MyNavLink Href="weather" IconClass="bi-list-icon" Text="Weather" />
+        <MyNavLink Href="auth" IconClass="bi-lock-icon" Text="Auth Required" />
         <AuthorizeView>
             <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
-                    </NavLink>
-                </div>
+                <MyNavLink Href="Account/Manage" IconClass="bi-person-icon" Text="@context.User.Identity?.Name" />
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                         <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            <span class="bi bi-arrow-icon" aria-hidden="true"></span> Logout
                         </button>
                     </form>
                 </div>
             </Authorized>
             <NotAuthorized>
-                <MyNavLink Href="Account/Register" IconClass="bi-person-nav-menu" Text="Register"></MyNavLink>
-                <MyNavLink Href="Account/Login" IconClass="bi-person-badge-nav-menu" Text="Login"></MyNavLink>
+                <MyNavLink Href="Account/Register" IconClass="bi-register-icon" Text="Register"></MyNavLink>
+                <MyNavLink Href="Account/Login" IconClass="bi-badge-icon" Text="Login"></MyNavLink>
             </NotAuthorized>
         </AuthorizeView>
     </nav>
 </div>
 
 @code {
-    private string? currentUrl;
+    private string currentUrl;
 
     protected override void OnInitialized()
     {
