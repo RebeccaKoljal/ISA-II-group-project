@@ -2,6 +2,7 @@
 @implements IDisposable
 
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,27 +14,22 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
-        <MyNavLink Href="" Match="NavLinkMatch.All" IconClass="bi-home-icon" Text="Movies" />
-        <MyNavLink Href="movies" IconClass="bi-movie-icon" Text="Movies" />
-        <MyNavLink Href="counter" IconClass="bi-counter-icon" Text="Counter" />
-        <MyNavLink Href="weather" IconClass="bi-list-icon" Text="Weather" />
-        <MyNavLink Href="auth" IconClass="bi-lock-icon" Text="Auth Required" />
+        <MyNavLink Href="" Match="NavLinkMatch.All" IconClass="home-icon" Text="Home" />
+        <MyNavLink Href="movies" IconClass="movie-icon" Text="Movies" />
+        <MyNavLink Href="counter" IconClass="counter-icon" Text="Counter" />
+        <MyNavLink Href="weather" IconClass="list-icon" Text="Weather" />
+        <MyNavLink Href="auth" IconClass="lock-icon" Text="Auth Required" />
         <AuthorizeView>
             <Authorized>
-                <MyNavLink Href="Account/Manage" IconClass="bi-person-icon" Text="@context.User.Identity?.Name" />
-                <div class="nav-item px-3">
-                    <form action="Account/Logout" method="post">
-                        <AntiforgeryToken />
-                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-icon" aria-hidden="true"></span> Logout
-                        </button>
-                    </form>
-                </div>
+                <MyNavLink Href="Account/Manage" IconClass="person-icon" Text="@Name" />
+                <MyNavLink Href="Account/Logout" IconClass="arrow-icon" Text="Logout" >
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                </MyNavLink>    
             </Authorized>
             <NotAuthorized>
-                <MyNavLink Href="Account/Register" IconClass="bi-register-icon" Text="Register"></MyNavLink>
-                <MyNavLink Href="Account/Login" IconClass="bi-badge-icon" Text="Login"></MyNavLink>
+                <MyNavLink Href="Account/Register" IconClass="register-icon" Text="Register" />
+                <MyNavLink Href="Account/Login" IconClass="badge-icon" Text="Login" />
             </NotAuthorized>
         </AuthorizeView>
     </nav>
@@ -41,6 +37,15 @@
 
 @code {
     private string currentUrl;
+	private string Name = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+		currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+		NavigationManager.LocationChanged += OnLocationChanged;
+		var context = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		Name = context.User.Identity?.Name ?? string.Empty;
+	}
 
     protected override void OnInitialized()
     {
@@ -48,7 +53,7 @@
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    private void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
         currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
         StateHasChanged();
