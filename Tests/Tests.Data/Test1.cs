@@ -1,4 +1,4 @@
-﻿namespace Tests.Domain
+﻿namespace Tests.Data
 {
     [TestClass]
     public sealed class Test1

@@ -24,10 +24,6 @@
   </Folder>
   <Folder Name="/Soft/Web/" />
   <Folder Name="/Tests/">
-    <Project Path="Tests/Aids/Tests.Aids.csproj" />
-    <Project Path="Tests/Data/Tests.Data.csproj" />
-    <Project Path="Tests/Domain/Tests.Domain.csproj" />
-    <Project Path="Tests/Infra/Tests.Infra.csproj" />
-    <Project Path="Tests/Jobs/Tests.Jobs.csproj" />
+    <Project Path="Tests/Tests.Data/Data.csproj" Id="c3415ba8-981c-4480-90d2-0cc1d2a7087a" />
   </Folder>
 </Solution>
