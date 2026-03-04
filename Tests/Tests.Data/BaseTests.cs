@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Abc.Aids;
+using System.Reflection;
 
 namespace Abc.Tests.Data
 {
@@ -20,7 +21,7 @@ namespace Abc.Tests.Data
         [TestMethod] public void IsClassTestedTest() 
         {
             var testMethods = GetType().GetMethods().Select(x => x.Name);
-            var membersToTest = getProperties().Concat(getMethods());
+            var membersToTest = GetProperties().Concat(GetMethods());
             foreach (var m in membersToTest)
             {
                 if (!testMethods.Contains(m + "Test"))
@@ -28,12 +29,10 @@ namespace Abc.Tests.Data
             }
         }
 
-        private static IEnumerable<string> getProperties() => typeof(TClass)
-            .GetProperties(publicDeclared)
-            .Select(i => i.Name); // i as in info
-        private static IEnumerable<string> getMethods() => Array.FindAll(
-            typeof(TClass).GetMethods(publicDeclared),
-            i => !i.IsSpecialName)
-            .Select(i => i.Name);
+        private static IEnumerable<string> GetProperties() 
+            => Aids.GetType.PropertyNames<TClass>(publicDeclared);
+        private static IEnumerable<string> GetMethods() 
+            => Aids.GetType.MethodNames<TClass>(publicDeclared, false);
+
     }
 }
