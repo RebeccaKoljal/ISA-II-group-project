@@ -1,5 +1,6 @@
 ﻿@page "/movies/create"
 @attribute [ExcludeFromInteractiveRouting]
+@using Abc.Shared.Components
 @using Microsoft.EntityFrameworkCore
 @using Abc.Data
 @inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
@@ -16,26 +17,10 @@
         <EditForm method="post" Model="Movie" OnValidSubmit="AddMovie" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
-                <label for="title" class="form-label">Title:</label> 
-                <InputText id="title" @bind-Value="Movie.Title" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Title" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="releasedate" class="form-label">ReleaseDate:</label> 
-                <InputDate id="releasedate" @bind-Value="Movie.ReleaseDate" class="form-control" /> 
-                <ValidationMessage For="() => Movie.ReleaseDate" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="genre" class="form-label">Genre:</label> 
-                <InputText id="genre" @bind-Value="Movie.Genre" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Genre" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="price" class="form-label">Price:</label> 
-                <InputNumber id="price" @bind-Value="Movie.Price" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Price" class="text-danger" /> 
-            </div>        
+            <MyEditItem TValue="string" Id="title" Label="Title:" @bind-value="@Movie.Title" />
+            <MyEditItem TValue="DateOnly" Id="releasedate" Label="ReleaseDate:"@bind-value="@Movie.ReleaseDate" />
+            <MyEditItem TValue="string" Id="genre" Label="Genre:" @bind-value="@Movie.Genre" />
+            <MyEditItem TValue="decimal" Id="price" Label="Price:" @bind-value="@Movie.Price" />
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
