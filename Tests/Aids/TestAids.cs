@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Abc.Tests.Data
+namespace Abc.Tests.Aids
 {
     public abstract class TestAids<TClass> where TClass : class, new() // provides helper methods for the tests
     {
@@ -11,8 +11,8 @@ namespace Abc.Tests.Data
             | BindingFlags.Static;
 
         protected static IEnumerable<string> GetProperties()
-            => Aids.GetType.PropertyNames<TClass>(publicDeclared);
+            => Abc.Aids.GetType.PropertyNames<TClass>(publicDeclared);
         protected static IEnumerable<string> GetMethods()
-            => Aids.GetType.MethodNames<TClass>(publicDeclared, false);
+            => Abc.Aids.GetType.MethodNames<TClass>(publicDeclared, false);
     }
 }

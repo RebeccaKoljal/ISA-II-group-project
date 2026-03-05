@@ -1,7 +1,7 @@
 ﻿using Abc.Aids;
 using System.Formats.Asn1;
 
-namespace Abc.Tests.Data
+namespace Abc.Tests.Aids
 {
     public abstract class BaseTests<TClass> : TestAids<TClass> where TClass : class, new() // deals with tests
     {
