@@ -1,13 +1,13 @@
 ﻿namespace Abc.Data
 {
-    public class Country
+    public class Country : NamedEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Capital { get; set; }
-        public string CountryCode { get; set; }
-        public int TotalArea { get; set; }
-        public int PopulationSize { get; set; }
-        public string ISOCode { get; set; }
+        public string OfficialName { get; set; } = "";
+        public string NativeName { get; set; } = "";
+        public string NumericCOde { get; set; } = "";
+        bool IsIsoCountry { get; set; }
+        bool IsLoyaltyProgram { get; set; }
+        public string IsoCode { get; set; } = "";
     }
 }
