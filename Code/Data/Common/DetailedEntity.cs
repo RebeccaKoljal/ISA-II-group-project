@@ -1,4 +1,4 @@
-﻿namespace Abc.Data
+﻿namespace Abc.Data.Common
 {
     public abstract class DetailedEntity : BaseEntity
     {

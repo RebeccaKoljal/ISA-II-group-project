@@ -1,4 +1,6 @@
-﻿namespace Abc.Data
+﻿using Abc.Data.Common;
+
+namespace Abc.Data
 {
     public class Country : NamedEntity
     {
