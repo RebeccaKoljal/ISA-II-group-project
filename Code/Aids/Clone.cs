@@ -7,7 +7,7 @@ namespace Abc.Aids
 {
     public static class Clone
     {
-        public static TClass Object<TClass>(TClass obj) where TClass : class, new(c) ) => (TClass)clone(obj);
+        public static TClass Object<TClass>(TClass obj) where TClass : class, new() => (TClass)clone(obj);
         private const BindingFlags publicInstance = BindingFlags.Public | BindingFlags.Instance;
         private static object clone(object obj)
         {
@@ -15,7 +15,7 @@ namespace Abc.Aids
             var t = obj.GetType();
             var o = Activator.CreateInstance(t);
             var props = t.GetProperties(publicInstance);
-            copy(obj, obj, props);
+            copy(obj, o, props);
             return o;
         }
         private static void copy(object from, object to, PropertyInfo[] props)
