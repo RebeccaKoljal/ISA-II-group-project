@@ -18,10 +18,10 @@
         <p><em>Loading...</em></p>
     }
     else {
-        <MyViewItem Label="Title" Value="@movie.Title" />
-        <MyViewItem Label="ReleaseDate" Value="@movie.ReleaseDate.ToString()" />
-        <MyViewItem Label="Genre" Value="@movie.Genre" />
-        <MyViewItem Label="Price" Value="@movie.Price.ToString()" />
+        <MyPropertyViewer Label="Title" Value="@movie.Title" />
+        <MyPropertyViewer Label="ReleaseDate" Value="@movie.ReleaseDate.ToString()" />
+        <MyPropertyViewer Label="Genre" Value="@movie.Genre" />
+        <MyPropertyViewer Label="Price" Value="@movie.Price.ToString()" />
         <div>
             <a href="@($"/movies/edit?id={movie.Id}")">Edit</a> |
             <a href="@($"/movies")">Back to List</a>
