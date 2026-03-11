@@ -1,9 +1,9 @@
 ﻿@page "/movies/create"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Shared.Components
+@using Abc.Soft.Web.Data
 @using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create</PageTitle>
@@ -17,10 +17,10 @@
         <EditForm method="post" Model="Movie" OnValidSubmit="AddMovie" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <MyPropertyEditor TValue="string" Id="title" Label="Title:" @bind-value="@Movie.Title" />
-            <MyPropertyEditor TValue="DateOnly" Id="releasedate" Label="ReleaseDate:"@bind-value="@Movie.ReleaseDate" />
-            <MyPropertyEditor TValue="string" Id="genre" Label="Genre:" @bind-value="@Movie.Genre" />
-            <MyPropertyEditor TValue="decimal" Id="price" Label="Price:" @bind-value="@Movie.Price" />
+            <MyPropertyEditor TValue="string" Id="title" Label="Title:" @bind-Value="@Movie.Title" />
+            <MyPropertyEditor TValue="DateOnly" Id="releasedate" Label="ReleaseDate:" @bind-Value="@Movie.ReleaseDate" />
+            <MyPropertyEditor TValue="string" Id="genre" Label="Genre:" @bind-Value="@Movie.Genre" />
+            <MyPropertyEditor TValue="decimal" Id="price" Label="Price:" @bind-Value="@Movie.Price" />
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

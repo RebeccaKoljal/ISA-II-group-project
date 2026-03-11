@@ -1,9 +1,9 @@
 ﻿@page "/movies/delete"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Shared.Components
+@using Abc.Soft.Web.Data
 @using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Delete</PageTitle>
@@ -19,10 +19,7 @@
         <p><em>Loading...</em></p>
     }
     else {
-		<MyPropertyViewer Label="Title" Value="@movie.Title" />
-        <MyPropertyViewer Label="ReleaseDate" Value="@movie.ReleaseDate.ToString()" />
-        <MyPropertyViewer Label="Genre" Value="@movie.Genre" />
-        <MyPropertyViewer Label="Price" Value="@movie.Price.ToString()" />
+        <MyEntityViewer Entity="movie" />
         <EditForm method="post" Model="movie" OnValidSubmit="DeleteMovie" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(movie is null)">Delete</button> |
             <a href="/movies">Back to List</a>

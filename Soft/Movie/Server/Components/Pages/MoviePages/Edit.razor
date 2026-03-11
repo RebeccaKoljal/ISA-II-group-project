@@ -1,9 +1,9 @@
 ﻿@page "/movies/edit"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Shared.Components
+@using Abc.Soft.Web.Data
 @using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<Abc.Soft.Web.Data.MovieDbContext> DbFactory
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Edit</PageTitle>

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Abc.Soft.Web.Migrations
 {
-    [DbContext(typeof(MovieDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260225111924_init")]
     partial class init
     {

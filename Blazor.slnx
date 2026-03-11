@@ -15,9 +15,6 @@
     <Project Path="Soft/Movie/Client/Movie.Client.csproj" />
     <Project Path="Soft/Movie/Server/Movie.csproj" />
   </Folder>
-  <Folder Name="/Soft/My Movie project/">
-    <Project Path="../BlazorWebAppMovies/BlazorWebAppMovies.csproj" />
-  </Folder>
   <Folder Name="/Soft/Todo/">
     <Project Path="Soft/Todo/Client/Todo.Client.csproj" />
     <Project Path="Soft/Todo/Server/Todo.csproj" />

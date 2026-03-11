@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Abc.Soft.Web.Migrations
 {
-    [DbContext(typeof(MovieDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class MovieDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

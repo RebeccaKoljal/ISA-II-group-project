@@ -1,7 +1,6 @@
-﻿@using System.Linq.Expressions
-@typeparam TValue
+﻿@typeparam TValue
 
-<div class="m-3">
+<div class="mb-3">
 	<label for="@Id" class="form-label">@Label</label>
 	@if (IsString)
 	{
@@ -26,7 +25,7 @@
 	[Parameter]	public string Label { get; set; } = string.Empty;
 	[Parameter] public TValue Value { get; set; } 
 	[Parameter] public EventCallback<TValue> ValueChanged { get; set; }
-	[Parameter] public Expression<Func<TValue>>? ValueExpression { get; set; }
+	[Parameter] public Expression<Func<TValue>> ValueExpression { get; set; }
 	private static Type UnderlyingType => Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 	private static bool IsString => UnderlyingType == typeof(string);
 	private static bool IsDate => UnderlyingType == typeof(DateTime) || UnderlyingType == typeof(DateOnly);
