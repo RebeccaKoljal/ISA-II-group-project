@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abc.Soft.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260311081709_CountriesInitialCreate")]
-    partial class CountriesInitialCreate
+    [Migration("20260311111937_aa")]
+    partial class aa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

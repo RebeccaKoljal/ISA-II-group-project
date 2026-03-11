@@ -1,4 +1,4 @@
-﻿@page "/movies/edit"
+﻿@page "/countries/edit"
 @attribute [ExcludeFromInteractiveRouting]
 @using Abc.Soft.Web.Data
 @using Microsoft.EntityFrameworkCore
@@ -6,13 +6,13 @@
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Country</PageTitle>
 
 <h1>Edit</h1>
 
-<h2>Movie</h2>
+<h2>Country</h2>
 <hr />
-@if (Movie is null)
+@if (country is null)
 {
     <p><em>Loading...</em></p>
 }
@@ -20,14 +20,19 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm method="post" Model="Movie" OnValidSubmit="UpdateMovie" FormName="edit" Enhance>
+            <EditForm method="post" Model="country" OnValidSubmit="updateCountry" FormName="edit" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary role="alert"/>
-                <input type="hidden" name="Movie.Id" value="@Movie.Id" />
-                <MyPropertyEditor TValue="string" Id="title" Label="Title:" @bind-value="@Movie.Title" />
-                <MyPropertyEditor TValue="DateOnly" Id="releasedate" Label="ReleaseDate:" @bind-value="@Movie.ReleaseDate" />
-                <MyPropertyEditor TValue="string" Id="genre" Label="Genre:" @bind-value="@Movie.Genre" />
-                <MyPropertyEditor TValue="decimal" Id="price" Label="Price:" @bind-value="@Movie.Price" />
+                <input type="hidden" name="country.Id" value="@country.Id" />
+                <MyPropertyEditor TValue="string" Id="name" Label="Name:" @bind-Value="@country.Name" />
+                <MyPropertyEditor TValue="string" Id="code" Label="Code:" @bind-Value="@country.Code" />
+                <MyPropertyEditor TValue="string" Id="details" Label="Details:" @bind-Value="@country.Details" />
+                <MyPropertyEditor TValue="string" Id="isoCode" Label="ISO Code:" @bind-Value="@country.IsoCode" />
+                <MyPropertyEditor TValue="string" Id="nativeName" Label="Native Name:" @bind-Value="@country.NativeName" />
+                <MyPropertyEditor TValue="string" Id="numericCode" Label="Numeric Code:" @bind-Value="@country.NumericCode" />
+                <MyPropertyEditor TValue="string" Id="officialName" Label="Official Name:" @bind-Value="@country.OfficialName" />
+                <MyPropertyEditor TValue="DateTime?" Id="validFrom" Label="Valid From:" @bind-Value="@country.ValidFrom" />
+                <MyPropertyEditor TValue="DateTime?" Id="validTo" Label="Valid To:" @bind-Value="@country.ValidTo" />
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
         </div>
@@ -35,56 +40,44 @@ else
 }
 
 <div>
-    <a href="/movies">Back to List</a>
+    <a href="/countries">Back to List</a>
 </div>
 
 @code {
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
 
-    [SupplyParameterFromForm]
-    private Movie Movie { get; set; }
+    [SupplyParameterFromForm] private Country country { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Movie ??= await context.Movies.FirstOrDefaultAsync(m => m.Id == Id);
-
-        if (Movie is null)
-        {
-            NavigationManager.NotFound();
-        }
+        country ??= await context.Countries.FirstOrDefaultAsync(m => m.Id == Id);
+        if (country is null) NavigationManager.NotFound();
     }
 
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task UpdateMovie()
+    private async Task updateCountry()
     {
         using var context = DbFactory.CreateDbContext();
-        context.Attach(Movie!).State = EntityState.Modified;
-
+        context.Attach(country!).State = EntityState.Modified;
+       // country.Timestamp = BitConverter.GetBytes(DateTime.Now.Ticks);
+        // context.Countries.Update(country!).State = EntityState.Modified;
         try
         {
             await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!MovieExists(Movie!.Id))
-            {
-                NavigationManager.NotFound();
-            }
-            else
-            {
-                throw;
-            }
+            if (!countryExists(country!.Id)) NavigationManager.NotFound();
+            else throw; 
         }
-
-        NavigationManager.NavigateTo("/movies");
+        NavigationManager.NavigateTo("/countries");
     }
 
-    private bool MovieExists(int id)
+    private bool countryExists(Guid id)
     {
         using var context = DbFactory.CreateDbContext();
-        return context.Movies.Any(e => e.Id == id);
+        return context.Countries.Any(e => e.Id == id);
     }
 }

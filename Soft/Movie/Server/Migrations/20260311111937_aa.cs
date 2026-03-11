@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abc.Soft.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class MovieInitialCreate : Migration
+    public partial class aa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,7 +51,28 @@ namespace Abc.Soft.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Movie",
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OfficialName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NativeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumericCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsoCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Movies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -63,7 +84,7 @@ namespace Abc.Soft.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movie", x => x.Id);
+                    table.PrimaryKey("PK_Movies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,7 +279,10 @@ namespace Abc.Soft.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Movie");
+                name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
