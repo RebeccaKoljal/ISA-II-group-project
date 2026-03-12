@@ -29,8 +29,7 @@
 @code {
     private Country country;
 
-    [SupplyParameterFromQuery]
-    private Guid Id { get; set; }
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
