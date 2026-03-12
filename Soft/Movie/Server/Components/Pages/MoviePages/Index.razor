@@ -16,8 +16,8 @@
 </p>
 
 <QuickGrid Class="table" Items="context.Movies">
-    <PropertyColumn Property="movie => movie.Title" />
-    <PropertyColumn Property="movie => movie.ReleaseDate" />
+    <PropertyColumn Property="movie => movie.Name" />
+    <PropertyColumn Property="movie => movie.ValidFrom" />
     <PropertyColumn Property="movie => movie.Genre" />
     <PropertyColumn Property="movie => movie.Price" />
 
@@ -31,10 +31,7 @@
 @code {
     private ApplicationDbContext context = default!;
 
-    protected override void OnInitialized()
-    {
-        context = DbFactory.CreateDbContext();
-    }
+	protected override void OnInitialized() => context = DbFactory.CreateDbContext();
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }

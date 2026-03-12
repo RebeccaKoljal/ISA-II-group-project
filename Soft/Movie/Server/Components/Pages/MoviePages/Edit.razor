@@ -24,8 +24,8 @@ else
                 <DataAnnotationsValidator />
                 <ValidationSummary role="alert"/>
                 <input type="hidden" name="Movie.Id" value="@Movie.Id" />
-                <MyPropertyEditor TValue="string" Id="title" Label="Title:" @bind-value="@Movie.Title" />
-                <MyPropertyEditor TValue="DateOnly" Id="releasedate" Label="ReleaseDate:" @bind-value="@Movie.ReleaseDate" />
+                <MyPropertyEditor TValue="string" Id="title" Label="Title:" @bind-value="@Movie.Name" />
+                <MyPropertyEditor TValue="DateTime?" Id="releasedate" Label="ReleaseDate:" @bind-value="@Movie.ValidFrom" />
                 <MyPropertyEditor TValue="string" Id="genre" Label="Genre:" @bind-value="@Movie.Genre" />
                 <MyPropertyEditor TValue="decimal" Id="price" Label="Price:" @bind-value="@Movie.Price" />
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -39,21 +39,16 @@ else
 </div>
 
 @code {
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
 
-    [SupplyParameterFromForm]
-    private Movie Movie { get; set; }
+    [SupplyParameterFromForm] private Movie Movie { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
         Movie ??= await context.Movies.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (Movie is null)
-        {
-            NavigationManager.NotFound();
-        }
+        if (Movie is null) NavigationManager.NotFound();
     }
 
     // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -62,27 +57,20 @@ else
     {
         using var context = DbFactory.CreateDbContext();
         context.Attach(Movie!).State = EntityState.Modified;
-
         try
         {
             await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!MovieExists(Movie!.Id))
-            {
-                NavigationManager.NotFound();
-            }
-            else
-            {
-                throw;
-            }
+            if (!MovieExists(Movie!.Id)) NavigationManager.NotFound();
+            else throw;
         }
 
         NavigationManager.NavigateTo("/movies");
     }
 
-    private bool MovieExists(int id)
+    private bool MovieExists(Guid id)
     {
         using var context = DbFactory.CreateDbContext();
         return context.Movies.Any(e => e.Id == id);
