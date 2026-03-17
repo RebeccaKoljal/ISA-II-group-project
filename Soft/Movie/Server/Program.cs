@@ -1,5 +1,4 @@
 ﻿using Abc.Infra;
-using Abc.Soft.Web.Client.Pages;
 using Abc.Soft.Web.Components;
 using Abc.Soft.Web.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -43,10 +42,14 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
         options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddSignInManager()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+// if repo is needed, then it needs to be added here, before app is built
+builder.Services.AddScoped<IMoviesRepo, MoviesRepo>();
+builder.Services.AddScoped<ICountriesRepo, CountriesRepo>();
+builder.Services.AddScoped<ICurrenciesRepo, CurrenciesRepo>();
+
 
 var app = builder.Build();
 
