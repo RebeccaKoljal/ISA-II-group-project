@@ -1,0 +1,59 @@
+﻿@page "/currencies/edit"
+@attribute [ExcludeFromInteractiveRouting]
+@using Abc.Infra
+@using Abc.Data
+@inject ICurrenciesRepo repo
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit Currency</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Currency</h2>
+<hr />
+@if (currency is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="currency" OnValidSubmit="updateCurrency" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="currency.Id" value="@currency.Id" />
+                <MyPropertyEditor TValue="string" Id="numericCode" Label="Numeric Code:" @bind-Value="@currency.NumericCode" />
+                <MyPropertyEditor TValue="string" Id="majorUnitSymbol" Label="Major Unit Symbol:" @bind-Value="@currency.MajorUnitSymbol" />
+                <MyPropertyEditor TValue="string" Id="minorUnitSymbol" Label="Minor Unit Symbol:" @bind-Value="@currency.MinorUnitSymbol" />
+                <MyPropertyEditor TValue="string" Id="ratioOfMinorUnit" Label="Ratio Of Minor Unit:" @bind-Value="@currency.RatioOfMinorUnit" />
+                <MyPropertyEditor TValue="bool" Id="isIsoCurrency" Label="Is ISO Currency:" @bind-Value="@currency.IsIsoCurrency" />
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/currencies">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+
+    [SupplyParameterFromForm] private Currency currency { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        currency ??= await repo.GetAsync(Id);
+		if (currency is null) NavigationManager.NotFound();
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task updateCurrency()
+    {
+		await repo.UpdateAsync(currency);
+        NavigationManager.NavigateTo("/currencies");
+    }
+}

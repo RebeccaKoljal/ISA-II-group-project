@@ -1,0 +1,38 @@
+﻿@page "/currencies/details"
+@attribute [ExcludeFromInteractiveRouting]
+@using Abc.Infra
+@using Abc.Data
+@inject ICurrenciesRepo repo
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details Currency</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Currency</h2>
+    <hr />
+    @if (currency is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+		<MyEntityViewer Entity="currency" />
+        <div>
+            <a href="@($"/currencies/edit?id={currency.Id}")">Edit</a> |
+            <a href="@($"/currencies")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Currency currency;
+
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+		currency = await repo.GetAsync(Id);
+        if (currency is null) NavigationManager.NotFound();
+    }
+}

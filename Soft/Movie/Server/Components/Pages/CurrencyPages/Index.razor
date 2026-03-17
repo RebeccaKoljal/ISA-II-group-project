@@ -1,0 +1,39 @@
+﻿@page "/currencies"
+@attribute [ExcludeFromInteractiveRouting]
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Abc.Data
+@using Abc.Infra
+@using System.Linq
+
+@inject NavigationManager NavigationManager
+@inject ICurrenciesRepo repo
+
+<PageTitle>Countries</PageTitle>
+
+<h1>Countries</h1>
+
+<p>
+    <a href="currencies/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="Currencies">
+    <PropertyColumn Property="movie => movie.NumericCode" />
+    <PropertyColumn Property="movie => movie.MajorUnitSymbol" />
+    <PropertyColumn Property="movie => movie.MinorUnitSymbol" />
+    <PropertyColumn Property="movie => movie.RatioOfMinorUnit" />
+    <TemplateColumn Context="currency">
+        <a href="@($"currencies/edit?id={currency.Id}")">Edit</a> |
+        <a href="@($"currencies/details?id={currency.Id}")">Details</a> |
+        <a href="@($"currencies/delete?id={currency.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+	private IQueryable<Currency> Currencies = Enumerable.Empty<Currency>().AsQueryable();
+
+    protected override async Task OnInitializedAsync() 
+    {
+		if (repo is null) return;
+        Currencies = (await repo.GetAsync()).AsQueryable();
+	}
+}

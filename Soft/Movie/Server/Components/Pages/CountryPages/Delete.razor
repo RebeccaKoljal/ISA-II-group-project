@@ -21,7 +21,7 @@
         <MyEntityViewer Entity="country" />
         <EditForm method="post" Model="country" OnValidSubmit="deleteCountry" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(country is null)">Delete</button> |
-            <a href="/movies">Back to List</a>
+            <a href="/countries">Back to List</a>
         </EditForm>
     }
 </div>

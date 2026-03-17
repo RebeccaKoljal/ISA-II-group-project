@@ -1,0 +1,44 @@
+﻿@page "/currencies/delete"
+@attribute [ExcludeFromInteractiveRouting]
+@using Abc.Infra
+@using Abc.Data
+@inject ICurrenciesRepo repo
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete Currency</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>Currency</h2>
+    <hr />
+    @if (currency is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <MyEntityViewer Entity="currency" />
+        <EditForm method="post" Model="currency" OnValidSubmit="deleteCurrency" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(currency is null)">Delete</button> |
+            <a href="/currencies">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private Currency currency;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+		currency = await repo.GetAsync(Id);
+        if (currency is null) NavigationManager.NotFound();
+    }
+
+    private async Task deleteCurrency()
+    {
+		await repo.DeleteAsync(currency!.Id);
+        NavigationManager.NavigateTo("/currencies");
+    }
+}
