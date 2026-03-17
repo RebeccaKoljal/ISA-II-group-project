@@ -22,4 +22,15 @@ public static class GetRandom
         if (min > max) (min, max) = (max, min);
         return min + r.NextDouble() * (max - min);
     }
+    public static sbyte Int8(sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue) => (sbyte) Int32(min, max);
+    public static short Int16(short min = short.MinValue, short max = short.MaxValue) => (short) Int32(min, max);
+    public static byte UInt8(byte min = byte.MinValue, byte max = byte.MaxValue) => (byte) Int32(min, max);
+    public static ushort UInt16(ushort min = ushort.MinValue, ushort max = ushort.MaxValue) => (ushort) Int32(min, max);
+    public static uint UInt32(uint min = uint.MinValue, uint max = uint.MaxValue) => (uint) Int64(min, max);
+    public static ulong UInt64(ulong min = ulong.MinValue, ulong max = ulong.MaxValue)
+    {
+        var minLong = (long) min - long.MaxValue;
+        var maxLong = (long) max - long.MaxValue;
+        return (ulong) Int64(minLong, maxLong) + long.MaxValue;
+    }
 }
