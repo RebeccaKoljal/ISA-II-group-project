@@ -1,12 +1,11 @@
 ﻿@page "/movies/details"
 @attribute [ExcludeFromInteractiveRouting]
 @using Abc.Infra
-@using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<PageTitle>Details</PageTitle>
+<PageTitle>Details Movie</PageTitle>
 
 <h1>Details</h1>
 
@@ -33,9 +32,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        movie = await context.Movies.FirstOrDefaultAsync(m => m.Id == Id);
-
+		movie = await repo.GetAsync(Id);
         if (movie is null) NavigationManager.NotFound();
     }
 }

@@ -1,12 +1,11 @@
 ﻿@page "/movies/create"
 @attribute [ExcludeFromInteractiveRouting]
 @using Abc.Infra
-@using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<PageTitle>Create</PageTitle>
+<PageTitle>Create Movie</PageTitle>
 
 <h1>Create</h1>
 
@@ -32,15 +31,13 @@
 
 @code {
     [SupplyParameterFromForm] private Movie Movie { get; set; } = default!;
-
+    s
     protected override void OnInitialized() => Movie ??= new();
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddMovie()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Movies.Add(Movie);
-        await context.SaveChangesAsync();
+		await repo.CreateAsync(Movie);
         NavigationManager.NavigateTo("/movies");
     }
 }

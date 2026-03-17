@@ -1,12 +1,11 @@
 ﻿@page "/movies/edit"
 @attribute [ExcludeFromInteractiveRouting]
 @using Abc.Infra
-@using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Movie</PageTitle>
 
 <h1>Edit</h1>
 
@@ -45,9 +44,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        Movie ??= await context.Movies.FirstOrDefaultAsync(m => m.Id == Id);
-
+		Movie ??= await repo.GetAsync(Id);
         if (Movie is null) NavigationManager.NotFound();
     }
 
@@ -55,24 +52,7 @@ else
     // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task UpdateMovie()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Attach(Movie!).State = EntityState.Modified;
-        try
-        {
-            await context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!MovieExists(Movie!.Id)) NavigationManager.NotFound();
-            else throw;
-        }
-
+		await repo.UpdateAsync(Movie);
         NavigationManager.NavigateTo("/movies");
-    }
-
-    private bool MovieExists(Guid id)
-    {
-        using var context = DbFactory.CreateDbContext();
-        return context.Movies.Any(e => e.Id == id);
     }
 }

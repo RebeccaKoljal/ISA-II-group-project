@@ -1,12 +1,11 @@
 ﻿@page "/movies/delete"
 @attribute [ExcludeFromInteractiveRouting]
 @using Abc.Infra
-@using Microsoft.EntityFrameworkCore
 @using Abc.Data
-@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<PageTitle>Delete</PageTitle>
+<PageTitle>Delete Movie</PageTitle>
 
 <h1>Delete</h1>
 
@@ -34,17 +33,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        movie = await context.Movies.FirstOrDefaultAsync(m => m.Id == Id);
-
+		movie = await repo.GetAsync(Id);
         if (movie is null) NavigationManager.NotFound();
     }
 
     private async Task DeleteMovie()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Movies.Remove(movie!);
-        await context.SaveChangesAsync();
+		await repo.DeleteAsync(movie!.Id);
         NavigationManager.NavigateTo("/movies");
     }
 }
