@@ -45,12 +45,12 @@ namespace Abc.Tests.Aids;
         Assert.AreNotEqual(GetRandom.TimeSpan(minSpan, maxSpan), GetRandom.TimeSpan(minSpan, maxSpan)); 
     }
     [TestMethod] public void GuidTest() => Assert.AreNotEqual(GetRandom.Guid(), GetRandom.Guid());
-    private class testClass : NamedEntity { }
+    private class TestClass : NamedEntity { }
     [TestMethod] public void ObjectTest()
     {
-        var o1 = GetRandom.Object(typeof(testClass));
-        var o2 = GetRandom.Object(typeof(testClass));
-        foreach (var p in typeof(testClass).GetProperties())
+        var o1 = GetRandom.Object(typeof(TestClass));
+        var o2 = GetRandom.Object(typeof(TestClass));
+        foreach (var p in typeof(TestClass).GetProperties())
         {
             if (p.PropertyType.IsArray) continue;
             Assert.AreNotEqual(p.GetValue(o1), p.GetValue(o2));

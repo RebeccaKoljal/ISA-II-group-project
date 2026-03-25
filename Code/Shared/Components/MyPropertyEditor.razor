@@ -12,6 +12,11 @@
 		<InputDate TValue="TValue" id="@Id" class="form-control" Value="@Value"
 			ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" />
 	}
+	else if (IsBool)
+	{
+		<InputCheckbox TValue="TValue" id="@Id" class="form-control" Value="@BoolValue"
+				   ValueChanged="@OnBoolValueChanged" ValueExpression="@BoolValueExpression" />
+	}
 	else
 	{
 		<InputNumber TValue="TValue" id="@Id" class="form-control" Value="@Value"
@@ -28,11 +33,18 @@
 	[Parameter] public Expression<Func<TValue>> ValueExpression { get; set; }
 	private static Type UnderlyingType => Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 	private static bool IsString => UnderlyingType == typeof(string);
+	private static bool IsBool => UnderlyingType == typeof(bool);
 	private static bool IsDate => UnderlyingType == typeof(DateTime) || UnderlyingType == typeof(DateOnly);
 	private string StringValue => Value as string;
+	private bool BoolValue => Convert.ToBoolean(Value);
 	private Task OnStringValueChanged(string value)
 	{
 		return ValueChanged.InvokeAsync((TValue)(object)value);
 	}
+	private Task OnBoolValueChanged(bool value)
+	{
+		return ValueChanged.InvokeAsync((TValue)(object)value);
+	}
 	private Expression<Func<string>> StringValueExpression => ValueExpression as Expression<Func<string>>;
+	private Expression<Func<bool>> BoolValueExpression => ValueExpression as Expression<Func<bool>>;
 }

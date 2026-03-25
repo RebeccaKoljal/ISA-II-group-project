@@ -75,12 +75,12 @@ public static class GetRandom
         {
             if (!p.CanWrite) continue;
             if (p.PropertyType.IsArray) continue;
-            var v = isClass(p) ? Object(p.PropertyType) : Value(p.PropertyType);
+            var v = IsClass(p) ? Object(p.PropertyType) : Value(p.PropertyType);
             p.SetValue(o, v);
         }
         return o;
     }
-    private static bool isClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
+    private static bool IsClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
     private static object Value(Type t)
     {
         if (t == typeof(sbyte)) return Int8();
@@ -98,6 +98,7 @@ public static class GetRandom
         if (t == typeof(char)) return Char((char) 0, char.MaxValue);
         if (t == typeof(bool)) return Bool();
         if (t == typeof(DateTime)) return DateTime();
+        if (t == typeof(DateTime?)) return DateTime();
         if (t == typeof(TimeSpan)) return TimeSpan();
         if (t == typeof(Guid)) return Guid();
         throw new NotSupportedException($"Type {t} is not supported");
