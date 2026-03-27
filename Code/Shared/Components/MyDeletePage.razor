@@ -12,10 +12,17 @@
     }
     else
     {
-        <MyEntityViewer Entity="Entity" />
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            <MyEntityViewer Entity="Entity" />
+        }
         <EditForm method="post" Model="Entity" OnValidSubmit="HandleValidSubmit" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(Entity is null)">Delete</button> |
-            <a href="/@BasePath">Back to List</a>
+            <a href="@BasePath">Back to List</a>
         </EditForm>
     }
 </div>
@@ -26,6 +33,7 @@
     [Parameter] public string BasePath { get; set; }
     [Parameter] public Guid? EntityId { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public RenderFragment ChildContent { get; set; }
     private async Task HandleValidSubmit()
     {
         if (OnValidSubmit.HasDelegate) await OnValidSubmit.InvokeAsync(null);

@@ -5,13 +5,11 @@
 @inject ICountriesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyDeletePage 
-    PageTitleText="Delete Country"
-    EntityTitle="Country"
-    Entity="country"
-    BasePath="/countries"
-    EntityId="Id"
-    OnValidSubmit="deleteCountry" />
+<MyDeletePage PageTitleText="Delete Country" EntityTitle="Country" Entity="country" BasePath="/countries" OnValidSubmit="deleteCountry">
+    <MyPropertyViewer Label="Id" Value="@country.Id.ToString()" />
+    <MyPropertyViewer Label="Name" Value="@country.Name" />
+    <MyPropertyViewer Label="Code" Value="@country.Code" />
+</MyDeletePage>
 
 @code {
     private Country country;
@@ -19,7 +17,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-		country = await repo.GetAsync(Id);
+		country = await repo.GetAsync(Id); 
         if (country is null) NavigationManager.NotFound();
     }
 
