@@ -2,7 +2,7 @@
 
 public abstract class BaseTests<TClass> : TestAids<TClass> where TClass : class, new() // deals with tests
 {
-    [TestInitialize] public void Initialize() => obj = new TClass();
+    [TestInitialize] public virtual void Initialize() => obj = new TClass();
     [TestMethod] public void CanCreateTest() => Assert.IsNotNull(obj);
     [TestMethod]
     public void IsCorrectClassTest() // checks if the test class is named correctly according to the convention

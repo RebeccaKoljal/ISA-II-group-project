@@ -2,7 +2,7 @@
 
 namespace Abc.Tests.Aids;
 
-public abstract class TestAids<TClass> where TClass : class, new() // provides helper methods for the tests
+public abstract class TestAids<TClass> : TestAids where TClass : class, new() // provides helper methods for the tests
 {
     protected TClass obj;
     protected const BindingFlags publicDeclared = BindingFlags.Public
@@ -24,4 +24,11 @@ public abstract class TestAids<TClass> where TClass : class, new() // provides h
     private static string WrongType<T>(string name, PropertyInfo p) => $"Property '{name}' in class '{typeof(TClass).Name}' is of type '{p.PropertyType.Name}', expected '{typeof(T).Name}'.";
 
     private static string NoProperty(string name) => $"Property '{name}' not found in class '{typeof(TClass).Name}'.";
+}
+
+public class TestAids
+{
+    public void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
+    public void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
+
 }

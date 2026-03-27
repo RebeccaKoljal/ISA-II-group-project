@@ -1,4 +1,24 @@
-﻿@typeparam TValue
+﻿@* @using Microsoft.AspNetCore.Components
+@using System.Reflection
+
+<div class="mb-3">
+	@if (hasProperty)
+	{
+		<label for="@PropertyName" class=" form-label">@</label>
+	}
+</div>
+
+@code{
+	[Parameter] public object Item { get; set; }
+	[Parameter] public string PropertyName { get; set; }
+	protected override void OnParametersSet() => ad = crAdapter();
+	// private crAdapter 
+	//private IEditorAdapter ad;
+
+} *@
+
+
+@* @typeparam TValue
 
 <div class="mb-3">
 	<label for="@Id" class="form-label">@Label</label>
@@ -47,4 +67,4 @@
 	}
 	private Expression<Func<string>> StringValueExpression => ValueExpression as Expression<Func<string>>;
 	private Expression<Func<bool>> BoolValueExpression => ValueExpression as Expression<Func<bool>>;
-}
+} *@
