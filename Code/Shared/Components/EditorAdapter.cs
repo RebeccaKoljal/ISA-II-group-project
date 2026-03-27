@@ -46,7 +46,8 @@ public sealed partial class EditorAdapter(ComponentBase c, object item, string p
 
     internal readonly IPropertyAdapter ad = new PropertyAdapter(item, propName);
     internal EventCallback<TValue> changed<TValue>()
-        => EventCallback.Factory.Create<TValue>(c, value => {
+        => EventCallback.Factory.Create<TValue>(c, value =>
+        {
             ad.SetValue(value);
             return Task.CompletedTask;
         });
@@ -64,7 +65,8 @@ public sealed partial class EditorAdapter(ComponentBase c, object item, string p
     [GeneratedRegex("(\\B[A-Z])")] internal static partial Regex myRegex();
     internal Type propType => ad?.PropType;
     internal string toName => myRegex().Replace(propName, " $1");
-    internal Type underlyingType => ad?.UnderlyingType ?? typeof(object);
+    internal Type underlyingType => ad?.UnderLyingType ?? typeof(object);
     internal object valChanged() => makeGeneric(method(nameof(changed)));
     internal object valExpression() => makeGeneric(method(nameof(expression)));
     internal static Type generic(Type editor, Type t) => editor.MakeGenericType(t);
+}
