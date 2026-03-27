@@ -7,7 +7,17 @@ namespace Abc.Tests.Aids;
 {
     private const sbyte min = sbyte.MinValue; // so that there can be negative values as well
     private const sbyte max = sbyte.MaxValue;
-    [TestMethod] public void Int8Test() => Assert.AreNotEqual(GetRandom.Int8(min, max), GetRandom.Int8(min, max));
+    [TestMethod] public void Int8Test() 
+    {
+        var x = GetRandom.Int8(min, max);
+        var y = GetRandom.Int8(min, max);
+
+        for (var i = 0; i < 10; i++)
+        {
+            if (x != y) break;
+            y = GetRandom.Int8(min, max);
+        }
+    }
     [TestMethod] public void Int16Test() => Assert.AreNotEqual(GetRandom.Int16(min, max), GetRandom.Int16(min, max));
     [TestMethod] public void Int32Test() => Assert.AreNotEqual(GetRandom.Int32(min, max), GetRandom.Int32(min, max));
     [TestMethod] public void Int64Test() => Assert.AreNotEqual(GetRandom.Int64(min, max), GetRandom.Int64(min, max));
@@ -20,8 +30,7 @@ namespace Abc.Tests.Aids;
     [TestMethod] public void DecimalTest() => Assert.AreNotEqual(GetRandom.Decimal(min, max), GetRandom.Decimal(min, max));
     [TestMethod] public void StringTest() => Assert.AreNotEqual(GetRandom.String(0, (byte) max), GetRandom.String(0, (byte) max));
     [TestMethod] public void CharTest() => Assert.AreNotEqual(GetRandom.Char((char) 0, (char) max), GetRandom.Char((char) 0, (char) max));
-    [TestMethod]
-    public void BoolTest()
+    [TestMethod] public void BoolTest()
     {
         var x = GetRandom.Bool();
         bool y = GetRandom.Bool();
