@@ -5,11 +5,7 @@
 @inject ICurrenciesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyEditPage PageTitleText="Edit Currency" EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="updateCurrency">
-    <MyPropertyViewer Label="Id" Value="@currency.Id.ToString()" />
-    <MyPropertyViewer Label="Name" Value="@currency.Name" />
-    <MyPropertyViewer Label="Code" Value="@currency.Code" />
-</MyEditPage>
+<MyEditPage PageTitleText="Edit Currency" EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="updateCurrency" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }

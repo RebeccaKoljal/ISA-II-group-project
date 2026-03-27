@@ -12,17 +12,17 @@
     }
     else
     {
-		@if (ChildContent is not null)
-		{
-			@ChildContent
-		}
-		else
-		{
-			<MyEntityEditor Entity="Entity" />
-		}
         <EditForm method="post" Model="Entity" OnValidSubmit="HandleValidSubmit" FormName="edit" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary role="alert" />
+			@if (ChildContent is not null)
+			{
+				@ChildContent
+			}
+			else
+			{
+				<MyEntityEditor Entity="Entity" />
+			}
             <button type="submit" class="btn btn-primary">Save</button> |
             <a href="@BasePath">Back to List</a>
         </EditForm>

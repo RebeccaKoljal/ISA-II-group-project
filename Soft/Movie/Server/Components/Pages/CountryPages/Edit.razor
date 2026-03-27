@@ -5,11 +5,7 @@
 @inject ICountriesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyEditPage PageTitleText="Edit Country" EntityTitle="Country" Entity="country" BasePath="/countries" OnValidSubmit="updateCountry">
-    <MyPropertyViewer Label="Id" Value="@country.Id.ToString()" />
-    <MyPropertyViewer Label="Name" Value="@country.Name" />
-    <MyPropertyViewer Label="Code" Value="@country.Code" />
-</MyEditPage>
+<MyEditPage PageTitleText="Edit Country" EntityTitle="Country" Entity="country" BasePath="/countries" OnValidSubmit="updateCountry" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }

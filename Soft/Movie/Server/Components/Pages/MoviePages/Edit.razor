@@ -5,11 +5,7 @@
 @inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyEditPage PageTitleText="Edit Movie" EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="UpdateMovie">
-    <MyPropertyViewer Label="Id" Value="@Movie.Id.ToString()" />
-    <MyPropertyViewer Label="Name" Value="@Movie.Name" />
-    <MyPropertyViewer Label="Code" Value="@Movie.Code" />
-</MyEditPage>
+<MyEditPage PageTitleText="Edit Movie" EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="UpdateMovie" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
