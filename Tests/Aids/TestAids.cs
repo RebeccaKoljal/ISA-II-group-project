@@ -1,10 +1,14 @@
-﻿using System.Reflection;
+﻿using System.Formats.Asn1;
+using System.Reflection;
 
 namespace Abc.Tests.Aids;
 
 public abstract class TestAids<TClass> : TestAids where TClass : class, new() // provides helper methods for the tests
 {
     protected TClass obj;
+
+    [TestInitialize] public virtual void Initialize() => type = typeof(TClass);
+
     protected const BindingFlags publicDeclared = BindingFlags.Public
         | BindingFlags.Instance
         | BindingFlags.DeclaredOnly
@@ -26,8 +30,15 @@ public abstract class TestAids<TClass> : TestAids where TClass : class, new() //
     private static string NoProperty(string name) => $"Property '{name}' not found in class '{typeof(TClass).Name}'.";
 }
 
-public class TestAids
+public abstract class TestAids
 {
+    protected Type type { get; set; }
+    [TestMethod] public void IsCorrectClassTest() // checks if the test class is named correctly according to the convention
+    {
+        var className = type?.Name;
+        var testClassName = GetType().Name;
+        Assert.AreEqual(testClassName.Replace("Tests", ""), className);
+    }
     public static void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
     public static void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
 

@@ -7,8 +7,18 @@ namespace Abc.Aids
 {
     public static class TypeExtension
     {
-        public static bool IsBool(this Type t) => t == typeof(bool);
-        public static bool IsDate(this Type t) => t == typeof(DateTime) || t == typeof(DateOnly);
+        public static bool IsBool(this Type t)
+        {
+            if (t is null) return false;
+            t = Nullable.GetUnderlyingType(t) ?? t;
+            return t == typeof(bool);
+        }
+        public static bool IsDate(this Type t)
+        {
+            if (t is null) return false;
+            t = Nullable.GetUnderlyingType(t) ?? t;
+            return t == typeof(DateTime) || t == typeof(DateOnly);
+        }
         public static bool IsString(this Type t) => t == typeof(string);
         public static bool IsNumeric(this Type t)
         {
