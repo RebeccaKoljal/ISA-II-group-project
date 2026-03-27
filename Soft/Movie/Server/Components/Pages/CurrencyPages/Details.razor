@@ -5,25 +5,12 @@
 @inject ICurrenciesRepo repo
 @inject NavigationManager NavigationManager
 
-<PageTitle>Details Currency</PageTitle>
-
-<h1>Details</h1>
-
-<div>
-    <h2>Currency</h2>
-    <hr />
-    @if (currency is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else {
-		<MyEntityViewer Entity="currency" />
-        <div>
-            <a href="@($"/currencies/edit?id={currency.Id}")">Edit</a> |
-            <a href="@($"/currencies")">Back to List</a>
-        </div>
-    }
-</div>
+<MyDetailsPage 
+    PageTitleText="Details Currency"
+    EntityTitle="Currency"
+    Entity="currency"
+    EntityId="currency?.Id"
+    BasePath="/currencies" />
 
 @code {
     private Currency currency;
