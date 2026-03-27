@@ -28,7 +28,7 @@ public abstract class TestAids<TClass> : TestAids where TClass : class, new() //
 
 public class TestAids
 {
-    public void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
-    public void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
+    public static void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
+    public static void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
 
 }
