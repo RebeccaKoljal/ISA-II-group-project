@@ -23,19 +23,16 @@ namespace Abc.Infra
         {
             return DeleteCoreAsync(id);
         }
-
         public async Task<IEnumerable<TEntity>> GetAsync()
         {
             return await GetAllCoreAsync();
         }
-
         public async Task<TEntity> UpdateAsync(TEntity e)
         {
             db.Update(e);
             await db.SaveChangesAsync();
             return e;
         }
-
         private async Task DeleteCoreAsync(Guid id)
         {
             var entity = await GetAsync(id);
