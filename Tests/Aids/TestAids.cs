@@ -40,9 +40,18 @@ public abstract class TestAids
     }
     public static void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
     public static void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
-    
-
     public static void IsTrue(bool condition) => Assert.IsTrue(condition);
     public static void IsFalse(bool condition) => Assert.IsFalse(condition);
 
+    //public static void AreNotEqual<T>(Func<T> f)
+    //{
+    //    var x = f();
+    //    var y = f();
+    //    for (var i = 0; i < 10; i++)
+    //    {
+    //        if (!Equals(x, y)) break;
+    //        y = f();
+    //    }
+    //    Assert.AreNotEqual(x, y);
+    //}
 }

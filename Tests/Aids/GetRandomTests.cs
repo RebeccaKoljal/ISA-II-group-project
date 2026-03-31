@@ -3,11 +3,13 @@ using Abc.Data.Common;
 
 namespace Abc.Tests.Aids;
 
-[TestClass] public sealed class GetRandomTests
+[TestClass]
+public sealed class GetRandomTests
 {
     private const sbyte min = sbyte.MinValue; // so that there can be negative values as well
     private const sbyte max = sbyte.MaxValue;
-    [TestMethod] public void Int8Test() 
+    [TestMethod]
+    public void Int8Test()
     {
         var x = GetRandom.Int8(min, max);
         var y = GetRandom.Int8(min, max);
@@ -28,9 +30,10 @@ namespace Abc.Tests.Aids;
     [TestMethod] public void DoubleTest() => Assert.AreNotEqual(GetRandom.Double(min, max), GetRandom.Double(min, max));
     [TestMethod] public void FloatTest() => Assert.AreNotEqual(GetRandom.Float(min, max), GetRandom.Float(min, max));
     [TestMethod] public void DecimalTest() => Assert.AreNotEqual(GetRandom.Decimal(min, max), GetRandom.Decimal(min, max));
-    [TestMethod] public void StringTest() => Assert.AreNotEqual(GetRandom.String(0, (byte) max), GetRandom.String(0, (byte) max));
-    [TestMethod] public void CharTest() => Assert.AreNotEqual(GetRandom.Char((char) 0, (char) max), GetRandom.Char((char) 0, (char) max));
-    [TestMethod] public void BoolTest()
+    [TestMethod] public void StringTest() => Assert.AreNotEqual(GetRandom.String(0, (byte)max), GetRandom.String(0, (byte)max));
+    [TestMethod] public void CharTest() => Assert.AreNotEqual(GetRandom.Char((char)0, (char)max), GetRandom.Char((char)0, (char)max));
+    [TestMethod]
+    public void BoolTest()
     {
         var x = GetRandom.Bool();
         bool y = GetRandom.Bool();
@@ -41,21 +44,24 @@ namespace Abc.Tests.Aids;
         }
         Assert.AreNotEqual(x, y);
     }
-    [TestMethod] public void DateTimeTest() 
-    { 
+    [TestMethod]
+    public void DateTimeTest()
+    {
         var minDate = DateTime.Now.AddYears(-100);
         var maxDate = DateTime.Now.AddYears(100);
-        Assert.AreNotEqual(GetRandom.DateTime(minDate, maxDate), GetRandom.DateTime(minDate, maxDate)); 
+        Assert.AreNotEqual(GetRandom.DateTime(minDate, maxDate), GetRandom.DateTime(minDate, maxDate));
     }
-    [TestMethod] public void TimeSpanTest()  
+    [TestMethod]
+    public void TimeSpanTest()
     {
         var minSpan = TimeSpan.FromTicks(DateTime.Now.AddYears(-100).Ticks);
         var maxSpan = TimeSpan.FromTicks(DateTime.Now.AddYears(100).Ticks);
-        Assert.AreNotEqual(GetRandom.TimeSpan(minSpan, maxSpan), GetRandom.TimeSpan(minSpan, maxSpan)); 
+        Assert.AreNotEqual(GetRandom.TimeSpan(minSpan, maxSpan), GetRandom.TimeSpan(minSpan, maxSpan));
     }
     [TestMethod] public void GuidTest() => Assert.AreNotEqual(GetRandom.Guid(), GetRandom.Guid());
     private class TestClass : NamedEntity { }
-    [TestMethod] public void ObjectTest()
+    [TestMethod]
+    public void ObjectTest()
     {
         var o1 = GetRandom.Object(typeof(TestClass));
         var o2 = GetRandom.Object(typeof(TestClass));
@@ -66,3 +72,39 @@ namespace Abc.Tests.Aids;
         }
     }
 }
+
+//[TestClass] //public sealed class GetRandomTests : TestAids
+//{
+//    private const sbyte min = sbyte.MinValue; // so that there can be negative values as well
+//    private const sbyte max = sbyte.MaxValue;
+//    [TestInitialize] public void TestInitialize() => type = typeof(GetRandom);
+//    [TestMethod] public void Int8Test() => AreNotEqual(() => GetRandom.Int8(min, max));
+//    [TestMethod] public void Int16Test() => AreNotEqual(() => GetRandom.Int16(min, max));
+//    [TestMethod] public void Int32Test() => AreNotEqual(() => GetRandom.Int32(min, max));
+//    [TestMethod] public void Int64Test() => AreNotEqual(() => GetRandom.Int64(min, max));
+//    [TestMethod] public void UInt8Test() => AreNotEqual(() => GetRandom.UInt8(0, (byte)max));
+//    [TestMethod] public void UInt16Test() => AreNotEqual(() => GetRandom.UInt16(0, (ushort)max));
+//    [TestMethod] public void UInt32Test() => AreNotEqual(() => GetRandom.UInt32(0, (uint)max));
+//    [TestMethod] public void UInt64Test() => AreNotEqual(() => GetRandom.UInt64(0, (ulong)max));
+//    [TestMethod] public void DoubleTest() => AreNotEqual(() => GetRandom.Double(min, max));
+//    [TestMethod] public void FloatTest() => AreNotEqual(() => GetRandom.Float(min, max));
+//    [TestMethod] public void DecimalTest() => AreNotEqual(() => GetRandom.Decimal(min, max));
+//    [TestMethod] public void StringTest() => AreNotEqual(() => GetRandom.String(0, (byte)max));
+//    [TestMethod] public void CharTest() => AreNotEqual(() => GetRandom.Char((char)0, (char)max));
+//    [TestMethod] public void BoolTest() => AreNotEqual(() => GetRandom.Bool());
+//    [TestMethod] public void DateTimeTest() => AreNotEqual(() => GetRandom.DateTime(DateTime.Now.AddYears(-100), DateTime.Now.AddYears(100)));
+//    [TestMethod] public void TimeSpanTest() => AreNotEqual(() => GetRandom.TimeSpan(TimeSpan.FromTicks(DateTime.Now.AddYears(-100).Ticks), TimeSpan.FromTicks(DateTime.Now.AddYears(100).Ticks)));
+//    [TestMethod] public void GuidTest() => AreNotEqual(() => GetRandom.Guid());
+//    private class TestClass : NamedEntity { }
+//    [TestMethod]
+//    public void ObjectTest()
+//    {
+//        var o1 = GetRandom.Object(typeof(TestClass));
+//        var o2 = GetRandom.Object(typeof(TestClass));
+//        foreach (var p in typeof(TestClass).GetProperties())
+//        {
+//            if (p.PropertyType.IsArray) continue;
+//            Assert.AreNotEqual(p.GetValue(o1), p.GetValue(o2));
+//        }
+//    }
+//}
