@@ -1,5 +1,4 @@
-﻿using System.Formats.Asn1;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Abc.Tests.Aids;
 
@@ -41,5 +40,9 @@ public abstract class TestAids
     }
     public static void AreEqual<T>(T e, T a) => Assert.AreEqual(e, a);
     public static void AreSame<T>(T e, T a) => Assert.AreEqual(e, a);
+    
+
+    public static void IsTrue(bool condition) => Assert.IsTrue(condition);
+    public static void IsFalse(bool condition) => Assert.IsFalse(condition);
 
 }
