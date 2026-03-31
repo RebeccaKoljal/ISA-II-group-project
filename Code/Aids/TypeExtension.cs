@@ -7,12 +7,7 @@ namespace Abc.Aids
 {
     public static class TypeExtension
     {
-        public static bool IsBool(this Type t)
-        {
-            if (t is null) return false;
-            t = Nullable.GetUnderlyingType(t) ?? t;
-            return t == typeof(bool);
-        }
+        public static bool IsBool(this Type t) => t == typeof(bool) || t == typeof(bool?);
         public static bool IsDate(this Type t)
         {
             if (t is null) return false;
