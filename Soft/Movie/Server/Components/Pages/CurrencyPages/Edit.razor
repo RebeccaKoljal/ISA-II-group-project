@@ -1,11 +1,15 @@
 ﻿@page "/currencies/edit"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Infra
-@using Abc.Data
 @inject ICurrenciesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyEditPage PageTitleText="Edit Currency" EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="updateCurrency" />
+<MyEditPage 
+    PageTitleText="Edit Currency" 
+    EntityTitle="@currency.Name" 
+    Entity="currency" 
+    BasePath="/currencies" 
+    EntityId="@Id"
+    OnValidSubmit="updateCurrency" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }

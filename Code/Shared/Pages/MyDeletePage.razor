@@ -31,7 +31,6 @@
     [Parameter] public string EntityTitle { get; set; }
     [Parameter] public object Entity { get; set; }
     [Parameter] public string BasePath { get; set; }
-    [Parameter] public Guid? EntityId { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 	[Parameter] public RenderFragment ChildContent { get; set; }
     private async Task HandleValidSubmit()

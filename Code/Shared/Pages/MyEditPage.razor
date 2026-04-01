@@ -2,33 +2,29 @@
 
 <h1>Edit</h1>
 
+<h2>@EntityTitle</h2>
+<hr />
+@if (Entity is null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Entity" OnValidSubmit="@HandleValidSubmit" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert" />
+                <input type="hidden" name="@getNameOfEntity()" value="@EntityId" />
+                <MyEntityEditor Entity="Entity" />
+                <button type="submit" class="btn btn-primary">Save</button> |
+            </EditForm>
+        </div>
+    </div>
+}
 <div>
-    <h2>@EntityTitle</h2>
-    <hr />
-
-    @if (Entity is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <EditForm method="post" Model="Entity" OnValidSubmit="HandleValidSubmit" FormName="edit" Enhance>
-            <DataAnnotationsValidator />
-            <ValidationSummary role="alert" />
-			@if (ChildContent is not null)
-			{
-				@ChildContent
-			}
-			else
-			{
-				<MyEntityEditor Entity="Entity" />
-			}
-            <button type="submit" class="btn btn-primary">Save</button> |
-            <a href="@BasePath">Back to List</a>
-        </EditForm>
-    }
+    <a href="@BasePath">Back to List</a>
 </div>
-
 
 @code {
     [Parameter] public string PageTitleText { get; set; } = "Edit";
@@ -37,8 +33,8 @@
     [Parameter] public string BasePath { get; set; }
     [Parameter] public Guid? EntityId { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    [Parameter] public RenderFragment ChildContent { get; set; }
-
+    // [Parameter] public RenderFragment ChildContent { get; set; }
+	private string getNameOfEntity() => $"{Entity?.GetType().Name}.Id" ?? "Entity";
     private async Task HandleValidSubmit()
     {
         if (OnValidSubmit.HasDelegate)
