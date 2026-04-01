@@ -1,11 +1,9 @@
 ﻿@page "/currencies/create"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Infra
-@using Abc.Data
 @inject ICurrenciesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage PageTitleText="Create Currency" EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="addCurrency" />
+<MyCreatePage EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="addCurrency" />
 
 @code {
     [SupplyParameterFromForm] private Currency currency { get; set; } = default!;

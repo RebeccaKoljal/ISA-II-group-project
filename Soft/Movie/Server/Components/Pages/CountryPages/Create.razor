@@ -1,21 +1,9 @@
 ﻿@page "/countries/create"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Infra
-@using Abc.Data
 @inject ICountriesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage PageTitleText="Create Country" EntityTitle="Country" Entity="country" BasePath="/countries" OnValidSubmit="addCountry" >
-    <MyPropertyEditor Item="country" PropertyName="Name" />
-    <MyPropertyEditor Item="country" PropertyName="OfficialName" />
-    <MyPropertyEditor Item="country" PropertyName="NativeName" />
-    <MyPropertyEditor Item="country" PropertyName="Code" />
-    <MyPropertyEditor Item="country" PropertyName="IsoCode" />
-    <MyPropertyEditor Item="country" PropertyName="NumericCode" />
-    <MyPropertyEditor Item="country" PropertyName="Details" />
-    <MyPropertyEditor Item="country" PropertyName="ValidFrom" />
-    <MyPropertyEditor Item="country" PropertyName="ValidTo" />
-</MyCreatePage>
+<MyCreatePage EntityTitle="Country" Entity="country" BasePath="/countries" OnValidSubmit="addCountry" />
 
 @code {
     [SupplyParameterFromForm] private Country country { get; set; } = default!;

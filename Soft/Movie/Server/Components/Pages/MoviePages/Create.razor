@@ -1,11 +1,9 @@
 ﻿@page "/movies/create"
 @attribute [ExcludeFromInteractiveRouting]
-@using Abc.Infra
-@using Abc.Data
 @inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage PageTitleText="Create Movie" EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="AddMovie" />
+<MyCreatePage EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="AddMovie" />
 
 
 @code {
