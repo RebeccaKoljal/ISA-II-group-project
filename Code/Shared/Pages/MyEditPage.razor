@@ -34,7 +34,7 @@ else
     [Parameter] public Guid? EntityId { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     // [Parameter] public RenderFragment ChildContent { get; set; }
-	private string getNameOfEntity() => $"{Entity?.GetType().Name}.Id" ?? "Entity";
+	private string getNameOfEntity() => $"{Entity?.GetType().Name}.Id" ?? "Entity"; // when saving edit, it doesn't multiply
     private async Task HandleValidSubmit()
     {
         if (OnValidSubmit.HasDelegate)

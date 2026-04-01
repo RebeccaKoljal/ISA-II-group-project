@@ -1,5 +1,23 @@
-﻿<h3>MyEntitiesTable</h3>
+﻿@using Abc.Data.Common
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+@typeparam TEntity where TEntity : NamedEntity
+
+<QuickGrid Class="table" Items="Entities">
+    <PropertyColumn Property="x => x.Name" />
+    <PropertyColumn Property="x => x.Code" />
+    <PropertyColumn Property="x => x.Details" />
+    <PropertyColumn Property="x => x.ValidFrom" />
+    <PropertyColumn Property="x => x.ValidTo" />
+
+    <TemplateColumn Context="x">
+        <a href="@($"{BasePath}/edit?id={x.Id}")">Edit</a> |
+        <a href="@($"{BasePath}/details?id={x.Id}")">Details</a> |
+        <a href="@($"{BasePath}/delete?id={x.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
 
 @code {
-
+    [Parameter] public IQueryable<TEntity> Entities { get; set; }
+	[Parameter] public string BasePath { get; set; }
 }
