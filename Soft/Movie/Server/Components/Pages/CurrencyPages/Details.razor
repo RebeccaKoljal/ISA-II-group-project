@@ -6,18 +6,16 @@
 <MyDetailsPage 
     PageTitleText="Details Currency"
     EntityTitle="Currency"
-    Entity="currency"
-    EntityId="currency?.Id"
+    Entity="item"
+    EntityId="item?.Id"
     BasePath="/currencies" />
 
 @code {
-    private Currency currency;
-
+    private Currency item;
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-		currency = await repo.GetAsync(Id);
-        if (currency is null) NavigationManager.NotFound();
+		item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
     }
 }

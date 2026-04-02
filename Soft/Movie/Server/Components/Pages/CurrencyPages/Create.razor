@@ -3,15 +3,18 @@
 @inject ICurrenciesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage EntityTitle="Currency" Entity="currency" BasePath="/currencies" OnValidSubmit="addCurrency" />
+<MyCreatePage 
+    Entity="item" 
+    EntityTitle="Currency" 
+    BasePath="/currencies" 
+    OnValidSubmit="add" />
 
 @code {
-    [SupplyParameterFromForm] private Currency currency { get; set; } = default!;
-    protected override void OnInitialized() => currency ??= new();
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task addCurrency()
+    [SupplyParameterFromForm] private Currency item { get; set; } = default!;
+    protected override void OnInitialized() => item ??= new();
+    private async Task add()
     {
-		await repo.CreateAsync(currency);
+		await repo.CreateAsync(item);
         NavigationManager.NavigateTo("/currencies");
     }
 }

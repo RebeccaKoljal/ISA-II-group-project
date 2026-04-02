@@ -5,25 +5,23 @@
 
 <MyEditPage 
     PageTitleText="Edit Currency" 
-    EntityTitle="@currency.Name" 
-    Entity="currency" 
+    EntityTitle="@item.Name" 
+    Entity="item" 
     BasePath="/currencies" 
     EntityId="@Id"
-    OnValidSubmit="updateCurrency" />
+    OnValidSubmit="update" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Currency currency { get; set; }
+    [SupplyParameterFromForm] private Currency item { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        currency ??= await repo.GetAsync(Id);
-		if (currency is null) NavigationManager.NotFound();
+        item ??= await repo.GetAsync(Id);
+		if (item is null) NavigationManager.NotFound();
     }
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task updateCurrency()
+    private async Task update()
     {
-		await repo.UpdateAsync(currency);
+		await repo.UpdateAsync(item!);
         NavigationManager.NavigateTo("/currencies");
     }
 }
