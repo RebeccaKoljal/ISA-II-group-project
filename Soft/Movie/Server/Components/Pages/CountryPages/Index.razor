@@ -5,17 +5,16 @@
 
 <MyIndexPage 
     TItem="Country" 
-    PageTitleText="Countries" 
-    EntityTitle="Countries" 
-    Items="countries" 
-    BasePath="countries" />
+    PageTitleText="Countries Page" 
+    EntityTitle="Country" 
+    Items="items" 
+    BasePath="/countries" />
 
 @code {
-	private IQueryable<Country> countries = Enumerable.Empty<Country>().AsQueryable();
-
+	private IQueryable<Country> items = Enumerable.Empty<Country>().AsQueryable();
     protected override async Task OnInitializedAsync() 
     {
 		if (repo is null) return;
-        countries = (await repo.GetAsync()).AsQueryable();
+        items = (await repo.GetAsync()).AsQueryable();
 	}
 }

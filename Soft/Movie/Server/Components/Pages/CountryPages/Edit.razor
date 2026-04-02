@@ -5,25 +5,23 @@
 
 <MyEditPage 
     PageTitleText="Edit Country" 
-    EntityTitle="@country.Name" 
-    Entity="country" 
+    EntityTitle="@item.Name" 
+    Entity="item" 
     BasePath="/countries" 
     EntityId="@Id"
-    OnValidSubmit="updateCountry" />
+    OnValidSubmit="update" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Country country { get; set; }
+    [SupplyParameterFromForm] private Country item { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        country ??= await repo.GetAsync(Id);
-		if (country is null) NavigationManager.NotFound();
+        item ??= await repo.GetAsync(Id);
+		if (item is null) NavigationManager.NotFound();
     }
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task updateCountry()
+    private async Task update()
     {
-		await repo.UpdateAsync(country);
+		await repo.UpdateAsync(item!);
         NavigationManager.NavigateTo("/countries");
     }
 }
