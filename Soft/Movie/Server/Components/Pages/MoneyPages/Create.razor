@@ -1,20 +1,21 @@
-﻿@page "/movies/create"
+﻿@page "/monies/create"
 @attribute [ExcludeFromInteractiveRouting]
-@inject IMoviesRepo repo
+@inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="AddMovie" />
+<MyCreatePage 
+    Entity="item"
+    EntityTitle="Money" 
+    BasePath="/monies" 
+    OnValidSubmit="add" />
 
 
 @code {
-    [SupplyParameterFromForm] private Movie Movie { get; set; } = default!;
-
-    protected override void OnInitialized() => Movie ??= new();
-
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task AddMovie()
+    [SupplyParameterFromForm] private Money item { get; set; } = default!;
+    protected override void OnInitialized() => item ??= new();
+    private async Task add()
     {
-		await repo.CreateAsync(Movie);
-        NavigationManager.NavigateTo("/movies");
+		await repo.CreateAsync(item);
+        NavigationManager.NavigateTo("/monies");
     }
 }

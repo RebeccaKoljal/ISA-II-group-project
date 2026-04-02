@@ -1,28 +1,26 @@
-﻿@page "/movies/delete"
+﻿@page "/monies/delete"
 @attribute [ExcludeFromInteractiveRouting]
-@inject IMoviesRepo repo
+@inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyDeletePage PageTitleText="Delete Movie" EntityTitle="Movie" Entity="movie" BasePath="/movies" OnValidSubmit="deleteMovie">
-    <MyPropertyViewer Label="Id" Value="@movie.Id.ToString()" />
-    <MyPropertyViewer Label="Name" Value="@movie.Name" />
-    <MyPropertyViewer Label="Code" Value="@movie.Code" />
-</MyDeletePage>
+<MyDeletePage 
+    PageTitleText="Delete Money" 
+    EntityTitle="Money" 
+    Entity="item" 
+    BasePath="/monies" 
+    OnValidSubmit="delete" />
 
 @code {
-    private Movie movie;
-
+    private Money item;
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-		movie = await repo.GetAsync(Id);
-        if (movie is null) NavigationManager.NotFound();
+		item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
     }
-
-    private async Task deleteMovie()
+    private async Task delete()
     {
-		await repo.DeleteAsync(movie!.Id);
-        NavigationManager.NavigateTo("/movies");
+		await repo.DeleteAsync(item!.Id);
+        NavigationManager.NavigateTo("/monies");
     }
 }

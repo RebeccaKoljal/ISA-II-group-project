@@ -1,29 +1,27 @@
-﻿@page "/movies/edit"
+﻿@page "/monies/edit"
 @attribute [ExcludeFromInteractiveRouting]
-@inject IMoviesRepo repo
+@inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
 
 <MyEditPage 
-    PageTitleText="Edit Movie" 
-    EntityTitle="@movie.Name" 
-    Entity="movie" 
-    BasePath="/movies" 
+    PageTitleText="Edit Money" 
+    EntityTitle="Money" 
+    Entity="item" 
+    BasePath="/monies"
     EntityId="@Id"
-    OnValidSubmit="UpdateMovie" />
+    OnValidSubmit="update" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Movie movie { get; set; }
+    [SupplyParameterFromForm] private Money item { get; set; }
     protected override async Task OnInitializedAsync()
     {
-		movie ??= await repo.GetAsync(Id);
-        if (movie is null) NavigationManager.NotFound();
+		item ??= await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
     }
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task UpdateMovie()
+    private async Task update()
     {
-		await repo.UpdateAsync(movie);
-        NavigationManager.NavigateTo("/movies");
+		await repo.UpdateAsync(item!);
+        NavigationManager.NavigateTo("/monies");
     }
 }

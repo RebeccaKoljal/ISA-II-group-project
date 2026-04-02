@@ -1,23 +1,21 @@
-﻿@page "/movies/details"
+﻿@page "/monies/details"
 @attribute [ExcludeFromInteractiveRouting]
-@inject IMoviesRepo repo
+@inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
 
 <MyDetailsPage
-    PageTitleText="Details Movie"
-    EntityTitle="Movie"
-    Entity="movie"
-    EntityId="movie?.Id"
-    BasePath="/movies" />
+    PageTitleText="Details Money"
+    EntityTitle="Money"
+    Entity="item"
+    EntityId="item?.Id"
+    BasePath="/monies" />
 
 @code {
-    private Movie movie;
-
+    private Money item;
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-		movie = await repo.GetAsync(Id);
-        if (movie is null) NavigationManager.NotFound();
+		item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
     }
 }
