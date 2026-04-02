@@ -3,12 +3,11 @@
 @inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyDeletePage 
-    PageTitleText="Delete Movie" 
-    EntityTitle="Movie" 
-    Entity="movie" 
-    BasePath="/movies" 
-    OnValidSubmit="deleteMovie" />
+<MyDeletePage PageTitleText="Delete Movie" EntityTitle="Movie" Entity="movie" BasePath="/movies" OnValidSubmit="deleteMovie">
+    <MyPropertyViewer Label="Id" Value="@movie.Id.ToString()" />
+    <MyPropertyViewer Label="Name" Value="@movie.Name" />
+    <MyPropertyViewer Label="Code" Value="@movie.Code" />
+</MyDeletePage>
 
 @code {
     private Movie movie;

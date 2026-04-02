@@ -1,14 +1,14 @@
-﻿@page "/movies/delete"
+﻿@page "/movies/details"
 @attribute [ExcludeFromInteractiveRouting]
 @inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyDeletePage 
-    PageTitleText="Delete Movie" 
-    EntityTitle="Movie" 
-    Entity="movie" 
-    BasePath="/movies" 
-    OnValidSubmit="deleteMovie" />
+<MyDetailsPage
+    PageTitleText="Details Movie"
+    EntityTitle="Movie"
+    Entity="movie"
+    EntityId="movie?.Id"
+    BasePath="/movies" />
 
 @code {
     private Movie movie;
@@ -19,11 +19,5 @@
     {
 		movie = await repo.GetAsync(Id);
         if (movie is null) NavigationManager.NotFound();
-    }
-
-    private async Task deleteMovie()
-    {
-		await repo.DeleteAsync(movie!.Id);
-        NavigationManager.NavigateTo("/movies");
     }
 }
