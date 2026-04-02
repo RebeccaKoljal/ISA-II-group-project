@@ -3,18 +3,18 @@
 @inject IMoviesRepo repo
 @inject NavigationManager NavigationManager
 
-<MyCreatePage EntityTitle="Movie" Entity="Movie" BasePath="/movies" OnValidSubmit="AddMovie" />
-
+<MyCreatePage 
+    Entity="item"
+    EntityTitle="Movie" 
+    BasePath="/movies" 
+    OnValidSubmit="add" />
 
 @code {
-    [SupplyParameterFromForm] private Movie Movie { get; set; } = default!;
-
-    protected override void OnInitialized() => Movie ??= new();
-
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task AddMovie()
+    [SupplyParameterFromForm] private Movie item { get; set; } = default!;
+    protected override void OnInitialized() => item ??= new();
+    private async Task add()
     {
-		await repo.CreateAsync(Movie);
+		await repo.CreateAsync(item);
         NavigationManager.NavigateTo("/movies");
     }
 }

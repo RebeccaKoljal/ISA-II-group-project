@@ -5,25 +5,23 @@
 
 <MyEditPage 
     PageTitleText="Edit Movie" 
-    EntityTitle="@movie.Name" 
-    Entity="movie" 
+    EntityTitle="@item.Name" 
+    Entity="item" 
     BasePath="/movies" 
     EntityId="@Id"
-    OnValidSubmit="UpdateMovie" />
+    OnValidSubmit="update" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Movie movie { get; set; }
+    [SupplyParameterFromForm] private Movie item { get; set; }
     protected override async Task OnInitializedAsync()
     {
-		movie ??= await repo.GetAsync(Id);
-        if (movie is null) NavigationManager.NotFound();
+		item ??= await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
     }
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task UpdateMovie()
+    private async Task update()
     {
-		await repo.UpdateAsync(movie);
+		await repo.UpdateAsync(item!);
         NavigationManager.NavigateTo("/movies");
     }
 }
