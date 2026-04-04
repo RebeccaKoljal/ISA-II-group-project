@@ -5,23 +5,23 @@
 
 <MyEditPage 
     PageTitleText="Edit Country" 
-    EntityTitle="@item.Name" 
-    Entity="item" 
+    EntityTitle="@country.Name" 
+    Entity="country" 
     BasePath="/countries" 
     EntityId="@Id"
     OnValidSubmit="update" />
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Country item { get; set; }
+    [SupplyParameterFromForm] private Country country { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        item ??= await repo.GetAsync(Id);
-		if (item is null) NavigationManager.NotFound();
+        country ??= await repo.GetAsync(Id);
+		if (country is null) NavigationManager.NotFound();
     }
     private async Task update()
     {
-		await repo.UpdateAsync(item!);
+		await repo.UpdateAsync(country!);
         NavigationManager.NavigateTo("/countries");
     }
 }
