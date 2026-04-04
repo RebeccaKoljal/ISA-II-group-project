@@ -1,0 +1,21 @@
+﻿@page "/products/details"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IProductsRepo repo
+@inject NavigationManager NavigationManager
+
+<MyDetailsPage
+    PageTitleText="Details Product"
+    EntityTitle="Product"
+    Entity="item"
+    EntityId="item?.Id"
+    BasePath="/products" />
+
+@code {
+    private Product item;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+		item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+}

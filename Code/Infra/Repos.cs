@@ -7,4 +7,5 @@ namespace Abc.Infra
     public class CountriesRepo (ApplicationDbContext c = null) : EfBaseRepo<ApplicationDbContext, Country>(c), ICountriesRepo { }
     public class MoniesRepo (ApplicationDbContext c = null) : EfBaseRepo<ApplicationDbContext, Money>(c), IMoniesRepo { }
     public class CountryCurrenciesRepo (ApplicationDbContext c = null) : EfBaseRepo<ApplicationDbContext, CountryCurrency>(c), ICountryCurrenciesRepo { }
+    public class ProductsRepo (ApplicationDbContext c = null) : EfBaseRepo<ApplicationDbContext, Product>(c), IProductsRepo { }
 }

@@ -1,0 +1,63 @@
+﻿@* @page "/products"
+@attribute [ExcludeFromInteractiveRouting]
+@inject NavigationManager NavigationManager
+@inject IProductsRepo repo
+
+<MyIndexPage 
+    TItem="Product"
+    PageTitleText="Products Page"
+    EntityTitle="Product"
+    Items="items"
+    BasePath="/products" />
+
+@code {
+    private IQueryable<Product> items = Enumerable.Empty<Product>().AsQueryable();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (repo is null) return;
+        items = (await repo.GetAsync()).AsQueryable();
+    }
+} *@
+@page "/products"
+@attribute [ExcludeFromInteractiveRouting]
+@inject NavigationManager NavigationManager
+@inject IProductsRepo repo
+
+<h1 class="title text-center">Milline toiduaine?</h1>
+
+<div class="select-container">
+    <div class="select-grid">
+        <div class="select-card" role="button" @onclick='() => GoToScan("Valmistoit")' tabindex="0" aria-label="Valmistoit">
+            Valmistoit
+        </div>
+
+        <div class="select-card" role="button" @onclick='() => GoToScan("Koostisosa")' tabindex="0" aria-label="Koostisosa">
+            Koostisosa
+        </div>
+    </div>
+
+    <button class="existing-link" @onclick="GoToExisting" aria-label="Olemasolevad tooted">Olemasolevad tooted</button>
+</div>
+
+@code {
+    private IQueryable<Product> items = Enumerable.Empty<Product>().AsQueryable();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (repo is null) return;
+        items = (await repo.GetAsync()).AsQueryable();
+    }
+
+    private void GoToScan(string type)
+    {
+        NavigationManager.NavigateTo($"/products/scan/{Uri.EscapeDataString(type)}");
+    }
+
+    private void GoToExisting()
+    {
+        // keep SPA behavior — navigate to fragment if you enable the existing section
+        NavigationManager.NavigateTo("#existing");
+    }
+}
+

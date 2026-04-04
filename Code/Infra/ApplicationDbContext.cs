@@ -11,5 +11,24 @@ namespace Abc.Infra
         public DbSet<Currency> Currencies { get; set; } = default!;
         public DbSet<Money> Monies { get; set; } = default!;
         public DbSet<CountryCurrency> CountryCurrencies { get; set; } = default!;
+        public DbSet<Product> Products { get; set; } = default!;
+        public DbSet<ProductType> ProductTypes { get; set; } = default!;
+        protected override void OnModelCreating(ModelBuilder modelBuilder) // cause there isn't primary key in the TypeOfProduct
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TypeOfProduct>()
+                .HasKey(tp => new { tp.ProductId, tp.ProductTypeId });
+
+            modelBuilder.Entity<TypeOfProduct>()
+                .HasOne(tp => tp.Product)
+                .WithMany(p => p.TypeOfProduct)
+                .HasForeignKey(tp => tp.ProductId);
+
+            modelBuilder.Entity<TypeOfProduct>()
+                .HasOne(tp => tp.ProductType)
+                .WithMany(pt => pt.TypeOfProduct)
+                .HasForeignKey(tp => tp.ProductTypeId);
+        }
     }
 }

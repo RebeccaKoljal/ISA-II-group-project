@@ -1,0 +1,26 @@
+﻿@page "/products/delete"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IProductsRepo repo
+@inject NavigationManager NavigationManager
+
+<MyDeletePage 
+    PageTitleText="Delete Product" 
+    EntityTitle="Product" 
+    Entity="item" 
+    BasePath="/products" 
+    OnValidSubmit="delete" />
+
+@code {
+    private Product item;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+		item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+    private async Task delete()
+    {
+		await repo.DeleteAsync(item!.Id);
+        NavigationManager.NavigateTo("/products");
+    }
+}
