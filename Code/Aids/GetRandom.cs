@@ -76,13 +76,16 @@ public static class GetRandom
             if (!p.CanWrite) continue;
             if (p.PropertyType.IsArray) continue;
             if (exclude.Contains(p.Name)) continue;
-            var v = IsClass(p) ? Object(p.PropertyType) : Value(p.PropertyType);
+            var randomAttribute = p.GetCustomAttribute<RandomAttribute>();
+            var v = randomAttribute is not null 
+                ? randomAttribute.CreateValue(p.PropertyType) : IsClass(p) 
+                ? Object(p.PropertyType) : Value(p.PropertyType);
             p.SetValue(o, v);
         }
         return o;
     }
     private static bool IsClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
-    private static object Value(Type t)
+    public static object Value(Type t)
     {
         if (t == typeof(sbyte)) return Int8();
         if (t == typeof(short)) return Int16();
