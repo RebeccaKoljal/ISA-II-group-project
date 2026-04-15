@@ -1,4 +1,5 @@
-﻿using Abc.Infra;
+﻿using Abc.Data;
+using Abc.Infra;
 using Abc.Soft.Web.Components;
 using Abc.Soft.Web.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -45,13 +46,20 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
 // if repo is needed, then it needs to be added here, before app is built
 builder.Services.AddScoped<IMoviesRepo, MoviesRepo>();
 builder.Services.AddScoped<ICountriesRepo, CountriesRepo>();
 builder.Services.AddScoped<ICurrenciesRepo, CurrenciesRepo>();
 builder.Services.AddScoped<IMoniesRepo, MoniesRepo>();
 builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
+builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var sp = scope.ServiceProvider;
+var db = sp.GetRequiredService<ApplicationDbContext>();
+await new SeedDb(db, 20).Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
