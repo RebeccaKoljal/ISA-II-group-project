@@ -5,7 +5,7 @@
 
 @typeparam TEntity where TEntity : BaseEntity
 
-<QuickGrid Class="table" Items="Entities">
+<QuickGrid Class="table myTable" Items="Entities">
     @foreach (var p in typeof(TEntity).GetProperties())
     {
 		@if (!show(p)) continue;
@@ -20,6 +20,21 @@
         <a href="@($"{BasePath}/delete?id={y.Id}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
+
+<style>
+    .myTable
+    {
+        table-layout: fixed;
+		width: 100%;
+		max-width: 100%;
+    }
+    .myTable td
+    {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+</style>
 
 @code {
     [Parameter] public IQueryable<TEntity> Entities { get; set; }
