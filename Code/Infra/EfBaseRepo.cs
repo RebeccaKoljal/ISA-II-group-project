@@ -8,7 +8,7 @@ namespace Abc.Infra
         where TEntity : BaseEntity
     {
         protected readonly TContext db = c;
-        public async Task<int> CountAsync() => await db.Set<TEntity>().CountAsync();
+        public async Task<int> CountAsync(Query q) => await db.Set<TEntity>().CountAsync();
         public async Task<TEntity> CreateAsync(TEntity e)
         {
             await db.AddAsync(e);
@@ -18,7 +18,7 @@ namespace Abc.Infra
         public async Task<TEntity> GetAsync(Guid id) => await db.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
 
         public Task DeleteAsync(Guid id) => deleteAsync(id);
-        public async Task<IEnumerable<TEntity>> GetAsync() => await getAsync();
+        public async Task<IEnumerable<TEntity>> GetAsync(Query q) => await getAsync(q);
         public async Task<TEntity> UpdateAsync(TEntity e)
         {
             db.Update(e);
@@ -32,6 +32,12 @@ namespace Abc.Infra
             db.Remove(entity);
             await db.SaveChangesAsync();
         }
-        private async Task<IEnumerable<TEntity>> getAsync() => await db.Set<TEntity>().ToListAsync();
+        private async Task<IEnumerable<TEntity>> getAsync(Query q)
+        {
+            var s = (q.Page - 1) * q.PageSize;
+            var t = q.PageSize;
+            var r = db.Set<TEntity>().Skip(s).Take(t).OrderBy(x => x.ValidTo).AsNoTracking();
+            return await r.ToListAsync();
+        }
     }
 }
