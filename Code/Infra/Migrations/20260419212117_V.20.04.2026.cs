@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abc.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class V08042026 : Migration
+    public partial class V20042026 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -295,9 +295,9 @@ namespace Abc.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Monies", x => x.Id);
+                    table.PrimaryKey("PK_Money", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Monies_Currencies_CurrencyId",
+                        name: "FK_Money_Currencies_CurrencyId",
                         column: x => x.CurrencyId,
                         principalTable: "Currencies",
                         principalColumn: "Id");
@@ -353,7 +353,7 @@ namespace Abc.Infra.Migrations
                         principalTable: "Countries",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Movies_Monies_MoneyId",
+                        name: "FK_Movies_Money_MoneyId",
                         column: x => x.MoneyId,
                         principalTable: "Money",
                         principalColumn: "Id");
@@ -412,7 +412,7 @@ namespace Abc.Infra.Migrations
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Monies_CurrencyId",
+                name: "IX_Money_CurrencyId",
                 table: "Money",
                 column: "CurrencyId");
 
