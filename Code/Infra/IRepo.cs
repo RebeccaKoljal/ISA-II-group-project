@@ -5,7 +5,8 @@ namespace Abc.Infra
 {
     public interface IRepo<TEntity> where TEntity : BaseEntity
     {
-        Task<TEntity> GetAsync(Guid id); 
+        Task<TEntity> GetAsync(Guid id);
+        Task<int> CountAsync(); // counts the number of entities in the database
         Task<IEnumerable<TEntity>> GetAsync(); // search for all entities and gives the info back
         Task<TEntity> CreateAsync(TEntity e); // creates the database
         Task<TEntity> UpdateAsync(TEntity e); 
