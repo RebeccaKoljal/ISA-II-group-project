@@ -21,6 +21,8 @@
     </TemplateColumn>
 </QuickGrid>
 
+<MyTablePageNav />
+
 @code {
     private IQueryable<TEntity> Entities { get; set; }
     [Parameter] public IRepo<TEntity> Repo { get; set; }
