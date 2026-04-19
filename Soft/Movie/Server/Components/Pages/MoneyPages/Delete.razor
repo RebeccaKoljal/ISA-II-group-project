@@ -1,4 +1,4 @@
-﻿@page "/monies/delete"
+﻿@page "/money/delete"
 @attribute [ExcludeFromInteractiveRouting]
 @inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
@@ -7,7 +7,7 @@
     PageTitleText="Delete Money" 
     EntityTitle="Money" 
     Entity="item" 
-    BasePath="/monies" 
+    BasePath="/money" 
     OnValidSubmit="delete" />
 
 @code {
@@ -21,6 +21,6 @@
     private async Task delete()
     {
 		await repo.DeleteAsync(item!.Id);
-        NavigationManager.NavigateTo("/monies");
+        NavigationManager.NavigateTo("/money");
     }
 }

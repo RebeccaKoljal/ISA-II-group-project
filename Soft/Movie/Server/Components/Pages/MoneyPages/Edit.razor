@@ -1,4 +1,4 @@
-﻿@page "/monies/edit"
+﻿@page "/money/edit"
 @attribute [ExcludeFromInteractiveRouting]
 @inject IMoniesRepo repo
 @inject NavigationManager NavigationManager
@@ -7,7 +7,7 @@
     PageTitleText="Edit Money" 
     EntityTitle="Money" 
     Entity="money" 
-    BasePath="/monies"
+    BasePath="/money"
     EntityId="@Id"
     OnValidSubmit="update" />
 
@@ -22,6 +22,6 @@
     private async Task update()
     {
 		await repo.UpdateAsync(money!);
-        NavigationManager.NavigateTo("/monies");
+        NavigationManager.NavigateTo("/money");
     }
 }

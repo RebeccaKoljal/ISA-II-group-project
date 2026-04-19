@@ -283,7 +283,7 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Monies",
+                name: "Money",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -355,7 +355,7 @@ namespace Abc.Infra.Migrations
                     table.ForeignKey(
                         name: "FK_Movies_Monies_MoneyId",
                         column: x => x.MoneyId,
-                        principalTable: "Monies",
+                        principalTable: "Money",
                         principalColumn: "Id");
                 });
 
@@ -413,7 +413,7 @@ namespace Abc.Infra.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Monies_CurrencyId",
-                table: "Monies",
+                table: "Money",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
@@ -472,7 +472,7 @@ namespace Abc.Infra.Migrations
                 name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "Monies");
+                name: "Money");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");

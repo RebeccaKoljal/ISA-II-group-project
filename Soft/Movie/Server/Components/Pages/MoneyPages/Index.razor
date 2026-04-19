@@ -1,14 +1,14 @@
-﻿@page "/monies"
+﻿@page "/money"
 @attribute [ExcludeFromInteractiveRouting]
 @inject NavigationManager NavigationManager
 @inject IMoniesRepo repo
 
 <MyIndexPage 
     TItem="Money"
-    PageTitleText="Monies Page"
+    PageTitleText="Money Page"
     EntityTitle="Money"
     Repo="repo"
-    BasePath="/monies" />
+    BasePath="/money" />
 
 @code {
 }
