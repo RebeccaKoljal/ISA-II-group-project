@@ -27,4 +27,5 @@ namespace Abc.Infra
     public interface ICurrenciesRepo : IRepo<Currency> { }
     public interface IMoniesRepo : IRepo<Money> { }
     public interface ICountryCurrenciesRepo : IRepo<CountryCurrency> { }
+    public interface IProductsRepo : IRepo<Product> { }
 }
