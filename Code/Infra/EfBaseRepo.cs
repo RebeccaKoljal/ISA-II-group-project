@@ -44,8 +44,8 @@ namespace Abc.Infra
             var r = key == null
                 ? db.Set<TEntity>().Skip(s).Take(t).AsNoTracking() // if property is null it wont sort
                 : (dir == "desc")
-                    ? db.Set<TEntity>().Skip(s).Take(t).OrderByDescending(key).AsNoTracking()
-                    : db.Set<TEntity>().Skip(s).Take(t).OrderBy(key).AsNoTracking();
+                    ? db.Set<TEntity>().OrderByDescending(key).Skip(s).Take(t).AsNoTracking() // needs to be sorted first then skip and take
+                    : db.Set<TEntity>().OrderBy(key).Skip(s).Take(t).AsNoTracking();
             return await r.ToListAsync();
         }
         private static readonly BindingFlags flags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
