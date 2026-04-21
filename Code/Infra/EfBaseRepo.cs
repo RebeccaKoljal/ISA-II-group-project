@@ -10,14 +10,15 @@ namespace Abc.Infra
         where TEntity : BaseEntity
     {
         protected readonly TContext db = c;
-        public async Task<int> CountAsync(Query q) => await db.Set<TEntity>().CountAsync();
+        private IQueryable<TEntity> set => db.Set<TEntity>();
+        public async Task<int> CountAsync(Query q) => await set.CountAsync();
         public async Task<TEntity> CreateAsync(TEntity e)
         {
             await db.AddAsync(e);
             await db.SaveChangesAsync();
             return e;
         }
-        public async Task<TEntity> GetAsync(Guid id) => await db.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<TEntity> GetAsync(Guid id) => await set.FirstOrDefaultAsync(x => x.Id == id);
 
         public Task DeleteAsync(Guid id) => deleteAsync(id);
         public async Task<IEnumerable<TEntity>> GetAsync(Query q) => await getAsync(q);
@@ -36,22 +37,34 @@ namespace Abc.Infra
         }
         private async Task<IEnumerable<TEntity>> getAsync(Query q)
         {
-            var s = (q.Page - 1) * q.PageSize;
-            var t = q.PageSize;
+            var r = addSearch(set, q);
+            r = addSort(r, q);
+            r = addPagging(r, q);
+            return await r.AsNoTracking().ToListAsync();
+        }
+        private static IQueryable<TEntity> addSearch(IQueryable<TEntity> r, Query q)
+        {
+            return r; // we will add this later when we have a better idea of how the search will work
+        }
+        private static IQueryable<TEntity> addSort(IQueryable<TEntity> r, Query q)
+        {
             var dir = q.SortDir;
             var n = q.SortBy;
             var key = (n is null) ? null : sortBy(n);
-            var r = key == null
-                ? db.Set<TEntity>().Skip(s).Take(t).AsNoTracking() // if property is null it wont sort
-                : (dir == "desc")
-                    ? db.Set<TEntity>().OrderByDescending(key).Skip(s).Take(t).AsNoTracking() // needs to be sorted first then skip and take
-                    : db.Set<TEntity>().OrderBy(key).Skip(s).Take(t).AsNoTracking();
-            return await r.ToListAsync();
+            if (key is null) return r;
+            return (dir == "desc") ? r.OrderByDescending(key) : r.OrderBy(key);
+        }
+        private static IQueryable<TEntity> addPagging(IQueryable<TEntity> r, Query q)
+        {
+            var s = (q.Page - 1) * q.PageSize;
+            var t = q.PageSize;
+            return r.Skip(s).Take(t);
         }
         private static readonly BindingFlags flags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
+        private static PropertyInfo getProp(string propName) => typeof(TEntity).GetProperty(propName, flags);
         private static Expression<Func<TEntity, object>> sortBy(string propName)
         {
-            var p = typeof(TEntity).GetProperty(propName, flags);
+            var p = getProp(propName);
             if (p is null) return null;
             var parameter = Expression.Parameter(typeof(TEntity), "x"); // we define that we have a parameter 
             var member = Expression.Property(parameter, p);
