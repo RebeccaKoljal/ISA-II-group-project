@@ -110,7 +110,7 @@
         return e != null && e.IsClass && e != typeof(string);
     }
     private string collectionHref(TEntity e) => query.Href(BasePath, e.Id);
-    private bool isCollectionVisible(TEntity e) => false;
+    private bool isCollectionVisible(TEntity e) => query.Selected == e.Id.ToString();
 }
 
 <style>
