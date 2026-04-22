@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abc.Infra.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:Code/Infra/Migrations/20260419212117_V.20.04.2026.cs
     public partial class V20042026 : Migration
+========
+    public partial class V08042026 : Migration
+>>>>>>>> 467179ed50d8beaa39ee08d077d5cbadcc09f95d:Code/Infra/Migrations/20260408191814_V.08.04.2026.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -473,6 +477,12 @@ namespace Abc.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Money");
+
+            migrationBuilder.DropTable(
+                name: "ProductTypes");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
