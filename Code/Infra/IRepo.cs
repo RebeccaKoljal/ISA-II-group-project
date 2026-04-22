@@ -11,6 +11,7 @@ namespace Abc.Infra
         public string SortBy => get(nameof(SortBy));
         public string SortDir => get(nameof(SortDir));
         public string SearchBy => get(nameof(SearchBy));
+        public string Selected => get(nameof(Selected));
         public string SearchStr => get(nameof(SearchStr));
         private string get(string s) => (d ?? []).TryGetValue(s, out var x) ? x : null;
         private static int toInt(string s, int def) => int.TryParse(s, out var i) ? i : def;
