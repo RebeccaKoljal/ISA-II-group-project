@@ -23,19 +23,19 @@ public static class GetRandom
         if (min > max) (min, max) = (max, min);
         return min + r.NextDouble() * (max - min);
     }
-    public static sbyte Int8(sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue) => (sbyte) Int32(min, max);
-    public static short Int16(short min = short.MinValue, short max = short.MaxValue) => (short) Int32(min, max);
-    public static byte UInt8(byte min = byte.MinValue, byte max = byte.MaxValue) => (byte) Int32(min, max);
-    public static ushort UInt16(ushort min = ushort.MinValue, ushort max = ushort.MaxValue) => (ushort) Int32(min, max);
-    public static uint UInt32(uint min = uint.MinValue, uint max = uint.MaxValue) => (uint) Int64(min, max);
+    public static sbyte Int8(sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue) => (sbyte)Int32(min, max);
+    public static short Int16(short min = short.MinValue, short max = short.MaxValue) => (short)Int32(min, max);
+    public static byte UInt8(byte min = byte.MinValue, byte max = byte.MaxValue) => (byte)Int32(min, max);
+    public static ushort UInt16(ushort min = ushort.MinValue, ushort max = ushort.MaxValue) => (ushort)Int32(min, max);
+    public static uint UInt32(uint min = uint.MinValue, uint max = uint.MaxValue) => (uint)Int64(min, max);
     public static ulong UInt64(ulong min = ulong.MinValue, ulong max = ulong.MaxValue)
     {
-        var minLong = (long) min - long.MaxValue;
-        var maxLong = (long) max - long.MaxValue;
-        return (ulong) Int64(minLong, maxLong) + long.MaxValue;
+        var minLong = (long)min - long.MaxValue;
+        var maxLong = (long)max - long.MaxValue;
+        return (ulong)Int64(minLong, maxLong) + long.MaxValue;
     }
-    public static float Float(float min = float.MinValue, float max = float.MaxValue) => (float) Double(min, max);
-    public static decimal Decimal(decimal min = decimal.MinValue, decimal max = decimal.MaxValue) => (decimal) Double((double) min, (double) max);
+    public static float Float(float min = float.MinValue, float max = float.MaxValue) => (float)Double(min, max);
+    public static decimal Decimal(decimal min = decimal.MinValue, decimal max = decimal.MaxValue) => (decimal)Double((double)min, (double)max);
     public static string String(byte minLen = byte.MinValue, byte maxLen = (byte)sbyte.MaxValue, string chars = null)
     {
         var len = UInt8(minLen, maxLen);
@@ -47,15 +47,15 @@ public static class GetRandom
     public static bool Bool() => r.Next(2) == 0;
     public static DateTime DateTime(System.DateTime? min = null, System.DateTime? max = null)
     {
-        var minTicks = min?.Ticks?? System.DateTime.MinValue.Ticks;
-        var maxTicks = max?.Ticks?? System.DateTime.MaxValue.Ticks;
+        var minTicks = min?.Ticks ?? System.DateTime.MinValue.Ticks;
+        var maxTicks = max?.Ticks ?? System.DateTime.MaxValue.Ticks;
         var ticks = Int64(minTicks, maxTicks);
         return new DateTime(ticks);
     }
     public static TimeSpan TimeSpan(System.TimeSpan? min = null, System.TimeSpan? max = null)
     {
-        var minTicks = min?.Ticks?? System.TimeSpan.MinValue.Ticks;
-        var maxTicks = max?.Ticks?? System.TimeSpan.MaxValue.Ticks;
+        var minTicks = min?.Ticks ?? System.TimeSpan.MinValue.Ticks;
+        var maxTicks = max?.Ticks ?? System.TimeSpan.MaxValue.Ticks;
         var ticks = Int64(minTicks, maxTicks);
         return new TimeSpan(ticks);
     }
@@ -71,14 +71,14 @@ public static class GetRandom
         var x = Nullable.GetUnderlyingType(t);
         if (x is not null) t = x;
         var o = Activator.CreateInstance(t);
-        foreach(var p in t.GetProperties())
+        foreach (var p in t.GetProperties())
         {
             if (!p.CanWrite) continue;
             if (p.PropertyType.IsArray) continue;
             if (exclude.Contains(p.Name)) continue;
             var randomAttribute = p.GetCustomAttribute<RandomAttribute>();
-            var v = randomAttribute is not null 
-                ? randomAttribute.CreateValue(p.PropertyType) : IsClass(p) 
+            var v = randomAttribute is not null
+                ? randomAttribute.CreateValue(p.PropertyType) : IsClass(p)
                 ? Object(p.PropertyType) : Value(p.PropertyType);
             p.SetValue(o, v);
         }
@@ -99,12 +99,13 @@ public static class GetRandom
         if (t == typeof(double)) return Double();
         if (t == typeof(decimal)) return Decimal();
         if (t == typeof(string)) return String();
-        if (t == typeof(char)) return Char((char) 0, char.MaxValue);
+        if (t == typeof(char)) return Char((char)0, char.MaxValue);
         if (t == typeof(bool)) return Bool();
         if (t == typeof(DateTime)) return DateTime();
         if (t == typeof(DateTime?)) return DateTime();
-        if (t == typeof(TimeSpan)) return TimeSpan();
-        if (t == typeof(Guid)) return Guid();
-        throw new NotSupportedException($"Type {t} is not supported");
+        // if (t == typeof(TimeSpan)) return TimeSpan();
+        // if (t == typeof(Guid)) return Guid();
+        return null;
+        // throw new NotSupportedException($"Type {t} is not supported");
     }
 }

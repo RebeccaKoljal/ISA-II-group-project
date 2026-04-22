@@ -66,9 +66,10 @@ namespace Abc.Infra
             return r.Skip(s).Take(t);
         }
         private static readonly BindingFlags flags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
-        private static PropertyInfo getProp(string propName) => string.IsNullOrEmpty(propName) ? null : typeof(TEntity).GetProperty(propName, flags); 
+        private static PropertyInfo getProp(string propName) => string.IsNullOrEmpty(propName) ? null : typeof(TEntity).GetProperty(propName, flags);
         private static Expression<Func<TEntity, object>> sortBy(string propName)
         {
+            // r.OrderBy(x => x.x.Id)
             var p = getProp(propName);
             if (p is null) return null;
             if (string.IsNullOrEmpty(propName)) return null;
