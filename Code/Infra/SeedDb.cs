@@ -14,6 +14,7 @@ namespace Abc.Infra
                 nameof(Currency.Timestamp)]);
 
             await seedTable(db.Countries, [
+                nameof(Country.CountryCurrency),
                 nameof(Country.Currencies),
                     nameof(Country.Timestamp)]);
 

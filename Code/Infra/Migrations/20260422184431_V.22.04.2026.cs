@@ -72,28 +72,6 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Currencies",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    NumericCode = table.Column<string>(type: "TEXT", nullable: true),
-                    MajorUnitSymbol = table.Column<string>(type: "TEXT", nullable: true),
-                    MinorUnitSymbol = table.Column<string>(type: "TEXT", nullable: true),
-                    RatioOfMinorUnit = table.Column<double>(type: "REAL", nullable: false),
-                    IsIsoCurrency = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
-                    Details = table.Column<string>(type: "TEXT", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Code = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Currencies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -256,6 +234,59 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    NumericCode = table.Column<string>(type: "TEXT", nullable: true),
+                    MajorUnitSymbol = table.Column<string>(type: "TEXT", nullable: true),
+                    MinorUnitSymbol = table.Column<string>(type: "TEXT", nullable: true),
+                    RatioOfMinorUnit = table.Column<double>(type: "REAL", nullable: false),
+                    IsIsoCurrency = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CountryId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Currencies_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeOfProduct",
+                columns: table => new
+                {
+                    ProductTypeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AssignedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeOfProduct", x => new { x.ProductId, x.ProductTypeId });
+                    table.ForeignKey(
+                        name: "FK_TypeOfProduct_ProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "ProductTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TypeOfProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CountryCurrencies",
                 columns: table => new
                 {
@@ -301,31 +332,6 @@ namespace Abc.Infra.Migrations
                         column: x => x.CurrencyId,
                         principalTable: "Currencies",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TypeOfProduct",
-                columns: table => new
-                {
-                    ProductTypeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AssignedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TypeOfProduct", x => new { x.ProductId, x.ProductTypeId });
-                    table.ForeignKey(
-                        name: "FK_TypeOfProduct_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TypeOfProduct_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -412,6 +418,11 @@ namespace Abc.Infra.Migrations
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Currencies_CountryId",
+                table: "Currencies",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Money_CurrencyId",
                 table: "Money",
                 column: "CurrencyId");
@@ -469,9 +480,6 @@ namespace Abc.Infra.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
                 name: "Money");
 
             migrationBuilder.DropTable(
@@ -482,6 +490,9 @@ namespace Abc.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Currencies");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
         }
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abc.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260422091552_V.22.04.2026")]
+    [Migration("20260422184431_V.22.04.2026")]
     partial class V22042026
     {
         /// <inheritdoc />
@@ -107,6 +107,9 @@ namespace Abc.Infra.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("CountryId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Details")
                         .HasColumnType("TEXT");
 
@@ -140,6 +143,8 @@ namespace Abc.Infra.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Currencies");
                 });
@@ -527,7 +532,7 @@ namespace Abc.Infra.Migrations
             modelBuilder.Entity("Abc.Data.CountryCurrency", b =>
                 {
                     b.HasOne("Abc.Data.Country", "Country")
-                        .WithMany("Currencies")
+                        .WithMany("CountryCurrency")
                         .HasForeignKey("CountryId");
 
                     b.HasOne("Abc.Data.Currency", "Currency")
@@ -537,6 +542,13 @@ namespace Abc.Infra.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("Currency");
+                });
+
+            modelBuilder.Entity("Abc.Data.Currency", b =>
+                {
+                    b.HasOne("Abc.Data.Country", null)
+                        .WithMany("Currencies")
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Abc.Data.Money", b =>
@@ -686,6 +698,8 @@ namespace Abc.Infra.Migrations
 
             modelBuilder.Entity("Abc.Data.Country", b =>
                 {
+                    b.Navigation("CountryCurrency");
+
                     b.Navigation("Currencies");
                 });
 
