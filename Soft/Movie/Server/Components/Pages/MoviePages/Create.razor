@@ -10,7 +10,7 @@
     OnValidSubmit="add" />
 
 @code {
-    [SupplyParameterFromForm] private Movie movie { get; set; } = default!;
+    [SupplyParameterFromForm(Name = nameof(Movie))] private Movie movie { get; set; } = default!;
     protected override void OnInitialized() => movie ??= new();
     private async Task add()
     {

@@ -10,7 +10,7 @@
     OnValidSubmit="add" />
 
 @code {
-    [SupplyParameterFromForm] private Country country { get; set; } = default!;
+    [SupplyParameterFromForm(Name = nameof(Country))] private Country country { get; set; } = default!;
     protected override void OnInitialized() => country ??= new();
     private async Task add()
     {

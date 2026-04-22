@@ -11,7 +11,7 @@
 
 
 @code {
-    [SupplyParameterFromForm] private Money money { get; set; } = default!;
+    [SupplyParameterFromForm(Name = nameof(Money))] private Money money { get; set; } = default!;
     protected override void OnInitialized() => money ??= new();
     private async Task add()
     {

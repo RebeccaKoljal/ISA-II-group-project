@@ -13,7 +13,7 @@
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private Money money { get; set; }
+    [SupplyParameterFromForm(Name = nameof(Money))] private Money money { get; set; }
     protected override async Task OnInitializedAsync()
     {
 		money ??= await repo.GetAsync(Id);

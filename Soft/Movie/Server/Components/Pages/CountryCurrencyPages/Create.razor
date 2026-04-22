@@ -10,7 +10,7 @@
     OnValidSubmit="add" />
 
 @code {
-    [SupplyParameterFromForm] private CountryCurrency countryCurrency { get; set; } = default!;
+    [SupplyParameterFromForm(Name = nameof(CountryCurrency))] private CountryCurrency countryCurrency { get; set; } = default!;
     protected override void OnInitialized() => countryCurrency ??= new();
     private async Task add()
     {
