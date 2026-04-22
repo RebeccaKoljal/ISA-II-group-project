@@ -22,7 +22,7 @@
 	[Parameter] public EventCallback<Guid?> ValueChanged { get; set; }
 	[Parameter] public Expression<Func<Guid?>> ValueExpression { get; set; } = default!;
 	[Parameter] public Type EntityType { get; set; } = default!;
-	[Parameter] public string DisplayPropertyName { get; set; } = "Name";
+	[Parameter] public string DisplayProperty { get; set; } = "Name";
 
 	private IReadOnlyList<OptionItem> options = [];
 
@@ -45,7 +45,7 @@
 	private string displayText(BaseEntity entity)
 	{
 		var t = entity.GetType();
-		var p = t.GetProperty(DisplayPropertyName) ?? t.GetProperty("Name") ?? t.GetProperty("Code");
+		var p = t.GetProperty(DisplayProperty) ?? t.GetProperty("Name") ?? t.GetProperty("Code");
 		var value = p?.GetValue(entity)?.ToString();
 		return string.IsNullOrWhiteSpace(value) ? entity.Id.ToString() : value;
 	}
