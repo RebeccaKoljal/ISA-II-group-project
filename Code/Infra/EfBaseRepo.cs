@@ -10,10 +10,10 @@ namespace Abc.Infra
         where TEntity : BaseEntity
     {
         protected readonly TContext db = c;
-        private IQueryable<TEntity> set => db.Set<TEntity>();
+        protected virtual IQueryable<TEntity> Query() => db.Set<TEntity>();
         public async Task<int> CountAsync(Query q)
         {
-            var r = addSearch(set, q);
+            var r = addSearch(Query(), q);
             return await r.CountAsync();
         }
         public async Task<TEntity> CreateAsync(TEntity e)
@@ -22,7 +22,7 @@ namespace Abc.Infra
             await db.SaveChangesAsync();
             return e;
         }
-        public async Task<TEntity> GetAsync(Guid id) => await set.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<TEntity> GetAsync(Guid id) => await Query().FirstOrDefaultAsync(x => x.Id == id);
 
         public Task DeleteAsync(Guid id) => deleteAsync(id);
         public async Task<IEnumerable<TEntity>> GetAsync(Query q) => await getAsync(q);
@@ -41,7 +41,7 @@ namespace Abc.Infra
         }
         private async Task<IEnumerable<TEntity>> getAsync(Query q)
         {
-            var r = addSearch(set, q);
+            var r = addSearch(Query(), q);
             r = addSort(r, q);
             r = addPagging(r, q);
             return await r.AsNoTracking().ToListAsync();

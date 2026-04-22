@@ -8,7 +8,7 @@
 
 @typeparam TEntity where TEntity : BaseEntity
 
-<MyQuickGrid Repo="@Repo" Entities="@Entities" BasePath="@BasePath" Query="@query" />
+<MyQuickGrid Entities="@Entities" BasePath="@BasePath" Query="@query" />
 
 @if (isSelected(selectedItem))
 {
@@ -24,7 +24,7 @@
             <QuickGrid Class="table myTable" Items="items">
                 @foreach (var p in cols)
                 {
-                    @if (!show(p)) continue;
+                    @if (!MyGridAids.Show(p)) continue;
                     <TemplateColumn>
                         <HeaderTemplate>@p.Name</HeaderTemplate>
                         <ChildContent Context="y">
@@ -39,7 +39,7 @@
 
 @if (Others.Any())
 {
-    <MyQuickGrid Repo="@Repo" Entities="@Others" BasePath="@BasePath" Query="@query" ShowHeader="@false" />
+    <MyQuickGrid Entities="@Others" BasePath="@BasePath" Query="@query" ShowHeader="@false" />
 }
 
 <MyTablePageNav Query="@query" TotalCount="@totalCount" CurrentUri="@nav.Uri"/>
@@ -80,16 +80,6 @@
     }
     private bool isSelected(TEntity e) => query.Selected == e?.Id.ToString();
     private string closHref(TEntity e) => query.Href(BasePath, e.Id);
-    private bool show(PropertyInfo p)
-    {
-        if (p is null) return false;
-        if (p.Name == nameof(NamedEntity.Id)) return false;
-        var t = p.PropertyType;
-        if (t == typeof(string)) return true;
-        if (typeof(IEnumerable).IsAssignableFrom(t)) return false;
-        if (t.IsClass) return false;
-        return true;
-    }
 }
 <style>
     .myTable
