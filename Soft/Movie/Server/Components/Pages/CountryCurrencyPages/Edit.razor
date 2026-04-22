@@ -13,7 +13,7 @@
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
-    [SupplyParameterFromForm] private CountryCurrency countryCurrency { get; set; }
+    [SupplyParameterFromForm(Name = nameof(CountryCurrency))] private CountryCurrency countryCurrency { get; set; }
     protected override async Task OnInitializedAsync()
     {
 		countryCurrency ??= await repo.GetAsync(Id);
