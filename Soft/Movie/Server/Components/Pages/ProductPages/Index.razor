@@ -46,7 +46,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (repo is null) return;
-        items = (await repo.GetAsync()).AsQueryable();
+        //items = (await repo.GetAsync()).AsQueryable();
     }
 
     private void GoToScan(string type)

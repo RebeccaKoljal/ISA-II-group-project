@@ -1,20 +1,14 @@
-﻿@page "/monies"
+﻿@page "/money"
 @attribute [ExcludeFromInteractiveRouting]
 @inject NavigationManager NavigationManager
 @inject IMoniesRepo repo
 
 <MyIndexPage 
     TItem="Money"
-    PageTitleText="Monies Page"
+    PageTitleText="Money Page"
     EntityTitle="Money"
-    Items="items"
-    BasePath="/monies" />
+    Repo="repo"
+    BasePath="/money" />
 
 @code {
-    private IQueryable<Money> items = Enumerable.Empty<Money>().AsQueryable();
-    protected override async Task OnInitializedAsync()
-    {
-        if (repo is null) return;
-        items = (await repo.GetAsync()).AsQueryable();
-    }
 }

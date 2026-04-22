@@ -36,12 +36,12 @@ public static class GetRandom
     }
     public static float Float(float min = float.MinValue, float max = float.MaxValue) => (float) Double(min, max);
     public static decimal Decimal(decimal min = decimal.MinValue, decimal max = decimal.MaxValue) => (decimal) Double((double) min, (double) max);
-    public static string String(byte minLength = byte.MinValue, byte maxLength = (byte) sbyte.MaxValue)
+    public static string String(byte minLen = byte.MinValue, byte maxLen = (byte)sbyte.MaxValue, string chars = null)
     {
-        var len = UInt8(minLength, maxLength);
+        var len = UInt8(minLen, maxLen);
         var s = new char[len];
-        for (var i = 0; i < len; i++) s[i] = Char('a', 'z');
-        return new string(Char('a', 'z'), len);
+        for (var i = 0; i < len; i++) s[i] = (chars is null) ? Char('a', 'z') : chars[UInt8(0, (byte)chars.Length)];
+        return new string(s);
     }
     public static char Char(char min, char max) => (char)UInt16(min, max);
     public static bool Bool() => r.Next(2) == 0;
@@ -65,8 +65,9 @@ public static class GetRandom
         r.NextBytes(buffer);
         return new Guid(buffer);
     }
-    public static object Object(Type t)
+    public static object Object(Type t, string[] exclude = null)
     {
+        exclude = exclude ?? [];
         var x = Nullable.GetUnderlyingType(t);
         if (x is not null) t = x;
         var o = Activator.CreateInstance(t);
@@ -74,13 +75,17 @@ public static class GetRandom
         {
             if (!p.CanWrite) continue;
             if (p.PropertyType.IsArray) continue;
-            var v = IsClass(p) ? Object(p.PropertyType) : Value(p.PropertyType);
+            if (exclude.Contains(p.Name)) continue;
+            var randomAttribute = p.GetCustomAttribute<RandomAttribute>();
+            var v = randomAttribute is not null 
+                ? randomAttribute.CreateValue(p.PropertyType) : IsClass(p) 
+                ? Object(p.PropertyType) : Value(p.PropertyType);
             p.SetValue(o, v);
         }
         return o;
     }
     private static bool IsClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
-    private static object Value(Type t)
+    public static object Value(Type t)
     {
         if (t == typeof(sbyte)) return Int8();
         if (t == typeof(short)) return Int16();

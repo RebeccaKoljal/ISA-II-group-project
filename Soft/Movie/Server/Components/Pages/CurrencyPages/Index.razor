@@ -7,14 +7,8 @@
     TItem="Currency"
     PageTitleText="Currencies Page"
     EntityTitle="Currency"
-    Items="items"
+    Repo="repo"
     BasePath="/currencies" />
 
 @code {
-	private IQueryable<Currency> items = Enumerable.Empty<Currency>().AsQueryable();
-    protected override async Task OnInitializedAsync() 
-    {
-		if (repo is null) return;
-        items = (await repo.GetAsync()).AsQueryable();
-	}
 }
