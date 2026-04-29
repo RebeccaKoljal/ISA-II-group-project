@@ -1,6 +1,8 @@
-﻿namespace Abc.Data
+﻿using Abc.Data.Common;
+
+namespace Abc.Data
 {
-    public class TypeOfProduct
+    public class TypeOfProduct : BaseEntity
     {
         public Guid ProductTypeId { get; set; } // not Guid? cause it needs to have Guid or else it doesn't exist
         public ProductType ProductType { get; set; }
