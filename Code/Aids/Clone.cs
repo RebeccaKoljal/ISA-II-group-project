@@ -19,12 +19,11 @@ public static class Clone
     {
         foreach (var p in props)
         {
-            if (!p.CanRead || !p.CanWrite) continue; // property must be getter and setter
+            if (!p.CanRead || !p.CanWrite) continue;
             var v = p.GetValue(from);
-            if (v != null && isClass(p)) // if it is a class, we need to clone it as well
-                v = clone(v);
+            if (v != null && isClass(p)) v = clone(v);
             p.SetValue(to, v);
         }
     }
-    private static bool isClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string); // is class but not string
+    private static bool isClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
 }

@@ -1,4 +1,5 @@
-﻿using Abc.Aids;
+﻿
+using Abc.Aids;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Linq.Expressions;
@@ -28,30 +29,26 @@ public sealed partial class EditorAdapter(ComponentBase c, object item, string p
                         : underlyingType.IsNumeric() ? generic(typeof(InputNumber<>), propType)
                         : null;
     public Type Validator => generic(typeof(ValidationMessage<>), propType);
-    public IDictionary<string, object> EditorParams
-        => new Dictionary<string, object>
-        {
-            ["id"] = propName,
-            ["name"] = inputName,
-            ["class"] = "form-control",
-            ["Value"] = ad.PropValue,
-            ["ValueChanged"] = valChanged(),
-            ["ValueExpression"] = valExpression()
-        }.withSelectParams(hasSelect);
-    public IDictionary<string, object> ValidationParams
-        => new Dictionary<string, object>
-        {
-            ["For"] = valExpression(),
-            ["class"] = "text-danger"
-        };
+    public IDictionary<string, object> EditorParams => new Dictionary<string, object>
+    {
+        ["id"] = propName,
+        ["name"] = inputName,
+        ["class"] = "form-control",
+        ["Value"] = ad.PropValue,
+        ["ValueChanged"] = valChanged(),
+        ["ValueExpression"] = valExpression()
+    }.withSelectParams(hasSelect);
+    public IDictionary<string, object> ValidationParams => new Dictionary<string, object>
+    {
+        ["For"] = valExpression(),
+        ["class"] = "text-danger"
+    };
 
     internal readonly IPropertyAdapter ad = new PropertyAdapter(item, propName);
-    internal EventCallback<TValue> changed<TValue>()
-        => EventCallback.Factory.Create<TValue>(c, value =>
-        {
-            ad.SetValue(value);
-            return Task.CompletedTask;
-        });
+    internal EventCallback<TValue> changed<TValue>() => EventCallback.Factory.Create<TValue>(c, value => {
+        ad.SetValue(value);
+        return Task.CompletedTask;
+    });
     internal Expression<Func<TValue>> expression<TValue>()
     {
         var i = Expression.Constant(item);
@@ -66,11 +63,10 @@ public sealed partial class EditorAdapter(ComponentBase c, object item, string p
     [GeneratedRegex("(\\B[A-Z])")] internal static partial Regex myRegex();
     internal Type propType => ad?.PropType;
     internal string toName => myRegex().Replace(propName, " $1");
-    internal Type underlyingType => ad?.UnderLyingType ?? typeof(object);
+    internal Type underlyingType => ad?.UnderlyingType ?? typeof(object);
     internal object valChanged() => makeGeneric(method(nameof(changed)));
     internal object valExpression() => makeGeneric(method(nameof(expression)));
     internal static Type generic(Type editor, Type t) => editor.MakeGenericType(t);
-
     internal bool isSelect => hasSelect is not null && propType == typeof(Guid?);
     internal SelectAttribute hasSelect => ad?.PropInfo?.GetCustomAttribute<SelectAttribute>();
 }

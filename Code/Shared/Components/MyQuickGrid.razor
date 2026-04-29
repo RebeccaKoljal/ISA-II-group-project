@@ -9,13 +9,19 @@
 @typeparam TEntity where TEntity : BaseEntity
 
 <QuickGrid Class="table myTable" Items="@Entities">
-    @foreach (var p in typeof(TEntity).GetProperties()) {
+    @foreach (var p in typeof(TEntity).GetProperties())
+    {
         @if (!MyGridAids.Show(p)) continue;
         <TemplateColumn>
             <HeaderTemplate>
-                @if (ShowHeader && ShowMyHeader) {
+                @if (ShowHeader && ShowMyHeader)
+                {
                     <MyTableHeader Query="@Query" BasePath="@BasePath" PropertyInfo="@p" />
-                } else if (ShowHeader) { @p.Name }
+                }
+                else if (ShowHeader)
+                {
+                    @p.Name
+                }
             </HeaderTemplate>
             <ChildContent Context="y">
                 @(MyGridAids.Value(p, y))
@@ -24,14 +30,14 @@
     }
     @if (ShowButtons)
     {
-
         <TemplateColumn Context="y">
             <MyTableRowButtons TEntity="TEntity" Item="@y" BasePath="@BasePath" Query="@Query" />
         </TemplateColumn>
     }
 </QuickGrid>
 
-        @code {
+
+@code {
     [Parameter] public IQueryable<TEntity> Entities { get; set; }
     [Parameter] public Query Query { get; set; }
     [Parameter] public string BasePath { get; set; }
@@ -39,17 +45,17 @@
     [Parameter] public bool ShowMyHeader { get; set; } = true;
     [Parameter] public bool ShowButtons { get; set; } = true;
 }
+
 <style>
-    .myTable
-    {
+    .myTable {
         table-layout: fixed;
-		width: 100%;
-		max-width: 100%;
+        width: 100%;
+        max-width: 100%;
     }
-    .myTable td
-    {
-        white-space: normal;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-    }
+
+        .myTable td {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
 </style>

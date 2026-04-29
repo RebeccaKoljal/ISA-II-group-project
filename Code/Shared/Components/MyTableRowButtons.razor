@@ -1,13 +1,13 @@
 ﻿@using Abc.Data.Common
-@using Abc.Infra
 @using System.Collections
+@using Abc.Infra
 
 @typeparam TEntity where TEntity : BaseEntity
 
 <a href="@($"{BasePath}/edit?id={Item.Id}")">Edit</a> |
 <a href="@($"{BasePath}/details?id={Item.Id}")">Details</a> |
 <a href="@($"{BasePath}/delete?id={Item.Id}")">Delete</a>
-        @if (hasCollection)
+@if (hasCollection)
 {
     <span> | </span>
     <a href="@collectionHref">

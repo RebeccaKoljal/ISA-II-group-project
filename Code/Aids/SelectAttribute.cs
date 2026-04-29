@@ -1,9 +1,8 @@
-﻿namespace Abc.Aids
+﻿namespace Abc.Aids;
+
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class SelectAttribute(Type t, string displayProperty = null) : Attribute
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public sealed class SelectAttribute(Type t, string displayProperty = null) : Attribute
-    {
-        public Type EntityType { get; } = t;
-        public string DisplayProperty { get; } = string.IsNullOrEmpty(displayProperty) ? "Name" : displayProperty;
-    }
+    public Type EntityType { get; } = t;
+    public string DisplayProperty { get; } = string.IsNullOrWhiteSpace(displayProperty) ? "Name" : displayProperty;
 }

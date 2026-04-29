@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿
+using System.Reflection;
 
 namespace Abc.Aids;
 
@@ -32,38 +33,39 @@ public static class GetRandom
     {
         var minLong = (long)min - long.MaxValue;
         var maxLong = (long)max - long.MaxValue;
-        return (ulong)Int64(minLong, maxLong) + long.MaxValue;
+        return (ulong)(Int64(minLong, maxLong) + long.MaxValue);
     }
     public static float Float(float min = float.MinValue, float max = float.MaxValue) => (float)Double(min, max);
     public static decimal Decimal(decimal min = decimal.MinValue, decimal max = decimal.MaxValue) => (decimal)Double((double)min, (double)max);
-    public static string String(byte minLen = byte.MinValue, byte maxLen = (byte)sbyte.MaxValue, string chars = null)
+    public static Guid Guid()
     {
-        var len = UInt8(minLen, maxLen);
-        var s = new char[len];
-        for (var i = 0; i < len; i++) s[i] = (chars is null) ? Char('a', 'z') : chars[UInt8(0, (byte)chars.Length)];
-        return new string(s);
+        Span<byte> buffer = stackalloc byte[16];
+        r.NextBytes(buffer);
+        return new Guid(buffer);
     }
-    public static char Char(char min, char max) => (char)UInt16(min, max);
-    public static bool Bool() => r.Next(2) == 0;
-    public static DateTime DateTime(System.DateTime? min = null, System.DateTime? max = null)
-    {
-        var minTicks = min?.Ticks ?? System.DateTime.MinValue.Ticks;
-        var maxTicks = max?.Ticks ?? System.DateTime.MaxValue.Ticks;
-        var ticks = Int64(minTicks, maxTicks);
-        return new DateTime(ticks);
-    }
-    public static TimeSpan TimeSpan(System.TimeSpan? min = null, System.TimeSpan? max = null)
+    public static TimeSpan TimeSpan(TimeSpan? min = null, TimeSpan? max = null)
     {
         var minTicks = min?.Ticks ?? System.TimeSpan.MinValue.Ticks;
         var maxTicks = max?.Ticks ?? System.TimeSpan.MaxValue.Ticks;
         var ticks = Int64(minTicks, maxTicks);
         return new TimeSpan(ticks);
     }
-    public static Guid Guid()
+    public static DateTime DateTime(DateTime? min = null, DateTime? max = null)
     {
-        Span<byte> buffer = stackalloc byte[16];
-        r.NextBytes(buffer);
-        return new Guid(buffer);
+        var minTicks = min?.Ticks ?? System.DateTime.MinValue.Ticks;
+        var maxTicks = max?.Ticks ?? System.DateTime.MaxValue.Ticks;
+        var ticks = Int64(minTicks, maxTicks);
+        return new DateTime(ticks);
+    }
+    public static bool Bool() => r.Next(2) == 0;
+    public static char Char(char min = char.MinValue, char max = char.MaxValue) => (char)UInt16(min, max);
+    public static string String(byte minLen = byte.MinValue, byte maxLen = (byte)sbyte.MaxValue, string chars = null)
+    {
+        var len = UInt8(minLen, maxLen);
+        var s = new char[len];
+        for (var i = 0; i < len; i++) s[i] = (chars is null) ? Char('a', 'z')
+           : chars[UInt8(0, (byte)chars.Length)];
+        return new string(s);
     }
     public static object Object(Type t, string[] exclude = null)
     {
@@ -78,34 +80,35 @@ public static class GetRandom
             if (exclude.Contains(p.Name)) continue;
             var randomAttribute = p.GetCustomAttribute<RandomAttribute>();
             var v = randomAttribute is not null
-                ? randomAttribute.CreateValue(p.PropertyType) : IsClass(p)
-                ? Object(p.PropertyType) : Value(p.PropertyType);
+                ? randomAttribute.CreateValue(p.PropertyType)
+                : isClass(p) ? Object(p.PropertyType) : Value(p.PropertyType);
             p.SetValue(o, v);
         }
         return o;
     }
-    private static bool IsClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
+    private static bool isClass(PropertyInfo p) => p.PropertyType.IsClass && p.PropertyType != typeof(string);
     public static object Value(Type t)
     {
-        if (t == typeof(sbyte)) return Int8();
-        if (t == typeof(short)) return Int16();
-        if (t == typeof(int)) return Int32();
-        if (t == typeof(long)) return Int64();
+        var x = Nullable.GetUnderlyingType(t);
+        if (x is not null) t = x;
+        if (t == typeof(string)) return String();
+        if (t == typeof(char)) return Char();
+        if (t == typeof(bool)) return Bool();
+        if (t == typeof(DateTime)) return DateTime();
+        if (t == typeof(decimal)) return Decimal();
+        if (t == typeof(double)) return Double();
+        if (t == typeof(float)) return Float();
         if (t == typeof(byte)) return UInt8();
         if (t == typeof(ushort)) return UInt16();
         if (t == typeof(uint)) return UInt32();
         if (t == typeof(ulong)) return UInt64();
-        if (t == typeof(float)) return Float();
-        if (t == typeof(double)) return Double();
-        if (t == typeof(decimal)) return Decimal();
-        if (t == typeof(string)) return String();
-        if (t == typeof(char)) return Char((char)0, char.MaxValue);
-        if (t == typeof(bool)) return Bool();
-        if (t == typeof(DateTime)) return DateTime();
-        if (t == typeof(DateTime?)) return DateTime();
-        // if (t == typeof(TimeSpan)) return TimeSpan();
-        // if (t == typeof(Guid)) return Guid();
+        if (t == typeof(sbyte)) return Int8();
+        if (t == typeof(short)) return Int16();
+        if (t == typeof(int)) return Int32();
+        if (t == typeof(long)) return Int64();
+        //if (t == typeof(TimeSpan)) return TimeSpan();
+        //if (t == typeof(Guid)) return Guid();
         return null;
-        // throw new NotSupportedException($"Type {t} is not supported");
+        //throw new NotSupportedException($"Type {t} is not supported.");
     }
 }

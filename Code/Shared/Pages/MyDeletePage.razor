@@ -26,15 +26,17 @@
         </EditForm>
     }
 </div>
+
 @code {
     [Parameter] public string PageTitleText { get; set; } = "Delete";
     [Parameter] public string EntityTitle { get; set; }
     [Parameter] public object Entity { get; set; }
     [Parameter] public string BasePath { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-	[Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
     private async Task HandleValidSubmit()
     {
-        if (OnValidSubmit.HasDelegate) await OnValidSubmit.InvokeAsync(null);
+        if (OnValidSubmit.HasDelegate) await OnValidSubmit.InvokeAsync();
     }
 }

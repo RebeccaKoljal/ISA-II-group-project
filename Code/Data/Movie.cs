@@ -16,4 +16,3 @@ public class Movie : NamedEntity
     public Money Money { get; set; }
     public Country Country { get; set; }
 }
-

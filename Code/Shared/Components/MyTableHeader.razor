@@ -14,7 +14,7 @@
     </form>
 </div>
 
-@code{
+@code {
     [Parameter] public Query Query { get; set; }
     [Parameter] public string BasePath { get; set; }
     [Parameter] public PropertyInfo PropertyInfo { get; set; }
@@ -25,10 +25,11 @@
     private bool isDisabled => PropertyInfo?.PropertyType != typeof(string);
     private string headerHref() //=> Query.Href(BasePath, name);
     {
-        var n = ((Query?.SortBy == name) && (Query?.SortDir == "desc")) ? null : name; // ascending then descending then none
+        var n = ((Query?.SortBy == name) && (Query?.SortDir == "desc")) ? null : name;
         var d = Query?.SortBy != name ? "asc" : "desc";
         var r = $"{BasePath}?Page=1&PageSize={Query?.PageSize ?? 7}";
         r = string.IsNullOrEmpty(Query?.SearchStr) ? r : r += $"&SearchBy={Query.SearchBy}&SearchStr={Query.SearchStr}";
         return (n is null) ? r : r + $"&SortBy={n}&SortDir={d}";
     }
+}
 }
