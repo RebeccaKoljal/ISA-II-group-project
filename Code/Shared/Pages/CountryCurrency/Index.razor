@@ -1,0 +1,13 @@
+﻿@page "/countrycurrencies"
+@inject NavigationManager NavigationManager
+@inject ICountryCurrenciesRepo repo
+
+<MyIndexPage 
+    TItem="CountryCurrency"
+    PageTitleText="Country Currencies Page"
+    EntityTitle="Country Currency"
+    Repo="repo"
+    BasePath="/countrycurrencies" />
+
+@code {
+}

@@ -29,8 +29,8 @@ namespace Abc.Tests.Aids;
     }
     [TestMethod] public void UnderLyingTypeTest()
     {
-        AreEqual(typeof(int), obj.UnderLyingType);
-        AreEqual(typeof(string), oStr.UnderLyingType);
+        AreEqual(typeof(int), obj.UnderlyingType);
+        AreEqual(typeof(string), oStr.UnderlyingType);
     }
     [TestMethod] public void PropValueTest() 
     { 

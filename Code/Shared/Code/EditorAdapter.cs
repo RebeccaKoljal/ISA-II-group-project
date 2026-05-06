@@ -2,6 +2,7 @@
 using Abc.Aids;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -10,6 +11,9 @@ namespace Abc.Shared.Components;
 
 public interface IEditorAdapter
 {
+    bool HasProperty { get; }
+
+    bool HasEditor { get; }
     string DisplayName { get; }
     PropertyInfo PropInfo { get; }
     Type Editor { get; }
@@ -20,6 +24,7 @@ public interface IEditorAdapter
 
 public sealed partial class EditorAdapter(ComponentBase c, object item, string propName) : IEditorAdapter
 {
+    public EditorAdapter() : this(null, null, null) { }
     public PropertyInfo PropInfo => ad?.PropInfo;
     public string DisplayName => hasName ? toName : string.Empty;
     public Type Editor => isSelect ? typeof(MyEntitiesSelect)
@@ -69,6 +74,9 @@ public sealed partial class EditorAdapter(ComponentBase c, object item, string p
     internal static Type generic(Type editor, Type t) => editor.MakeGenericType(t);
     internal bool isSelect => hasSelect is not null && propType == typeof(Guid?);
     internal SelectAttribute hasSelect => ad?.PropInfo?.GetCustomAttribute<SelectAttribute>();
+
+    public bool HasProperty => PropInfo is not null;
+    public bool HasEditor => Editor is not null;
 }
 
 file static class EditorParamsExtensions

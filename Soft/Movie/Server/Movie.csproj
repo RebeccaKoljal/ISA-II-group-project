@@ -31,6 +31,8 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Pages\CountryPages\" />
+    <Folder Include="Pages\MoviePages\" />
   </ItemGroup>
 
 </Project>
