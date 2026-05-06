@@ -3,6 +3,7 @@
     <MyPropertyViewer Label="@p.Name" Value="@p.GetValue(Entity)?.ToString()" />
 }
 
-@code {
+@code 
+{
     [Parameter] public object Entity { get; set; }
 }

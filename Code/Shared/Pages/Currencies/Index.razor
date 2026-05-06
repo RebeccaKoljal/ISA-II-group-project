@@ -1,0 +1,13 @@
+﻿@page "/currencies"
+@inject NavigationManager NavigationManager
+@inject ICurrenciesRepo repo
+
+<MyIndexPage 
+    TItem="Currency"
+    PageTitleText="Currencies Page"
+    EntityTitle="Currency"
+    Repo="repo"
+    BasePath="/currencies" />
+
+@code {
+}

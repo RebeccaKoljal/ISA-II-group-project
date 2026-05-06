@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+   <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+	 <Nullable>disable</Nullable>
+	 <AssemblyName>Abc.Tests.Shared</AssemblyName>
+	 <RootNamespace>Abc.Tests.Shared</RootNamespace>
+   <PlatformTarget>AnyCPU</PlatformTarget> 
+    <UseVSTest>true</UseVSTest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bunit.web" Version="1.40.0" />
+    <PackageReference Include="MSTest" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Code/Shared/Shared.csproj" />
+    <ProjectReference Include="../Aids/Aids.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages/" />
+  </ItemGroup>
+
+</Project>

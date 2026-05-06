@@ -4,7 +4,7 @@ namespace Abc.Shared.Code;
 
 public class UrlParams(Uri url)
 {
-    private readonly Dictionary<string, string> d = [];
+    public readonly Dictionary<string, string> d = [];
     public Query Parse()
     {
         var q = url?.Query?.TrimStart('?');

@@ -1,6 +1,8 @@
 ﻿using Abc.Data;
+using Abc.Soft.Web;
 using Abc.Infra;
 using Abc.Soft.Web.Components;
+using System.Text.Json.Serialization;
 using Abc.Soft.Web.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 //builder.Services.AddDbContextFactory<MovieDbContext>(options =>
 //    options.UseSqlite(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string 'AbcSoftWebContext' not found.")));
 
+builder.Services.ConfigureHttpJsonOptions(o =>
+    o.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Kui kuskil on DI-s vaja ApplicationDbContext-i (mitte factory't), võta see factory kaudu
 builder.Services.AddQuickGridEntityFrameworkAdapter();
@@ -51,9 +56,10 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 builder.Services.AddScoped<IMoviesRepo, MoviesRepo>();
 builder.Services.AddScoped<ICountriesRepo, CountriesRepo>();
 builder.Services.AddScoped<ICurrenciesRepo, CurrenciesRepo>();
-builder.Services.AddScoped<IMoniesRepo, MoniesRepo>();
+builder.Services.AddScoped<IMoneyRepo, MoneyRepo>();
 builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
 builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
+
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
@@ -74,6 +80,7 @@ else
     app.UseHsts();
     app.UseMigrationsEndPoint();
 }
+
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
 
@@ -83,9 +90,15 @@ app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Abc.Soft.Web.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(Abc.Soft.Web.Client._Imports).Assembly,
+                             typeof(Abc.Shared.Pages.Countries.Index).Assembly);
 
 // Add additional endpoints required by the Identity /Account Razor components.
+app.MapCountriesApi();
+app.MapMoviesApi();
+app.MapCurrenciesApi();
+app.MapMoneyApi();
+app.MapCountryCurrenciesApi();
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();

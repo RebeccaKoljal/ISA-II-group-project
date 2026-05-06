@@ -1,0 +1,13 @@
+﻿@page "/movies"
+@inject NavigationManager NavigationManager
+@inject IMoviesRepo repo
+
+<MyIndexPage 
+    TItem="Movie"
+    PageTitleText="Movies Page"
+    EntityTitle="Movie"
+    Repo="repo"
+    BasePath="/movies" />
+
+@code {
+}

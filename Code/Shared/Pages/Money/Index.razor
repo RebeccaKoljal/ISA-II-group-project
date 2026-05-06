@@ -1,0 +1,13 @@
+﻿@page "/money"
+@inject NavigationManager NavigationManager
+@inject IMoneyRepo repo
+
+<MyIndexPage 
+    TItem="Money"
+    PageTitleText="Money Page"
+    EntityTitle="Money"
+    Repo="repo"
+    BasePath="/money" />
+
+@code {
+}
