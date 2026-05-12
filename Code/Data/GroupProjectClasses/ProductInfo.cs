@@ -1,7 +1,7 @@
 ﻿using Abc.Data.Common;
 using System.ComponentModel;
 
-namespace Abc.Data;
+namespace Abc.Data.GroupProjectClasses;
 
 public class ProductInfo : NamedEntity
 {
