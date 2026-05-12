@@ -11,6 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Pages\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Pages\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Pages\**" />
+    <None Remove="Data\**" />
+    <None Remove="Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Client\Movie.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="10.*" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.6" />
@@ -27,12 +38,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Pages\CountryPages\" />
-    <Folder Include="Pages\MoviePages\" />
   </ItemGroup>
 
 </Project>
