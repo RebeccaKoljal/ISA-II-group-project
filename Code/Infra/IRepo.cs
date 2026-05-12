@@ -18,4 +18,3 @@ public interface ICountriesRepo : IRepo<Country> { }
 public interface ICurrenciesRepo : IRepo<Currency> { }
 public interface IMoneyRepo : IRepo<Money> { }
 public interface ICountryCurrenciesRepo : IRepo<CountryCurrency> { }
-public interface IProductsRepo : IRepo<Product> { }

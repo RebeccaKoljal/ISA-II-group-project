@@ -26,5 +26,3 @@ public class CountryCurrenciesRepo(ApplicationDbContext c = null)
             .Include(x => x.Country)
             .Include(x => x.Currency);
 }
-public class ProductsRepo (ApplicationDbContext c = null) : 
-    EfBaseRepo<ApplicationDbContext, Product>(c), IProductsRepo { }
