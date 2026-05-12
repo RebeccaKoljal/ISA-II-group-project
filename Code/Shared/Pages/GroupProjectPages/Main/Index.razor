@@ -1,0 +1,51 @@
+﻿@page "/main"
+@attribute [ExcludeFromInteractiveRouting]
+@inject NavigationManager NavigationManager
+
+<h1 class="title text-center">Milline toiduaine?</h1>
+
+<div class="select-container">
+    <div class="select-grid">
+        <div class="select-card" role="button" @onclick='() => GoToPage("Valmistoit")' tabindex="0" aria-label="Valmistoit">
+            Valmistoit
+        </div>
+
+        <div class="select-card" role="button" @onclick='() => GoToPage("Koostisosa")' tabindex="0" aria-label="Koostisosa">
+            Koostisosa
+        </div>
+    </div>
+
+    <div class="bottom-left" role="button" @onclick="GoToRecipe" tabindex="0" aria-label="Retseptid">
+        Retseptid
+    </div>
+
+    <div class="bottom-right" role="button" @onclick="GoToInventory" tabindex="0" aria-label="Olemasolevad tooted">
+        Olemasolevad tooted
+    </div>
+
+    <div class="top-right" role="button" @onclick="GoToUser" tabindex="0" aria-label="Kasutaja">
+        Kasutaja
+    </div>
+</div>
+
+@code {
+    private void GoToPage(string type)
+    {
+        NavigationManager.NavigateTo($"/main/{Uri.EscapeDataString(type)}");
+    }
+
+    private void GoToRecipe()
+    {
+        NavigationManager.NavigateTo("/GroupProjectPages/Recipe");
+    }
+
+    private void GoToInventory()
+    {
+        NavigationManager.NavigateTo("/GroupProjectPages/Inventory");
+    }
+
+    private void GoToUser()
+    {
+        NavigationManager.NavigateTo("/GroupProjectPages/User");
+    }
+}

@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup>
 	<Folder Include="Code\" />
-	<Folder Include="Pages\GroupProjectPages\Main\" />
 	<Folder Include="Pages\GroupProjectPages\Inventory\" />
 	<Folder Include="Pages\GroupProjectPages\Recipe\" />
 	<Folder Include="Pages\GroupProjectPages\Scan\" />
