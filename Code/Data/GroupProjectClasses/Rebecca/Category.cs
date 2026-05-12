@@ -1,7 +1,7 @@
 ﻿using Abc.Data.Common;
 using System.ComponentModel;
 
-namespace Abc.Data.GroupProjectClasses;
+namespace Abc.Data.GroupProjectClasses.Rebecca;
 
 public class Category : NamedEntity
 {
