@@ -1,5 +1,6 @@
 ﻿using Abc.Data;
 using Microsoft.EntityFrameworkCore;
+using Abc.Data.GroupProjectClasses.Elizaveta;
 
 namespace Abc.Infra;
 
@@ -45,3 +46,12 @@ public class UserRecipesRepo(ApplicationDbContext c = null)
     protected override IQueryable<UserRecipe> Query() => db.UserRecipes
         .Include(x => x.Recipe);
 }
+public class BarcodesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Barcode>(c), IBarcodesRepo
+{ }
+public class ExpiryDatesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ExpiryDate>(c), IExpiryDatesRepo
+{ }
+public class ProductsRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Product>(c), IProductsRepo
+{ }

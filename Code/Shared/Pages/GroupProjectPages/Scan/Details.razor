@@ -1,0 +1,17 @@
+﻿@page "/scan/details"
+@inject IBarcodesRepo repo
+@inject NavigationManager NavigationManager
+<MyDetailsPage
+    PageTitleText="Barcode Details"
+    EntityTitle="Barcode"
+    Entity="item"
+    BasePath="/scan" />
+@code {
+    private Barcode item;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+}
