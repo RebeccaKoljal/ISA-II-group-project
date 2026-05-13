@@ -1,0 +1,20 @@
+@page "/userrecipes/details"
+@inject IUserRecipesRepo repo
+@inject NavigationManager NavigationManager
+
+<MyDetailsPage
+    PageTitleText="Ingredient Details"
+    EntityTitle="Ingredient"
+    Entity="item"
+    EntityId="item?.Id"
+    BasePath="/userrecipes" />
+
+@code {
+    private UserRecipe item;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+}

@@ -1,0 +1,25 @@
+@page "/internetrecipes/delete"
+@inject IInternetRecipesRepo repo
+@inject NavigationManager NavigationManager
+
+<MyDeletePage
+    PageTitleText="Delete Internet Recipe"
+    EntityTitle="Internet Recipe"
+    Entity="item"
+    BasePath="/internetrecipes"
+    OnValidSubmit="delete" />
+
+@code {
+    private InternetRecipe item;
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        item = await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+    private async Task delete()
+    {
+        await repo.DeleteAsync(item!.Id);
+        NavigationManager.NavigateTo("/internetrecipes");
+    }
+}

@@ -56,6 +56,9 @@ builder.Services.AddScoped<ICountriesRepo, CountriesRepo>();
 builder.Services.AddScoped<ICurrenciesRepo, CurrenciesRepo>();
 builder.Services.AddScoped<IMoneyRepo, MoneyRepo>();
 builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
+builder.Services.AddScoped<IRecipesRepo, RecipesRepo>();
+builder.Services.AddScoped<IInternetRecipesRepo, InternetRecipesRepo>();
+builder.Services.AddScoped<IUserRecipesRepo, UserRecipesRepo>();
 
 var app = builder.Build();
 
@@ -96,6 +99,9 @@ app.MapMoviesApi();
 app.MapCurrenciesApi();
 app.MapMoneyApi();
 app.MapCountryCurrenciesApi();
+app.MapRecipesApi();
+app.MapInternetRecipesApi();
+app.MapUserRecipesApi();
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();

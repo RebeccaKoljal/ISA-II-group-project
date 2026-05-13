@@ -1,0 +1,140 @@
+@page "/GroupProjectPages/Recipe"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IRecipesRepo RecipesRepo
+@inject IUserRecipesRepo UserRecipesRepo
+@inject NavigationManager NavigationManager
+
+<h2>Retseptid</h2>
+
+<div class="recipe-page">
+    <div class="ingredient-filter">
+        <h4>Mis sul laos on?</h4>
+        <p class="hint">Kirjuta koostisosa ja vajuta Lisa</p>
+        <div class="ingredient-input">
+            <input @bind="newIngredient" @bind:event="oninput" @onkeydown="onEnter"
+                   placeholder="nt. piim, munad, jahu..." />
+            <button @onclick="addIngredient">Lisa</button>
+        </div>
+        <div class="selected-ingredients">
+            @foreach (var ingredient in selectedIngredients)
+            {
+                <span class="ingredient-tag">
+                    @ingredient
+                    <button @onclick="() => removeIngredient(ingredient)">×</button>
+                </span>
+            }
+        </div>
+        @if (selectedIngredients.Count > 0)
+        {
+            <button class="clear-btn" @onclick="clearIngredients">Tühjenda</button>
+        }
+    </div>
+
+    <div class="recipe-list">
+        @if (recipes is null)
+        {
+            <p>Laen retsepte...</p>
+        }
+        else if (!filteredRecipes.Any())
+        {
+            <p class="no-results">Valitud koostisosadega retsepte ei leitud.</p>
+        }
+        else
+        {
+            @foreach (var recipe in filteredRecipes)
+            {
+                <div class="recipe-card @(isAvailable(recipe) ? "available" : "")">
+                    <div class="recipe-header">
+                        <h3>@recipe.Name</h3>
+                        @if (isAvailable(recipe))
+                        {
+                            <span class="available-badge">Saab teha!</span>
+                        }
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(recipe.Details))
+                    {
+                        <p class="recipe-details">@recipe.Details</p>
+                    }
+                    <div class="recipe-ingredients">
+                        <strong>Koostisosad:</strong>
+                        @if (recipe.Ingredients.Any())
+                        {
+                            <ul>
+                                @foreach (var ingredient in recipe.Ingredients)
+                                {
+                                    <li class="@(selectedIngredients.Contains(ingredient.ProductName, StringComparer.OrdinalIgnoreCase) ? "have-it" : "")">
+                                        @ingredient.ProductName
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="no-ingredients">Koostisosad puuduvad</span>
+                        }
+                    </div>
+                    @if (recipe.Sources.Any())
+                    {
+                        <div class="recipe-sources">
+                            <strong>Allikad:</strong>
+                            @foreach (var source in recipe.Sources)
+                            {
+                                <a href="@source.Url" target="_blank">@source.Source</a>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="manage-links">
+    <a href="/recipes">Halda retsepte</a>
+    <a href="/userrecipes">Halda koostisosasid</a>
+    <a href="/internetrecipes">Halda allikaid</a>
+</div>
+
+@code {
+    private List<Recipe> recipes;
+    private List<string> selectedIngredients = [];
+    private string newIngredient = "";
+
+    private IEnumerable<Recipe> filteredRecipes =>
+        selectedIngredients.Count == 0
+            ? recipes ?? []
+            : (recipes ?? []).Where(isAvailable);
+
+    private bool isAvailable(Recipe recipe)
+    {
+        if (!recipe.Ingredients.Any()) return false;
+        return recipe.Ingredients.All(i =>
+            selectedIngredients.Contains(i.ProductName, StringComparer.OrdinalIgnoreCase));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await RecipesRepo.GetAsync(new Query(new Dictionary<string, string>
+        {
+            ["PageSize"] = "100"
+        }));
+        recipes = result.ToList();
+    }
+
+    private void addIngredient()
+    {
+        var trimmed = newIngredient.Trim();
+        if (!string.IsNullOrWhiteSpace(trimmed) && !selectedIngredients.Contains(trimmed, StringComparer.OrdinalIgnoreCase))
+            selectedIngredients.Add(trimmed);
+        newIngredient = "";
+    }
+
+    private void removeIngredient(string ingredient) => selectedIngredients.Remove(ingredient);
+
+    private void clearIngredients() => selectedIngredients.Clear();
+
+    private async Task onEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") addIngredient();
+    }
+}
