@@ -1,6 +1,6 @@
 ﻿using Abc.Data;
-using Abc.Data.GroupProjectClasses.Nora;
 using Microsoft.EntityFrameworkCore;
+using Abc.Data.GroupProjectClasses.Elizaveta;
 
 namespace Abc.Infra;
 
@@ -46,22 +46,12 @@ public class UserRecipesRepo(ApplicationDbContext c = null)
     protected override IQueryable<UserRecipe> Query() => db.UserRecipes
         .Include(x => x.Recipe);
 }
-public class UsersRepo(ApplicationDbContext c = null)
-    : EfBaseRepo<ApplicationDbContext, User>(c), IUsersRepo
+public class BarcodesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Barcode>(c), IBarcodesRepo
 { }
-
-public class ProductsInUserInventoryRepo(ApplicationDbContext c = null)
-    : EfBaseRepo<ApplicationDbContext, ProductsInUserInventory>(c), IProductsInUserInventoryRepo
-{
-    protected override IQueryable<ProductsInUserInventory> Query() => db.ProductsInUserInventory
-        .Include(x => x.User)
-        .Include(x => x.Product);
-}
-
-public class AvailableRecipesRepo(ApplicationDbContext c = null)
-    : EfBaseRepo<ApplicationDbContext, AvailableRecipe>(c), IAvailableRecipesRepo
-{
-    protected override IQueryable<AvailableRecipe> Query() => db.AvailableRecipes
-        .Include(x => x.User)
-        .Include(x => x.Recipe);
-}
+public class ExpiryDatesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ExpiryDate>(c), IExpiryDatesRepo
+{ }
+public class ProductsRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Product>(c), IProductsRepo
+{ }

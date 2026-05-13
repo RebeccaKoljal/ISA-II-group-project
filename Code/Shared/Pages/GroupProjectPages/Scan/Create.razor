@@ -1,0 +1,17 @@
+﻿@page "/scan/create"
+@inject IBarcodesRepo repo
+@inject NavigationManager NavigationManager
+<MyCreatePage
+    Entity="barcode"
+    EntityTitle="Barcode"
+    BasePath="/scan"
+    OnValidSubmit="add" />
+@code {
+    [SupplyParameterFromForm(Name = nameof(Barcode))] private Barcode barcode { get; set; } = default!;
+    protected override void OnInitialized() => barcode ??= new();
+    private async Task add()
+    {
+        await repo.CreateAsync(barcode);
+        NavigationManager.NavigateTo("/scan");
+    }
+}

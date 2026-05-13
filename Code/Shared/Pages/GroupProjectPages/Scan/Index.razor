@@ -1,0 +1,14 @@
+﻿<h3>Index.razor</h3>
+@page "/scan"
+@inject NavigationManager NavigationManager 
+@inject IBarcodesRepo barcodesRepo
+<MyIndexPage
+    TItem="Barcode"
+    PageTitleText="Scanned Barcodes"
+    EntityTitle="Barcode"
+    Repo="barcodesRepo"
+    BasePath="/scan" /> 
+    
+@code {
+
+}
