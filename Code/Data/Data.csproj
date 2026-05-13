@@ -23,6 +23,7 @@
     <Folder Include="GroupProjectClasses\Elizaveta\" />
     <Folder Include="GroupProjectClasses\Martin\" />
     <Folder Include="GroupProjectClasses\Robi\" />
+    <Folder Include="GroupProjectClasses\Nora\" />
   </ItemGroup>
 
 </Project>
