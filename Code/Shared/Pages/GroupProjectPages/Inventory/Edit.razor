@@ -10,6 +10,11 @@
 @if (item != null)
 {
     <EditForm Model="item" OnValidSubmit="update" FormName="InventoryEdit">
+        <input type="hidden" name="@idField" value="@Id" />
+        <div>
+            <label>Toote nimi</label>
+            <InputText @bind-Value="item.ProductName" />
+        </div>
         <div>
             <label>Kogus (g)</label>
             <InputNumber @bind-Value="item.Quantity" min="0" />
@@ -19,13 +24,15 @@
             <InputDate @bind-Value="item.ExpiryDate" />
         </div>
         <button type="submit">Salvesta</button>
-        <a href="/inventory">Tagasi</a>
+        <a href="/GroupProjectPages/Inventory">Tagasi</a>
     </EditForm>
 }
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
     [SupplyParameterFromForm(FormName = "InventoryEdit")] private ProductsInUserInventory item { get; set; }
+
+    private string idField => $"{item.GetType().Name}.Id";
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,7 +42,12 @@
 
     private async Task update()
     {
-        await repo.UpdateAsync(item!);
+        var existing = await repo.GetAsync(Id);
+        existing.ProductName = item.ProductName;
+        existing.Quantity = item.Quantity;
+        existing.ExpiryDate = item.ExpiryDate;
+        existing.Timestamp = item.Timestamp;
+        await repo.UpdateAsync(existing);
         NavigationManager.NavigateTo("/GroupProjectPages/Inventory");
     }
 }

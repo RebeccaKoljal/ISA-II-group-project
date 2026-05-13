@@ -2,14 +2,16 @@
 @attribute [ExcludeFromInteractiveRouting]
 @inject IProductsInUserInventoryRepo repo
 @inject NavigationManager NavigationManager
+
 @using Abc.Data.GroupProjectClasses.Nora
+
 
 <h1 class="title text-center">Lisa toode</h1>
 
 <EditForm Model="item" OnValidSubmit="add" FormName="InventoryCreate">
-    @* <div><label>Toote nimi</label>
-        <InputText @bind-Value="item.Quantity" />
-    </div> *@
+  <div><label>Toote nimi</label>
+        <InputText @bind-Value="item.ProductName" />
+    </div> 
     <div>
         <label>Kogus</label>
         <InputNumber @bind-Value="item.Quantity" min="0" />

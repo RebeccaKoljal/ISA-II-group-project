@@ -1,6 +1,7 @@
 ﻿using Abc.Data;
-using Microsoft.EntityFrameworkCore;
 using Abc.Data.GroupProjectClasses.Elizaveta;
+using Abc.Data.GroupProjectClasses.Nora;
+using Microsoft.EntityFrameworkCore;
 
 namespace Abc.Infra;
 
@@ -55,3 +56,22 @@ public class ExpiryDatesRepo(ApplicationDbContext c = null)
 public class ProductsRepo(ApplicationDbContext c = null)
     : EfBaseRepo<ApplicationDbContext, Product>(c), IProductsRepo
 { }
+public class UsersRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, User>(c), IUsersRepo
+{ }
+
+public class ProductsInUserInventoryRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ProductsInUserInventory>(c), IProductsInUserInventoryRepo
+{
+    protected override IQueryable<ProductsInUserInventory> Query() => db.ProductsInUserInventory
+        .Include(x => x.User)
+        .Include(x => x.Product);
+}
+
+public class AvailableRecipesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, AvailableRecipe>(c), IAvailableRecipesRepo
+{
+    protected override IQueryable<AvailableRecipe> Query() => db.AvailableRecipes
+        .Include(x => x.User)
+        .Include(x => x.Recipe);
+}

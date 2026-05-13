@@ -146,6 +146,105 @@ namespace Abc.Infra.Migrations
                     b.ToTable("Currencies");
                 });
 
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.Barcode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ScannedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Barcodes");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.ExpiryDate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductInfoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpiryDates");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.AvailableRecipe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -188,6 +287,9 @@ namespace Abc.Infra.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Quantity")

@@ -51,6 +51,25 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Barcodes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ScannedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Barcodes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
                 {
@@ -69,6 +88,22 @@ namespace Abc.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExpiryDates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ProductInfoId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpiryDates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,6 +127,24 @@ namespace Abc.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,6 +414,7 @@ namespace Abc.Infra.Migrations
                     UserId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ProductName = table.Column<string>(type: "TEXT", nullable: true),
                     ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
@@ -587,13 +641,22 @@ namespace Abc.Infra.Migrations
                 name: "AvailableRecipes");
 
             migrationBuilder.DropTable(
+                name: "Barcodes");
+
+            migrationBuilder.DropTable(
                 name: "CountryCurrencies");
+
+            migrationBuilder.DropTable(
+                name: "ExpiryDates");
 
             migrationBuilder.DropTable(
                 name: "InternetRecipes");
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "ProductsInUserInventory");

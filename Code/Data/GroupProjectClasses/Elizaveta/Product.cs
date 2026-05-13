@@ -7,4 +7,5 @@ namespace Abc.Data.GroupProjectClasses.Elizaveta;
 public class Product : NamedEntity
 {
   [DisplayName("Image URL")] public string ImageUrl { get; set; } = "";
+
 }

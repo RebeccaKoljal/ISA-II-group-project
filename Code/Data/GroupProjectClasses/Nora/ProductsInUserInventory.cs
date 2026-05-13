@@ -12,5 +12,6 @@ public class ProductsInUserInventory : BaseEntity
     public User? User { get; set; }
     [DisplayName("Quantity")] public int Quantity { get; set; }
     [DisplayName("Expiry Date")] public DateTime? ExpiryDate { get; set; }
-   
+    [DisplayName("Toote nimi")] public string ProductName { get; set; }
+
 }
