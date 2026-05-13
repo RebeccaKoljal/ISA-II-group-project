@@ -1,0 +1,13 @@
+@page "/userrecipes"
+@inject NavigationManager NavigationManager
+@inject IUserRecipesRepo repo
+
+<MyIndexPage
+    TItem="UserRecipe"
+    PageTitleText="Recipe Ingredients"
+    EntityTitle="Ingredient"
+    Repo="repo"
+    BasePath="/userrecipes" />
+
+@code {
+}

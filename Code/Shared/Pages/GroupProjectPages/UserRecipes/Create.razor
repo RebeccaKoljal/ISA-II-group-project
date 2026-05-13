@@ -1,0 +1,19 @@
+@page "/userrecipes/create"
+@inject IUserRecipesRepo repo
+@inject NavigationManager NavigationManager
+
+<MyCreatePage
+    Entity="userRecipe"
+    EntityTitle="Ingredient"
+    BasePath="/userrecipes"
+    OnValidSubmit="add" />
+
+@code {
+    [SupplyParameterFromForm(Name = nameof(UserRecipe))] private UserRecipe userRecipe { get; set; } = default!;
+    protected override void OnInitialized() => userRecipe ??= new();
+    private async Task add()
+    {
+        await repo.CreateAsync(userRecipe);
+        NavigationManager.NavigateTo("/userrecipes");
+    }
+}

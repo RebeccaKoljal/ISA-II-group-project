@@ -38,3 +38,29 @@ public sealed class CountryCurrencyConfig : IEntityTypeConfiguration<CountryCurr
         b.HasOne(x => x.Currency).WithMany().HasForeignKey(x => x.CurrencyId);
     }
 }
+public sealed class RecipeConfig : IEntityTypeConfiguration<Recipe>
+{
+    public void Configure(EntityTypeBuilder<Recipe> b)
+    {
+        b.HasMany(x => x.Ingredients)
+            .WithOne(x => x.Recipe)
+            .HasForeignKey(x => x.RecipeId);
+        b.HasMany(x => x.Sources)
+            .WithOne(x => x.Recipe)
+            .HasForeignKey(x => x.RecipeId);
+    }
+}
+public sealed class InternetRecipeConfig : IEntityTypeConfiguration<InternetRecipe>
+{
+    public void Configure(EntityTypeBuilder<InternetRecipe> b)
+    {
+        b.HasOne(x => x.Recipe).WithMany(x => x.Sources).HasForeignKey(x => x.RecipeId);
+    }
+}
+public sealed class UserRecipeConfig : IEntityTypeConfiguration<UserRecipe>
+{
+    public void Configure(EntityTypeBuilder<UserRecipe> b)
+    {
+        b.HasOne(x => x.Recipe).WithMany(x => x.Ingredients).HasForeignKey(x => x.RecipeId);
+    }
+}

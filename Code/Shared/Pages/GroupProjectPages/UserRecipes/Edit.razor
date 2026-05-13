@@ -1,0 +1,26 @@
+@page "/userrecipes/edit"
+@inject IUserRecipesRepo repo
+@inject NavigationManager NavigationManager
+
+<MyEditPage
+    PageTitleText="Edit Ingredient"
+    EntityTitle="@userRecipe.ProductName"
+    Entity="userRecipe"
+    BasePath="/userrecipes"
+    EntityId="@Id"
+    OnValidSubmit="update" />
+
+@code {
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    [SupplyParameterFromForm(Name = nameof(UserRecipe))] private UserRecipe userRecipe { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        userRecipe ??= await repo.GetAsync(Id);
+        if (userRecipe is null) NavigationManager.NotFound();
+    }
+    private async Task update()
+    {
+        await repo.UpdateAsync(userRecipe!);
+        NavigationManager.NavigateTo("/userrecipes");
+    }
+}

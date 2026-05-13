@@ -1,0 +1,26 @@
+@page "/internetrecipes/edit"
+@inject IInternetRecipesRepo repo
+@inject NavigationManager NavigationManager
+
+<MyEditPage
+    PageTitleText="Edit Internet Recipe"
+    EntityTitle="@internetRecipe.Url"
+    Entity="internetRecipe"
+    BasePath="/internetrecipes"
+    EntityId="@Id"
+    OnValidSubmit="update" />
+
+@code {
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    [SupplyParameterFromForm(Name = nameof(InternetRecipe))] private InternetRecipe internetRecipe { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        internetRecipe ??= await repo.GetAsync(Id);
+        if (internetRecipe is null) NavigationManager.NotFound();
+    }
+    private async Task update()
+    {
+        await repo.UpdateAsync(internetRecipe!);
+        NavigationManager.NavigateTo("/internetrecipes");
+    }
+}

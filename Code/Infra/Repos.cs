@@ -26,3 +26,22 @@ public class CountryCurrenciesRepo(ApplicationDbContext c = null)
             .Include(x => x.Country)
             .Include(x => x.Currency);
 }
+public class RecipesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Recipe>(c), IRecipesRepo
+{
+    protected override IQueryable<Recipe> Query() => db.Recipes
+        .Include(x => x.Ingredients)
+        .Include(x => x.Sources);
+}
+public class InternetRecipesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, InternetRecipe>(c), IInternetRecipesRepo
+{
+    protected override IQueryable<InternetRecipe> Query() => db.InternetRecipes
+        .Include(x => x.Recipe);
+}
+public class UserRecipesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, UserRecipe>(c), IUserRecipesRepo
+{
+    protected override IQueryable<UserRecipe> Query() => db.UserRecipes
+        .Include(x => x.Recipe);
+}
