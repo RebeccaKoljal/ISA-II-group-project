@@ -1,4 +1,6 @@
 ﻿using Abc.Data;
+using Abc.Data.GroupProjectClasses.Nora;
+using Abc.Data.GroupProjectClasses.Rebecca;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -63,4 +65,32 @@ public sealed class UserRecipeConfig : IEntityTypeConfiguration<UserRecipe>
     {
         b.HasOne(x => x.Recipe).WithMany(x => x.Ingredients).HasForeignKey(x => x.RecipeId);
     }
+}
+public sealed class AvailableRecipeConfig : IEntityTypeConfiguration<AvailableRecipe>
+{
+    public void Configure(EntityTypeBuilder<AvailableRecipe> b)
+    {
+        b.HasOne(x => x.Recipe).WithMany(x => x.AvailableRecipes).HasForeignKey(x => x.RecipeId);
+        b.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
+    }
+}
+public sealed class ProductsInUserInventoryConfig : IEntityTypeConfiguration<ProductsInUserInvetory>
+{
+    public void Configure(EntityTypeBuilder<ProductsInUserInvetory> b)
+    {
+        b.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
+        b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);
+    }
+}
+public sealed class UserConfig : IEntityTypeConfiguration<User>
+{
+    public void Configure(EntityTypeBuilder<User> b) { }
+}
+public sealed class ProductInfoConfig : IEntityTypeConfiguration<ProductInfo>
+{
+    public void Configure(EntityTypeBuilder<ProductInfo> b) { }
+}
+public sealed class CategoryConfig : IEntityTypeConfiguration<Category>
+{
+    public void Configure(EntityTypeBuilder<Category> b) { }
 }

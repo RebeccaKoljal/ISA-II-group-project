@@ -59,6 +59,11 @@ builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
 builder.Services.AddScoped<IRecipesRepo, RecipesRepo>();
 builder.Services.AddScoped<IInternetRecipesRepo, InternetRecipesRepo>();
 builder.Services.AddScoped<IUserRecipesRepo, UserRecipesRepo>();
+builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
+builder.Services.AddScoped<IUsersRepo, UsersRepo>();
+builder.Services.AddScoped<IProductsInUserInventoryRepo, ProductsInUserInventoryRepo>();
+builder.Services.AddScoped<IProductInfoRepo, ProductInfoRepo>();
+builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 
 var app = builder.Build();
 

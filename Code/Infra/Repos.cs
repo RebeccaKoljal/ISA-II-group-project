@@ -1,4 +1,6 @@
 ﻿using Abc.Data;
+using Abc.Data.GroupProjectClasses.Nora;
+using Abc.Data.GroupProjectClasses.Rebecca;
 using Microsoft.EntityFrameworkCore;
 
 namespace Abc.Infra;
@@ -45,3 +47,26 @@ public class UserRecipesRepo(ApplicationDbContext c = null)
     protected override IQueryable<UserRecipe> Query() => db.UserRecipes
         .Include(x => x.Recipe);
 }
+public class AvailableRecipesRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, AvailableRecipe>(c), IAvailableRecipesRepo
+{
+    protected override IQueryable<AvailableRecipe> Query() => db.AvailableRecipes
+        .Include(x => x.User)
+        .Include(x => x.Recipe);
+}
+public class UsersRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, User>(c), IUsersRepo
+{ }
+public class ProductsInUserInventoryRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ProductsInUserInvetory>(c), IProductsInUserInventoryRepo
+{
+    protected override IQueryable<ProductsInUserInvetory> Query() => db.ProductsInUserInventory
+        .Include(x => x.User)
+        .Include(x => x.Product);
+}
+public class ProductInfoRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ProductInfo>(c), IProductInfoRepo
+{ }
+public class CategoryRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Category>(c), ICategoryRepo
+{ }
