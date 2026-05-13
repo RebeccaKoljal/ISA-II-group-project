@@ -8,6 +8,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Pages\GroupProjectPages\Recipe\**" />
+    <Compile Remove="Pages\GroupProjectPages\Scan\**" />
+    <Compile Remove="Pages\GroupProjectPages\User\**" />
+    <Content Remove="Pages\GroupProjectPages\Recipe\**" />
+    <Content Remove="Pages\GroupProjectPages\Scan\**" />
+    <Content Remove="Pages\GroupProjectPages\User\**" />
+    <EmbeddedResource Remove="Pages\GroupProjectPages\Recipe\**" />
+    <EmbeddedResource Remove="Pages\GroupProjectPages\Scan\**" />
+    <EmbeddedResource Remove="Pages\GroupProjectPages\User\**" />
+    <None Remove="Pages\GroupProjectPages\Recipe\**" />
+    <None Remove="Pages\GroupProjectPages\Scan\**" />
+    <None Remove="Pages\GroupProjectPages\User\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -22,9 +37,6 @@
   </ItemGroup>
   <ItemGroup>
 	<Folder Include="Code\" />
-	<Folder Include="Pages\GroupProjectPages\Recipe\" />
-	<Folder Include="Pages\GroupProjectPages\Scan\" />
-	<Folder Include="Pages\GroupProjectPages\User\" />
 	<InternalsVisibleTo Include="Abc.Tests.Shared" />
 
   </ItemGroup>

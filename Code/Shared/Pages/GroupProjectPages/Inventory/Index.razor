@@ -28,13 +28,15 @@
                             @GetExpiryText(item.ExpiryDate)
                         </span>
                     </div>
-                    <a class="btn-delete" href="/inventory/delete?Id=@item.Id">Kustuta</a>
+                    <a href="/GroupProjectPages/Inventory/edit?Id=@item.Id">Muuda</a>
+                    <a class="btn-delete" href="/GroupProjectPages/Inventory/delete?Id=@item.Id">Kustuta</a>
                 </div>
             }
         </div>
     }
 
-    <a class="btn-add" href="/inventory/create">+ Lisa toode</a>
+    <a class="btn-add" href="/GroupProjectPages/Inventory/create">+ Lisa toode</a>
+
 </div>
 
 @code {
