@@ -1,4 +1,4 @@
-﻿@page "/inventory/create"
+﻿@page "/GroupProjectPages/Inventory/create"
 @attribute [ExcludeFromInteractiveRouting]
 @inject IProductsInUserInventoryRepo repo
 @inject NavigationManager NavigationManager
@@ -31,6 +31,6 @@
     private async Task add()
     {
         await repo.CreateAsync(item);
-        NavigationManager.NavigateTo("/inventory");
+        NavigationManager.NavigateTo("/GroupProjectPages/Inventory");
     }
 }
