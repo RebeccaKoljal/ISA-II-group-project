@@ -1,0 +1,36 @@
+﻿@page "/inventory/create"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IProductsInUserInventoryRepo repo
+@inject NavigationManager NavigationManager
+@using Abc.Data.GroupProjectClasses.Nora
+
+<h1 class="title text-center">Lisa toode</h1>
+
+<EditForm Model="item" OnValidSubmit="add" FormName="InventoryCreate">
+    @* <div><label>Toote nimi</label>
+        <InputText @bind-Value="item.Quantity" />
+    </div> *@
+    <div>
+        <label>Kogus</label>
+        <InputNumber @bind-Value="item.Quantity" min="0" />
+    </div>
+    <div>
+        <label>Aegumiskuupäev</label>
+        <InputDate @bind-Value="item.ExpiryDate" />
+    </div>
+    <button type="submit">Salvesta</button>
+    <a href="/inventory">Tagasi</a>
+</EditForm>
+
+@code {
+        [SupplyParameterFromForm(FormName = "InventoryCreate")]
+        private ProductsInUserInventory item { get; set; } = default!;
+    
+    protected override void OnInitialized() => item ??= new();
+
+    private async Task add()
+    {
+        await repo.CreateAsync(item);
+        NavigationManager.NavigateTo("/inventory");
+    }
+}
