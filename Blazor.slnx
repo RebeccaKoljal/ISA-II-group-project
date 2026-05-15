@@ -8,7 +8,11 @@
     <Project Path="Code/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/Soft/" />
-  <Folder Name="/Soft/App/" />
+  <Folder Name="/Soft/App/">
+    <Project Path="Soft/Maui/Maui.csproj" Id="28a1390a-141d-4cab-93ae-c897e7109dd4">
+      <Deploy Solution="Debug|*" />
+    </Project>
+  </Folder>
   <Folder Name="/Soft/Blazor/" />
   <Folder Name="/Soft/Maui/" />
   <Folder Name="/Soft/Movie/">
