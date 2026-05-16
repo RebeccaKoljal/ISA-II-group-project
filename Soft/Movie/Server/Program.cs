@@ -1,5 +1,6 @@
 ﻿using Abc.Soft.Web;
 using Abc.Infra;
+using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Soft.Web.Components;
 using System.Text.Json.Serialization;
 using Abc.Soft.Web.Components.Account;
@@ -59,6 +60,9 @@ builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
 builder.Services.AddScoped<IRecipesRepo, RecipesRepo>();
 builder.Services.AddScoped<IInternetRecipesRepo, InternetRecipesRepo>();
 builder.Services.AddScoped<IUserRecipesRepo, UserRecipesRepo>();
+builder.Services.AddScoped<IUsersRepo, UsersRepo>();
+builder.Services.AddScoped<IProductsInUserInventoryRepo, ProductsInUserInventoryRepo>();
+builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
 builder.Services.AddScoped<IBarcodesRepo, BarcodesRepo>();
 builder.Services.AddScoped<IExpiryDatesRepo, ExpiryDatesRepo>();
 builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
@@ -106,5 +110,9 @@ app.MapRecipesApi();
 app.MapInternetRecipesApi();
 app.MapUserRecipesApi();
 app.MapAdditionalIdentityEndpoints();
+app.MapUsersApi();
+app.MapProductsInUserInventoryApi();
+app.MapAvailableRecipesApi();
+
 
 app.Run();

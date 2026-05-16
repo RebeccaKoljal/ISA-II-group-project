@@ -1,0 +1,63 @@
+﻿@page "/GroupProjectPages/Inventory"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IProductsInUserInventoryRepo repo
+@inject NavigationManager NavigationManager
+@using Abc.Data.GroupProjectClasses.Nora
+
+<div class="inventory-page">
+    <h1 class="page-title">Olemasolevad tooted</h1>
+
+    @if (items == null)
+    {
+        <p class="state-text">Laadimine...</p>
+    }
+    else if (!items.Any())
+    {
+        <p class="state-text">Tooted puuduvad.</p>
+    }
+    else
+    {
+        <div class="product-list">
+            @foreach (var item in items)
+            {
+                <div class="product-card">
+                    <div class="product-info">
+                        <span class="product-name">@item.ProductName</span>
+                        <span class="product-qty">@item.Quantity g</span>
+                        <span class="product-expiry @GetExpiryClass(item.ExpiryDate)">
+                            @GetExpiryText(item.ExpiryDate)
+                        </span>
+                    </div>
+                    <a href="/GroupProjectPages/Inventory/edit?Id=@item.Id">Muuda</a>
+                    <a class="btn-delete" href="/GroupProjectPages/Inventory/delete?Id=@item.Id">Kustuta</a>
+                </div>
+            }
+        </div>
+    }
+
+    <a class="btn-add" href="/GroupProjectPages/Inventory/create">+ Lisa toode</a>
+
+</div>
+
+@code {
+    private IEnumerable<ProductsInUserInventory>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await repo.GetAsync(new Query());
+    }
+
+    private string GetExpiryClass(DateTime? date)
+    {
+        if (date == null) return "";
+        var days = (date.Value - DateTime.Now).Days;
+        return days < 0 ? "expired" : days <= 3 ? "soon" : "";
+    }
+
+    private string GetExpiryText(DateTime? date)
+    {
+        if (date == null) return "-";
+        var days = (date.Value - DateTime.Now).Days;
+        return days < 0 ? "Aegunud" : $"Aegub {date.Value:dd.MM.yyyy}";
+    }
+}
