@@ -37,9 +37,10 @@ using Microsoft.AspNetCore.Components.Forms;
         IsFalse(obj.HasProperty);
     }
 
-    [TestMethod] public void HasEditorDefaultIsFalse()
+    [TestMethod]
+    public void HasEditorDefaultIsFalse()
     {
-        IsFalse(obj.HasEditor);
+        Assert.Throws<ArgumentNullException>(() => _ = obj.HasEditor);
     }
 
     [TestMethod]
