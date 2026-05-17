@@ -10,20 +10,13 @@
   <Folder Name="/Soft/" />
   <Folder Name="/Soft/App/">
     <Project Path="Soft/Maui/Maui.csproj" Id="28a1390a-141d-4cab-93ae-c897e7109dd4">
-      <Deploy Solution="Debug|*" />
+      <Build Solution="Debug|*" Project="false" />
     </Project>
   </Folder>
-  <Folder Name="/Soft/Blazor/" />
-  <Folder Name="/Soft/Maui/" />
   <Folder Name="/Soft/Movie/">
     <Project Path="Soft/Movie/Client/Movie.Client.csproj" />
     <Project Path="Soft/Movie/Server/Movie.csproj" />
   </Folder>
-  <Folder Name="/Soft/Todo/">
-    <Project Path="Soft/Todo/Client/Todo.Client.csproj" />
-    <Project Path="Soft/Todo/Server/Todo.csproj" />
-  </Folder>
-  <Folder Name="/Soft/Web/" />
   <Folder Name="/Tests/">
     <Project Path="Tests/Aids/Aids.csproj" Id="a258b406-cdf2-4332-bc03-fcfbaf55dab7" />
     <Project Path="Tests/Infra/Infra.csproj" />
