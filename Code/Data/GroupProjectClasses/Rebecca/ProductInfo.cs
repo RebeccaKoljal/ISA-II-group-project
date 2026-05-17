@@ -1,19 +1,20 @@
 ﻿using Abc.Data.Common;
-using System.ComponentModel;
+using Abc.Data.GroupProjectClasses.Elizaveta;
+using Abc.Aids;
 
 namespace Abc.Data.GroupProjectClasses.Rebecca;
 
 public class ProductInfo : NamedEntity
 {
-    [DisplayName("Product ID")] public override Guid Id { get; set; }
-    public string Barcode { get; set; } // FK to Barcode
-    [DisplayName("Product name")] public override string Name { get; set; }
+    [Select(typeof(Barcode))] public Guid? BarcodeId { get; set; } // FK to Barcode
+    [Select(typeof(Barcode))] public Guid? ProductId { get; set; }
+    [Select(typeof(Barcode))] public DateTime? ScannedAt { get; set; }
+
+    [Select(typeof(ExpiryDate))] public DateTime? Date { get; set; }
+
     public string Brand { get; set; }
-    [DisplayName("Description")] public override string Details { get; set; }
-    public string ImageUrl { get; set; }
-    [DisplayName("Expiry Date")] public override DateTime? ValidTo { get; set; }
-    public Guid CategoryId { get; set; } // FK to Category NEED TO REPLACE WHEN CATEGORY IS DONE IG
     public string WeightOrVolume { get; set; }
-    [DisplayName("Created at")] public override DateTime? ValidFrom { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+
+    public ICollection<ProductCategory> ProductCategories { get; set; } = [];
+    public ICollection<Category> Categories => [.. ProductCategories.Select(c => c.Category)];
 }
