@@ -1,6 +1,8 @@
 ﻿using Abc.Data;
 using Abc.Data.GroupProjectClasses.Elizaveta;
 using Abc.Data.GroupProjectClasses.Nora;
+using Abc.Data.GroupProjectClasses.Rebecca;
+using Abc.Data.GroupProjectClasses.Martin;
 using Microsoft.EntityFrameworkCore;
 
 namespace Abc.Infra;
@@ -75,3 +77,9 @@ public class AvailableRecipesRepo(ApplicationDbContext c = null)
         .Include(x => x.User)
         .Include(x => x.Recipe);
 }
+public class ProductInfoRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, ProductInfo>(c), IProductInfoRepo
+{ }
+public class CategoryRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, Category>(c), ICategoryRepo
+{ }

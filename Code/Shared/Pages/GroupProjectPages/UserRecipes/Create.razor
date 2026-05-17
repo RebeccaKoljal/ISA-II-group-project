@@ -1,4 +1,4 @@
-@page "/userrecipes/create"
+@page "/GroupProjectPages/userRecipes/create"
 @inject IUserRecipesRepo repo
 @inject NavigationManager NavigationManager
 
@@ -14,6 +14,6 @@
     private async Task add()
     {
         await repo.CreateAsync(userRecipe);
-        NavigationManager.NavigateTo("/userrecipes");
+        NavigationManager.NavigateTo("/GroupProjectPages/userRecipes");
     }
 }

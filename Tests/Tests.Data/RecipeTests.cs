@@ -1,4 +1,5 @@
-using Abc.Data;
+using Abc.Data.GroupProjectClasses.Martin;
+using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Tests.Aids;
 namespace Abc.Tests.Data;
 
@@ -7,4 +8,5 @@ public sealed class RecipeTests : BaseTests<Recipe>
 {
     [TestMethod] public void IngredientsTest() => IsProperty<ICollection<UserRecipe>>(nameof(Recipe.Ingredients));
     [TestMethod] public void SourcesTest() => IsProperty<ICollection<InternetRecipe>>(nameof(Recipe.Sources));
+    [TestMethod] public void AvailableRecipesTest() => IsProperty<ICollection<AvailableRecipe>>(nameof(Recipe.AvailableRecipes));
 }

@@ -1,7 +1,7 @@
 using Abc.Aids;
 using Abc.Data.Common;
 
-namespace Abc.Data;
+namespace Abc.Data.GroupProjectClasses.Martin;
 
 public class UserRecipe : BaseEntity
 {

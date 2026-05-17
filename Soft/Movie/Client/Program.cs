@@ -9,5 +9,8 @@ builder.Services.AddAuthenticationStateDeserialization();
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<ICountriesRepo, CountriesHttpRepo>();
 builder.Services.AddScoped<IMoviesRepo, MoviesHttpRepo>();
+builder.Services.AddScoped<IRecipesRepo, RecipesHttpRepo>();
+builder.Services.AddScoped<IUserRecipesRepo, UserRecipesHttpRepo>();
+builder.Services.AddScoped<IInternetRecipesRepo, InternetRecipesHttpRepo>();
 
 await builder.Build().RunAsync();

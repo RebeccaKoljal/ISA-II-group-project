@@ -1,8 +1,10 @@
 using Abc.Data;
 using Abc.Data.GroupProjectClasses.Nora;
+using Abc.Data.GroupProjectClasses.Rebecca;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Abc.Data.GroupProjectClasses.Elizaveta;
+using Abc.Data.GroupProjectClasses.Martin;
 
 
 namespace Abc.Infra;
@@ -24,6 +26,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<User> Users { get; set; } = default!;
     public DbSet<ProductsInUserInventory> ProductsInUserInventory { get; set; } = default!;
     public DbSet<AvailableRecipe> AvailableRecipes { get; set; } = default!;
+    public DbSet<User> AppUsers { get; set; } = default!;
+    public DbSet<ProductInfo> ProductInfos { get; set; } = default!;
+    public DbSet<Category> Categories { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
