@@ -9,6 +9,7 @@ namespace Abc.Infra;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
+    public DbSet<ShoppingSession> ShoppingSessions { get; set; } = default!;
     public DbSet<Barcode> Barcodes { get; set; } = default!;
     public DbSet<ExpiryDate> ExpiryDates { get; set; } = default!;
     public DbSet<Product> Products { get; set; } = default!;
