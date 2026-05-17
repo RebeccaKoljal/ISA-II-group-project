@@ -1,4 +1,30 @@
-﻿.delete-card {
+﻿.edit-page {
+    max-width: 600px;
+    margin: 2rem 2rem;
+    padding: 0 1.5rem;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.back-btn {
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+}
+
+.delete-card {
     background: #f5f5f5;
     border-radius: 12px;
     padding: 1rem;

@@ -24,11 +24,11 @@
                 <span class="stat-label">TOODET</span>
             </div>
             <div class="stat">
-                <span class="stat-num warn">@items.Count(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value - DateTime.Now).Days is >= 0 and <= 3)</span>
+                <span class="stat-num warn">@items.Count(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days is >= 0 and <= 3)</span>
                 <span class="stat-label">AEGUMAS</span>
             </div>
             <div class="stat">
-                <span class="stat-num danger">@items.Count(x => x.ExpiryDate.HasValue && x.ExpiryDate.Value < DateTime.Now)</span>
+                <span class="stat-num danger">@items.Count(x => x.ExpiryDate.HasValue && x.ExpiryDate.Value.Date < DateTime.Now.Date)</span>
                 <span class="stat-label">AEGUNUD</span>
             </div>
         </div>
