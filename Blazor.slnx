@@ -8,7 +8,9 @@
     <Project Path="Code/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/Soft/" />
-  <Folder Name="/Soft/App/" />
+  <Folder Name="/Soft/App/">
+    <Project Path="Soft/App/App.csproj" />
+  </Folder>
   <Folder Name="/Soft/Movie/">
     <Project Path="Soft/Movie/Client/Movie.Client.csproj" />
     <Project Path="Soft/Movie/Server/Movie.csproj" />
