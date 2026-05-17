@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Abc.Data.Common;
+using System.ComponentModel.DataAnnotations;
 
-namespace Abc.Data.GroupProjectClasses.Robi
+namespace Abc.Data.GroupProjectClasses.Robi;
+
+public class NotificationType : NamedEntity
 {
-    internal class NotificationType
-    {
-    }
+    [Display(Name = "Type Name")] public override string Name { get; set; }
+
+    [Display(Name = "Description")] public override string Details { get; set; }
 }
