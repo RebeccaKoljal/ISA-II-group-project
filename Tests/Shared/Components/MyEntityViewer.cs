@@ -6,8 +6,7 @@ using Abc.Shared.Components;
 using Abc.Tests.Aids;
 using Bunit;
 
-[TestClass]
-public sealed class MyEntityViewerTests : BaseTests<MyEntityViewer>
+[TestClass] public sealed class MyEntityViewerTests : BaseTests<MyEntityViewer>
 {
     private sealed class SampleEntity
     {
@@ -19,8 +18,7 @@ public sealed class MyEntityViewerTests : BaseTests<MyEntityViewer>
     private MyEntityViewer o;
     private SampleEntity e;
 
-    [TestInitialize]
-    public override void Initialize()
+    [TestInitialize] public override void Initialize()
     {
         base.Initialize();
         e = new SampleEntity
@@ -32,22 +30,19 @@ public sealed class MyEntityViewerTests : BaseTests<MyEntityViewer>
         c = new TestContext();
     }
 
-    [TestCleanup]
-    public void Cleanup()
+    [TestCleanup] public void Cleanup()
     {
         c.Dispose();
         c = null;
     }
 
     [TestMethod]
-    public void EntityTest()
-    {
+    public void EntityTest() {
         AreEqual(null, obj.Entity);
         AreSame(e, o.Entity);
     }
 
-    [TestMethod]
-    public void RenderMarkupTest()
+    [TestMethod] public void RenderMarkupTest()
     {
         var r = c.RenderComponent<MyEntityViewer>(p => p.Add(x => x.Entity, e));
         var labels = r.FindAll("dt").Select(x => x.TextContent).ToList();
@@ -60,8 +55,7 @@ public sealed class MyEntityViewerTests : BaseTests<MyEntityViewer>
         Assert.Contains(e.Name, values);
         Assert.Contains(e.Age.ToString(), values);
     }
-    [TestMethod]
-    public void RenderNullEntityTest()
+    [TestMethod] public void RenderNullEntityTest()
     {
         var r = c.RenderComponent<MyEntityViewer>(p => p.Add(x => x.Entity, null));
         AreEqual(0, r.FindAll("dt").Count);

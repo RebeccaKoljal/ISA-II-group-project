@@ -6,8 +6,7 @@ using Abc.Shared.Components;
 using Abc.Tests.Aids;
 using Microsoft.AspNetCore.Components.Forms;
 
-[TestClass]
-public class EditorAdapterTests : BaseTests<EditorAdapter>
+[TestClass] public class EditorAdapterTests : BaseTests<EditorAdapter>
 {
     private sealed class TestItem
     {
@@ -38,8 +37,7 @@ public class EditorAdapterTests : BaseTests<EditorAdapter>
         IsFalse(obj.HasProperty);
     }
 
-    [TestMethod]
-    public void HasEditorDefaultIsFalse()
+    [TestMethod] public void HasEditorDefaultIsFalse()
     {
         IsFalse(obj.HasEditor);
     }

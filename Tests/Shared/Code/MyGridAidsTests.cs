@@ -1,4 +1,4 @@
-namespace Abc.Tests.Shared.Code;
+﻿namespace Abc.Tests.Shared.Code;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,8 +22,8 @@ public class MyGridAidsTests : TestAids
     [TestInitialize]
     public void TestInitialize()
     {
-       type = typeof(MyGridAids);
-       o = new TestClass
+        type = typeof(MyGridAids);
+        o = new TestClass
         {
             StringProperty = GetRandom.String(),
             IntProperty = GetRandom.Int32(),
