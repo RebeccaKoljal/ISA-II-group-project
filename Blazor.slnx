@@ -26,12 +26,8 @@
   <Folder Name="/Soft/Web/" />
   <Folder Name="/Tests/">
     <Project Path="Tests/Aids/Aids.csproj" Id="a258b406-cdf2-4332-bc03-fcfbaf55dab7" />
-    <Project Path="Tests/Infra/Infra.csproj">
-      <Build Solution="Debug|*" Project="false" />
-    </Project>
-    <Project Path="Tests/Shared/Shared.csproj">
-      <Build Solution="Debug|*" Project="false" />
-    </Project>
+    <Project Path="Tests/Infra/Infra.csproj" />
+    <Project Path="Tests/Shared/Shared.csproj" />
     <Project Path="Tests/Tests.Data/Data.csproj" Id="c3415ba8-981c-4480-90d2-0cc1d2a7087a" />
   </Folder>
 </Solution>

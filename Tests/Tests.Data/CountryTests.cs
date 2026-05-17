@@ -12,4 +12,13 @@ public sealed class CountryTests : BaseTests<Country>
     // [TestMethod] public void IsIsoCountryTest() => IsProperty<bool>(nameof(Country.IsIsoCountry));
     // [TestMethod] public void IsLoyaltyProgramTest() => IsProperty<bool>(nameof(Country.IsLoyaltyProgram));
     [TestMethod] public void IsoCodeTest() => IsProperty<string>(nameof(Country.IsoCode));
+    [TestMethod] public void CountryCurrenciesTest() => IsProperty<ICollection<CountryCurrency>>(nameof(Country.CountryCurrencies));
+    [TestMethod] public void CurrenciesTest()
+    {
+        AreEqual(0, obj.Currencies.Count);
+        var c = new Currency();
+        obj.CountryCurrencies.Add(new CountryCurrency { Currency = c });
+        AreEqual(1, obj.Currencies.Count);
+        AreSame(c, obj.Currencies.First());
+    }
 }

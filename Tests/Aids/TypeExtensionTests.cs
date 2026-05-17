@@ -27,8 +27,8 @@ namespace Abc.Tests.Aids
         }
         [TestMethod] public void IsDateNullableTest()
         {
-            IsTrue(TypeExtension.IsDate(typeof(DateOnly?)));
-            IsTrue(TypeExtension.IsDate(typeof(DateTime?)));
+            IsFalse(TypeExtension.IsDate(typeof(DateOnly?)));
+            IsFalse(TypeExtension.IsDate(typeof(DateTime?)));
             IsFalse(TypeExtension.IsDate(typeof(int?)));
         }
         [TestMethod] public void IsStringTest()

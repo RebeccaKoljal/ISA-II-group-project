@@ -1,0 +1,39 @@
+﻿@page "/GroupProjectPages/Inventory/delete"
+@attribute [ExcludeFromInteractiveRouting]
+@inject IProductsInUserInventoryRepo repo
+@inject NavigationManager NavigationManager
+@using Abc.Data.GroupProjectClasses.Nora
+
+<h1 class="title text-center">Kustuta toode</h1>
+
+@if (item != null)
+{
+    <p>Kogus: @item.Quantity g</p>
+    <p>Aegub: @(item.ExpiryDate?.ToString("dd.MM.yyyy") ?? "-")</p>
+    <p>Kas oled kindel?</p>
+    
+    <EditForm Model="item" OnValidSubmit="delete" FormName="DeleteInventory">
+        <input type="hidden" name="item.Id" value="@item.Id" />
+        <button type="submit">Kustuta</button>
+    </EditForm>
+    <a href="/inventory">Tagasi</a>
+}
+
+@code {
+    [SupplyParameterFromForm(FormName = "DeleteInventory")]
+    private ProductsInUserInventory item { get; set; }
+    
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        item ??= await repo.GetAsync(Id);
+        if (item is null) NavigationManager.NotFound();
+    }
+
+    private async Task delete()
+    {
+        await repo.DeleteAsync(item!.Id);
+        NavigationManager.NavigateTo("/GroupProjectPages/Inventory");
+    }
+}

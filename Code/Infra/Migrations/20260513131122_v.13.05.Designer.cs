@@ -3,6 +3,7 @@ using System;
 using Abc.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abc.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260513131122_v.13.05")]
+    partial class v1305
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.8");
@@ -171,9 +174,6 @@ namespace Abc.Infra.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("BLOB");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ValidFrom")
                         .HasColumnType("TEXT");
@@ -996,8 +996,6 @@ namespace Abc.Infra.Migrations
 
             modelBuilder.Entity("Abc.Data.Recipe", b =>
                 {
-                    b.Navigation("AvailableRecipes");
-
                     b.Navigation("Ingredients");
 
                     b.Navigation("Sources");
