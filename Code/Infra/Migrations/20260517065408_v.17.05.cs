@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abc.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class NewClasses : Migration
+    public partial class v1705 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -107,6 +107,29 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductInfo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Barcode = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Brand = table.Column<string>(type: "TEXT", nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    WeightOrVolume = table.Column<string>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -139,6 +162,43 @@ namespace Abc.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingSessions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StoreName = table.Column<string>(type: "TEXT", nullable: true),
+                    SessionDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingSessions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -338,6 +398,62 @@ namespace Abc.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AvailableRecipes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    RecipeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AvailableRecipes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AvailableRecipes_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AvailableRecipes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductsInUserInventory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ProductName = table.Column<string>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductsInUserInventory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductsInUserInventory_ProductInfo_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "ProductInfo",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductsInUserInventory_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CountryCurrencies",
                 columns: table => new
                 {
@@ -459,6 +575,16 @@ namespace Abc.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_AvailableRecipes_RecipeId",
+                table: "AvailableRecipes",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AvailableRecipes_UserId",
+                table: "AvailableRecipes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CountryCurrencies_CountryId",
                 table: "CountryCurrencies",
                 column: "CountryId");
@@ -494,6 +620,16 @@ namespace Abc.Infra.Migrations
                 column: "MoneyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductsInUserInventory_ProductId",
+                table: "ProductsInUserInventory",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductsInUserInventory_UserId",
+                table: "ProductsInUserInventory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRecipes_RecipeId",
                 table: "UserRecipes",
                 column: "RecipeId");
@@ -521,6 +657,9 @@ namespace Abc.Infra.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AvailableRecipes");
+
+            migrationBuilder.DropTable(
                 name: "Barcodes");
 
             migrationBuilder.DropTable(
@@ -539,6 +678,12 @@ namespace Abc.Infra.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "ProductsInUserInventory");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingSessions");
+
+            migrationBuilder.DropTable(
                 name: "UserRecipes");
 
             migrationBuilder.DropTable(
@@ -549,6 +694,12 @@ namespace Abc.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Money");
+
+            migrationBuilder.DropTable(
+                name: "ProductInfo");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Recipes");

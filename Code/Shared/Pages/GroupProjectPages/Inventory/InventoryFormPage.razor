@@ -1,0 +1,38 @@
+﻿@using Abc.Data.GroupProjectClasses.Nora
+
+<div class="edit-page">
+    <div class="page-header">
+        <a class="back-btn" href="@BasePath">← Tagasi</a>
+        <h1 class="page-title">@Title</h1>
+    </div>
+
+    <EditForm Model="Item" OnValidSubmit="OnValidSubmit" FormName="@FormName">
+        @if (HiddenId != Guid.Empty)
+        {
+            <input type="hidden" name="@IdField" value="@HiddenId" />
+        }
+        <div class="form-group">
+            <label class="form-label">Toote nimi</label>
+            <InputText class="form-input" @bind-Value="Item.ProductName" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Kogus (g)</label>
+            <InputNumber class="form-input" @bind-Value="Item.Quantity" min="0" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Aegumiskuupäev</label>
+            <InputDate class="form-input" @bind-Value="Item.ExpiryDate" />
+        </div>
+        <button type="submit" class="btn-save">Salvesta</button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = default!;
+    [Parameter] public string BasePath { get; set; } = default!;
+    [Parameter] public string FormName { get; set; } = default!;
+    [Parameter] public ProductsInUserInventory Item { get; set; } = default!;
+    [Parameter] public Guid HiddenId { get; set; }
+    [Parameter] public string IdField { get; set; } = default!;
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

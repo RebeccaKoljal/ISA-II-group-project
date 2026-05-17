@@ -1,53 +1,38 @@
 ﻿@page "/GroupProjectPages/Inventory/edit"
 @attribute [ExcludeFromInteractiveRouting]
 @inject IProductsInUserInventoryRepo repo
-@inject NavigationManager NavigationManager
+@inject NavigationManager Nav
 @using Abc.Data.GroupProjectClasses.Nora
-@using Abc.Infra
 
-<h1 class="title text-center">Muuda toodet</h1>
-
-@if (item != null)
-{
-    <EditForm Model="item" OnValidSubmit="update" FormName="InventoryEdit">
-        <input type="hidden" name="@idField" value="@Id" />
-        <div>
-            <label>Toote nimi</label>
-            <InputText @bind-Value="item.ProductName" />
-        </div>
-        <div>
-            <label>Kogus (g)</label>
-            <InputNumber @bind-Value="item.Quantity" min="0" />
-        </div>
-        <div>
-            <label>Aegumiskuupäev</label>
-            <InputDate @bind-Value="item.ExpiryDate" />
-        </div>
-        <button type="submit">Salvesta</button>
-        <a href="/GroupProjectPages/Inventory">Tagasi</a>
-    </EditForm>
-}
+<InventoryFormPage Title="Muuda toodet"
+                   BasePath="/GroupProjectPages/Inventory"
+                   FormName="InventoryEdit"
+                   Item="item"
+                   HiddenId="@Id"
+                   IdField="@idField"
+                   OnValidSubmit="Update" />
 
 @code {
+    private const string BasePath = "/GroupProjectPages/Inventory";
     [SupplyParameterFromQuery] private Guid Id { get; set; }
     [SupplyParameterFromForm(FormName = "InventoryEdit")] private ProductsInUserInventory item { get; set; }
 
-    private string idField => $"{item.GetType().Name}.Id";
+    private string idField => $"{item?.GetType().Name}.Id";
 
     protected override async Task OnInitializedAsync()
     {
         item ??= await repo.GetAsync(Id);
-        if (item is null) NavigationManager.NotFound();
+        if (item is null) Nav.NotFound();
     }
 
-    private async Task update()
+    private async Task Update()
     {
         var existing = await repo.GetAsync(Id);
         existing.ProductName = item.ProductName;
         existing.Quantity = item.Quantity;
         existing.ExpiryDate = item.ExpiryDate;
-        existing.Timestamp = item.Timestamp;
         await repo.UpdateAsync(existing);
-        NavigationManager.NavigateTo("/GroupProjectPages/Inventory");
+        Nav.NavigateTo(BasePath);
     }
+}
 }

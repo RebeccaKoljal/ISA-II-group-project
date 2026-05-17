@@ -1,0 +1,46 @@
+﻿@using Abc.Data.GroupProjectClasses.Nora
+
+<div class="inventory-page">
+    <div class="inventory-header">
+        <h1 class="page-title">@Title</h1>
+        <a class="btn-add" href="@($"{BasePath}/create")">+ Lisa toode</a>
+    </div>
+
+    @if (Items == null)
+    {
+        <p class="state-text">Laadimine...</p>
+    }
+    else if (!Items.Any())
+    {
+        <p class="state-text">Sahver on tühi.</p>
+    }
+    else
+    {
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-num">@Items.Count()</span>
+                <span class="stat-label">TOODET</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num warn">@Items.Count(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value - DateTime.Now).Days is >= 0 and <= 3)</span>
+                <span class="stat-label">AEGUMAS</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num danger">@Items.Count(x => x.ExpiryDate.HasValue && x.ExpiryDate.Value < DateTime.Now)</span>
+                <span class="stat-label">AEGUNUD</span>
+            </div>
+        </div>
+        <div class="product-list">
+            @foreach (var item in Items)
+            {
+                <InventoryCard Item="item" BasePath="@BasePath" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Sinu sahver";
+    [Parameter] public string BasePath { get; set; } = default!;
+    [Parameter] public IEnumerable<ProductsInUserInventory>? Items { get; set; }
+}

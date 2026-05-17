@@ -1,0 +1,32 @@
+﻿@using Abc.Data.GroupProjectClasses.Nora
+
+<div class="edit-page">
+    <div class="page-header">
+        <a class="back-btn" href="@BasePath">← Tagasi</a>
+        <h1 class="page-title">@Title</h1>
+    </div>
+
+    @if (Item != null)
+    {
+        <div class="delete-card">
+            <p class="delete-item-name">@Item.ProductName</p>
+            <p class="delete-item-meta">@Item.Quantity g</p>
+            <p class="delete-item-meta">@(Item.ExpiryDate?.ToString("dd.MM.yyyy") ?? "-")</p>
+        </div>
+        <p class="delete-warning">Kas oled kindel, et soovid selle toote kustutada?</p>
+        <EditForm Model="Item" OnValidSubmit="OnValidSubmit" FormName="@FormName">
+            <input type="hidden" name="@IdField" value="@Item.Id" />
+            <button type="submit" class="btn-delete-confirm">Kustuta</button>
+        </EditForm>
+        <a class="btn-back" href="@BasePath">Tagasi</a>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Kustuta toode";
+    [Parameter] public string BasePath { get; set; } = default!;
+    [Parameter] public string FormName { get; set; } = default!;
+    [Parameter] public ProductsInUserInventory? Item { get; set; }
+    [Parameter] public string IdField { get; set; } = default!;
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}
