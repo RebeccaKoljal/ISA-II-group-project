@@ -1,4 +1,4 @@
-@page "/userrecipes/delete"
+@page "/GroupProjectPages/userRecipes/delete"
 @inject IUserRecipesRepo repo
 @inject NavigationManager NavigationManager
 
@@ -20,6 +20,6 @@
     private async Task delete()
     {
         await repo.DeleteAsync(item!.Id);
-        NavigationManager.NavigateTo("/userrecipes");
+        NavigationManager.NavigateTo("/GroupProjectPages/userRecipes");
     }
 }

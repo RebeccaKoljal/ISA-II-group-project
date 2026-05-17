@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abc.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260513092937_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260517112145_uusNamespace")]
+    partial class uusNamespace
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,6 +149,233 @@ namespace Abc.Infra.Migrations
                     b.ToTable("Currencies");
                 });
 
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.Barcode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ScannedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Barcodes");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.ExpiryDate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductInfoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpiryDates");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Elizaveta.ShoppingSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("SessionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StoreName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingSessions");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.InternetRecipe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("RecipeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("InternetRecipes");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.Recipe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.UserRecipe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("RecipeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime?>("ValidFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("UserRecipes");
+                });
+
             modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.AvailableRecipe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -163,7 +390,7 @@ namespace Abc.Infra.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("BLOB");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ValidFrom")
@@ -181,16 +408,19 @@ namespace Abc.Infra.Migrations
                     b.ToTable("AvailableRecipes");
                 });
 
-            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.ProductsInUserInvetory", b =>
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.ProductsInUserInventory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ExpiryDate")
+                    b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Quantity")
@@ -201,7 +431,7 @@ namespace Abc.Infra.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("BLOB");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ValidFrom")
@@ -250,7 +480,7 @@ namespace Abc.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUsers");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Abc.Data.GroupProjectClasses.Rebecca.Category", b =>
@@ -336,39 +566,6 @@ namespace Abc.Infra.Migrations
                     b.ToTable("ProductInfos");
                 });
 
-            modelBuilder.Entity("Abc.Data.InternetRecipe", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("RecipeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Source")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ValidFrom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ValidTo")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("InternetRecipes");
-                });
-
             modelBuilder.Entity("Abc.Data.Money", b =>
                 {
                     b.Property<Guid>("Id")
@@ -444,67 +641,6 @@ namespace Abc.Infra.Migrations
                     b.HasIndex("MoneyId");
 
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("Abc.Data.Recipe", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
-                    b.Property<DateTime?>("ValidFrom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ValidTo")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Recipes");
-                });
-
-            modelBuilder.Entity("Abc.Data.UserRecipe", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("RecipeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
-                    b.Property<DateTime?>("ValidFrom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ValidTo")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("UserRecipes");
                 });
 
             modelBuilder.Entity("Abc.Infra.ApplicationUser", b =>
@@ -743,9 +879,27 @@ namespace Abc.Infra.Migrations
                         .HasForeignKey("CountryId");
                 });
 
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.InternetRecipe", b =>
+                {
+                    b.HasOne("Abc.Data.GroupProjectClasses.Martin.Recipe", "Recipe")
+                        .WithMany("Sources")
+                        .HasForeignKey("RecipeId");
+
+                    b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.UserRecipe", b =>
+                {
+                    b.HasOne("Abc.Data.GroupProjectClasses.Martin.Recipe", "Recipe")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId");
+
+                    b.Navigation("Recipe");
+                });
+
             modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.AvailableRecipe", b =>
                 {
-                    b.HasOne("Abc.Data.Recipe", "Recipe")
+                    b.HasOne("Abc.Data.GroupProjectClasses.Martin.Recipe", "Recipe")
                         .WithMany("AvailableRecipes")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -753,41 +907,26 @@ namespace Abc.Infra.Migrations
 
                     b.HasOne("Abc.Data.GroupProjectClasses.Nora.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Recipe");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.ProductsInUserInvetory", b =>
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Nora.ProductsInUserInventory", b =>
                 {
                     b.HasOne("Abc.Data.GroupProjectClasses.Rebecca.ProductInfo", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Abc.Data.GroupProjectClasses.Nora.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Abc.Data.InternetRecipe", b =>
-                {
-                    b.HasOne("Abc.Data.Recipe", "Recipe")
-                        .WithMany("Sources")
-                        .HasForeignKey("RecipeId");
-
-                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("Abc.Data.Money", b =>
@@ -812,15 +951,6 @@ namespace Abc.Infra.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("Money");
-                });
-
-            modelBuilder.Entity("Abc.Data.UserRecipe", b =>
-                {
-                    b.HasOne("Abc.Data.Recipe", "Recipe")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId");
-
-                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -932,7 +1062,7 @@ namespace Abc.Infra.Migrations
                     b.Navigation("Currencies");
                 });
 
-            modelBuilder.Entity("Abc.Data.Recipe", b =>
+            modelBuilder.Entity("Abc.Data.GroupProjectClasses.Martin.Recipe", b =>
                 {
                     b.Navigation("AvailableRecipes");
 

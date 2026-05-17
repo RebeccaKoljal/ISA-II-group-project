@@ -1,4 +1,4 @@
-@page "/userrecipes/edit"
+@page "/GroupProjectPages/userRecipes/edit"
 @inject IUserRecipesRepo repo
 @inject NavigationManager NavigationManager
 
@@ -21,6 +21,6 @@
     private async Task update()
     {
         await repo.UpdateAsync(userRecipe!);
-        NavigationManager.NavigateTo("/userrecipes");
+        NavigationManager.NavigateTo("/GroupProjectPages/userRecipes");
     }
 }

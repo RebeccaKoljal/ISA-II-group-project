@@ -3,6 +3,7 @@ using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Data.GroupProjectClasses.Rebecca;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Abc.Data.GroupProjectClasses.Martin;
 
 namespace Abc.Infra;
 
@@ -74,9 +75,9 @@ public sealed class AvailableRecipeConfig : IEntityTypeConfiguration<AvailableRe
         b.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
     }
 }
-public sealed class ProductsInUserInventoryConfig : IEntityTypeConfiguration<ProductsInUserInvetory>
+public sealed class ProductsInUserInventoryConfig : IEntityTypeConfiguration<ProductsInUserInventory>
 {
-    public void Configure(EntityTypeBuilder<ProductsInUserInvetory> b)
+    public void Configure(EntityTypeBuilder<ProductsInUserInventory> b)
     {
         b.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
         b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);

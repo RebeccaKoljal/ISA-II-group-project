@@ -9,7 +9,7 @@ public class ProductsInUserInventory : BaseEntity
     [Select(typeof(ProductInfo))] public Guid? ProductId { get; set; }
     public ProductInfo Product { get; set; }
     [Select(typeof(User))] public Guid? UserId { get; set; }
-    public User? User { get; set; }
+    public User User { get; set; }
     [DisplayName("Quantity")] public int Quantity { get; set; }
     [DisplayName("Expiry Date")] public DateTime? ExpiryDate { get; set; }
     [DisplayName("Toote nimi")] public string ProductName { get; set; }
