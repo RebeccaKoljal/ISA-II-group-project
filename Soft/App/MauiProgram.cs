@@ -46,6 +46,34 @@ public static class MauiProgram
     {
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        new SeedDb(db, 100).Seed().GetAwaiter().GetResult();
+
+        try
+        {
+            // Try to seed normally
+            new SeedDb(db, 100).Seed().GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+#if DEBUG
+            // If it crashes during local development, automatically wipe the broken Windows file
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "abc-soft.db");
+            if (File.Exists(dbPath))
+            {
+                System.Diagnostics.Debug.WriteLine($"[DB FIX] Database migration failed: {ex.Message}. Deleting local file...");
+
+                // Clear the connection pool and delete the file safely
+                Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
+                File.Delete(dbPath);
+
+                // Re-initialize a brand new clean database
+                var cleanDb = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                new SeedDb(cleanDb, 100).Seed().GetAwaiter().GetResult();
+                return;
+            }
+#endif
+            // If it's a real non-migration crash, throw the error
+            throw;
+        }
     }
+
 }
