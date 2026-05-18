@@ -31,6 +31,9 @@ public static class MauiProgram
         builder.Services.AddScoped<ICurrenciesRepo, CurrenciesRepo>();
         builder.Services.AddScoped<IMoneyRepo, MoneyRepo>();
         builder.Services.AddScoped<ICountryCurrenciesRepo, CountryCurrenciesRepo>();
+        builder.Services.AddScoped<IUsersRepo, UsersRepo>();
+        builder.Services.AddScoped<IProductsInUserInventoryRepo, ProductsInUserInventoryRepo>();
+        builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
