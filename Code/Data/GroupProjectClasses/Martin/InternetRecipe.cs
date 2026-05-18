@@ -10,3 +10,6 @@ public class InternetRecipe : BaseEntity
     [Random(10, 50)] public string Url { get; set; } = "";
     [Random(5, 15)] public string Source { get; set; } = "";
 }
+
+
+
