@@ -1,9 +1,10 @@
 ﻿using Abc.Data;
 using Abc.Data.Common;
-using Abc.Data.GroupProjectClasses.Nora;
-using Abc.Data.GroupProjectClasses.Rebecca;
 using Abc.Data.GroupProjectClasses.Elizaveta;
 using Abc.Data.GroupProjectClasses.Martin;
+using Abc.Data.GroupProjectClasses.Nora;
+using Abc.Data.GroupProjectClasses.Rebecca;
+using Abc.Data.GroupProjectClasses.Robi;
 
 namespace Abc.Infra;
 
@@ -33,3 +34,5 @@ public interface IExpiryDatesRepo : IRepo<ExpiryDate> { }
 public interface IProductsRepo : IRepo<Product> { }
 public interface IProductInfoRepo : IRepo<ProductInfo> { }
 public interface ICategoryRepo : IRepo<Category> { }
+public interface INotificationsRepo : IRepo<Notifications> { }
+

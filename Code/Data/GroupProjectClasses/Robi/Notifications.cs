@@ -14,4 +14,6 @@ public class Notifications : NamedEntity
     [Display(Name = "Sent At")] public DateTime? SentAt { get; set; }
 
     public bool IsRead { get; set; }
+    public Guid? ProductId { get; set; }
+
 }
