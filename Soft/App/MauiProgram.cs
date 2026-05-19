@@ -34,6 +34,9 @@ public static class MauiProgram
         builder.Services.AddScoped<IUsersRepo, UsersRepo>();
         builder.Services.AddScoped<IProductsInUserInventoryRepo, ProductsInUserInventoryRepo>();
         builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
+        builder.Services.AddScoped<INotificationsRepo, NotificationsRepo>();
+        builder.Services.AddScoped<INotificationSettingsRepo, NotificationSettingsRepo>();
+        builder.Services.AddScoped<INotificationTypeRepo, NotificationTypeRepo>();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
