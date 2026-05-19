@@ -33,7 +33,12 @@
         <div class="product-list">
             @foreach (var item in Items)
             {
-                <InventoryCard Item="item" BasePath="@BasePath" />
+                <div class="product-card">
+                    <span class="product-name">@item.ProductName</span>
+                    <span class="product-qty">@item.Quantity g</span>
+                    <a href="@($"{BasePath}/edit?Id={item.Id}")">Muuda</a>
+                    <a href="@($"{BasePath}/delete?Id={item.Id}")">Kustuta</a>
+                </div>
             }
         </div>
     }
@@ -42,5 +47,5 @@
 @code {
     [Parameter] public string Title { get; set; } = "Sinu sahver";
     [Parameter] public string BasePath { get; set; } = default!;
-    [Parameter] public IEnumerable<ProductsInUserInventory>? Items { get; set; }
+    [Parameter] public IEnumerable<ProductsInUserInventory> Items { get; set; }
 }
