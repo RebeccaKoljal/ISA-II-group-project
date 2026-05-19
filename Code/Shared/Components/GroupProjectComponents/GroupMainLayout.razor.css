@@ -1,0 +1,16 @@
+﻿/* Sets up a full viewport height flexbox grid */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Allows your primary inner pages to stretch and fill empty vertical space */
+.main-content {
+    flex: 1;
+    width: 100%;
+    /* Adds bottom padding so page content doesn't get covered by the 64px tall fixed nav menu */
+    padding-bottom: 80px;
+    box-sizing: border-box;
+}

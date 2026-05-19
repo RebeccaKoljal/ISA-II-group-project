@@ -1,4 +1,5 @@
-﻿<Router AppAssembly="typeof(Program).Assembly" 
+﻿@using Abc.Shared.Components.GroupProjectComponents
+@* <Router AppAssembly="typeof(Program).Assembly" 
 AdditionalAssemblies="[typeof(Abc.Shared.Pages.Countries.Index).Assembly]"
 
 NotFoundPage="typeof(NotFound)">
@@ -8,6 +9,16 @@ NotFoundPage="typeof(NotFound)">
                 <RedirectToLogin />
             </NotAuthorized>
         </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+</Router>
+ *@
+
+ <Router AppAssembly="typeof(Program).Assembly" 
+        AdditionalAssemblies="[typeof(Abc.Shared.Pages.Countries.Index).Assembly]"
+        NotFoundPage="typeof(NotFound)">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Abc.Shared.Components.GroupProjectComponents.GroupMainLayout)" />
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
