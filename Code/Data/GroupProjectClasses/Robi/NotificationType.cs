@@ -3,9 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Abc.Data.GroupProjectClasses.Robi;
 
-public class NotificationType : NamedEntity
+public class NotificationType : BaseEntity
 {
-    [Display(Name = "Type Name")] public override string Name { get; set; }
+    [Display(Name = "Type Name")]
+    public string Name { get; set; } = "";
 
-    [Display(Name = "Description")] public override string Details { get; set; }
+    [Display(Name = "Description")]
+    public string Details { get; set; } = "";
 }

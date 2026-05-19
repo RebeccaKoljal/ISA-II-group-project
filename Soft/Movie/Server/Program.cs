@@ -116,6 +116,9 @@ app.MapAdditionalIdentityEndpoints();
 app.MapUsersApi();
 app.MapProductsInUserInventoryApi();
 app.MapAvailableRecipesApi();
+app.MapNotificationsApi();
+app.MapNotificationSettingsApi();
+app.MapNotificationTypesApi();
 
 
 app.Run();
