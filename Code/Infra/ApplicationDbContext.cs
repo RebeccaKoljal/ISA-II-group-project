@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Abc.Data.GroupProjectClasses.Elizaveta;
 using Abc.Data.GroupProjectClasses.Martin;
+using Abc.Data.GroupProjectClasses.Robi;
 
 
 namespace Abc.Infra;
@@ -29,6 +30,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<User> AppUsers { get; set; } = default!;
     public DbSet<ProductInfo> ProductInfos { get; set; } = default!;
     public DbSet<Category> Categories { get; set; } = default!;
+    public DbSet<Notifications> Notifications { get; set; } = default!;
+    public DbSet<NotificationSettings> NotificationSettings { get; set; } = default!;
+    public DbSet<NotificationType> NotificationTypes { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
