@@ -66,6 +66,9 @@ builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
 builder.Services.AddScoped<IBarcodesRepo, BarcodesRepo>();
 builder.Services.AddScoped<IExpiryDatesRepo, ExpiryDatesRepo>();
 builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
+builder.Services.AddScoped<INotificationsRepo, NotificationsRepo>();
+builder.Services.AddScoped<INotificationSettingsRepo, NotificationSettingsRepo>();
+builder.Services.AddScoped<INotificationTypeRepo, NotificationTypeRepo>();
 
 var app = builder.Build();
 
