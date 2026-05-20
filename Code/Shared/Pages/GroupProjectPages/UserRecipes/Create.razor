@@ -1,19 +1,80 @@
 @page "/GroupProjectPages/userRecipes/create"
 @inject IUserRecipesRepo repo
-@inject NavigationManager NavigationManager
+@inject IRecipesRepo recipesRepo
+@inject NavigationManager Nav
 
-<MyCreatePage
-    Entity="userRecipe"
-    EntityTitle="Ingredient"
-    BasePath="/userrecipes"
-    OnValidSubmit="add" />
+<div class="recipe-form-page">
+    <div class="form-header">
+        <a href="/GroupProjectPages/userRecipes">← Tagasi</a>
+        <h1>Lisa koostisosad</h1>
+    </div>
+
+    <div class="form-group">
+        <label>Retsept *</label>
+        <select @bind="selectedRecipeId">
+            <option value="">Vali retsept...</option>
+            @foreach (var r in recipes)
+            {
+                <option value="@r.Id">@r.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Koostisosa</label>
+        <div class="ingredient-input-row">
+            <input @bind="newIngredient" @bind:event="oninput" @onkeydown="OnEnter"
+                   placeholder="nt. Munad" />
+            <button type="button" class="btn-add-ingredient" @onclick="AddIngredient">Lisa</button>
+        </div>
+    </div>
+
+    @if (ingredientList.Any())
+    {
+        <div class="ingredient-tags">
+            @foreach (var ing in ingredientList)
+            {
+                <div class="ingredient-tag">
+                    @ing
+                    <button type="button" @onclick="() => ingredientList.Remove(ing)">×</button>
+                </div>
+            }
+        </div>
+    }
+
+    <button class="btn-save" @onclick="SaveAll" disabled="@(!ingredientList.Any() || string.IsNullOrWhiteSpace(selectedRecipeId))">
+        Salvesta kõik (@ingredientList.Count)
+    </button>
+    <BottomNav />
+</div>
 
 @code {
-    [SupplyParameterFromForm(Name = nameof(UserRecipe))] private UserRecipe userRecipe { get; set; } = default!;
-    protected override void OnInitialized() => userRecipe ??= new();
-    private async Task add()
+    private IEnumerable<Recipe> recipes = [];
+    private string selectedRecipeId = "";
+    private string newIngredient = "";
+    private List<string> ingredientList = [];
+
+    protected override async Task OnInitializedAsync()
+        => recipes = await recipesRepo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "100" }));
+
+    private void AddIngredient()
     {
-        await repo.CreateAsync(userRecipe);
-        NavigationManager.NavigateTo("/GroupProjectPages/userRecipes");
+        var trimmed = newIngredient.Trim();
+        if (!string.IsNullOrWhiteSpace(trimmed) && !ingredientList.Contains(trimmed))
+            ingredientList.Add(trimmed);
+        newIngredient = "";
+    }
+
+    private async Task OnEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") AddIngredient();
+    }
+
+    private async Task SaveAll()
+    {
+        if (!Guid.TryParse(selectedRecipeId, out var recipeId)) return;
+        foreach (var name in ingredientList)
+            await repo.CreateAsync(new UserRecipe { RecipeId = recipeId, ProductName = name });
+        Nav.NavigateTo("/GroupProjectPages/userRecipes");
     }
 }

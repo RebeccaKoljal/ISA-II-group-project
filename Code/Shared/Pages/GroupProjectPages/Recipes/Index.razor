@@ -1,13 +1,62 @@
 @page "/GroupProjectPages/Recipes"
-@inject NavigationManager NavigationManager
 @inject IRecipesRepo repo
+@inject NavigationManager Nav
 
-<MyIndexPage
-    TItem="Recipe"
-    PageTitleText="Recipes"
-    EntityTitle="Recipe"
-    Repo="repo"
-    BasePath="/recipes" />
+<div class="recipes-manage-page">
+    <div class="recipes-header">
+        <h1>Retseptide haldamine</h1>
+        <a class="btn-add" href="/GroupProjectPages/Recipe/Create">+ Lisa retsept</a>
+    </div>
+
+    @if (recipes == null)
+    {
+        <p>Laadimine...</p>
+    }
+    else if (!recipes.Any())
+    {
+        <p class="empty-text">Retsepte pole lisatud. Lisa esimene retsept!</p>
+    }
+    else
+    {
+        @foreach (var r in recipes)
+        {
+            <div class="recipe-manage-card">
+                <div class="recipe-manage-header">
+                    <div>
+                        <div class="recipe-manage-name">@r.Name</div>
+                        @if (!string.IsNullOrWhiteSpace(r.Details))
+                        {
+                            <div class="recipe-manage-details">@r.Details</div>
+                        }
+                    </div>
+                    <div class="recipe-manage-actions">
+                        <a href="/GroupProjectPages/Recipe/Edit?Id=@r.Id">Muuda</a>
+                        <a href="/GroupProjectPages/Recipe/Delete?Id=@r.Id" class="btn-danger">Kustuta</a>
+                    </div>
+                </div>
+                <div class="recipe-ingredients-list">
+                    <strong>Koostisosad (@r.Ingredients.Count()):</strong>
+                    @if (r.Ingredients.Any())
+                    {
+                        <span>@string.Join(", ", r.Ingredients.Select(i => i.ProductName))</span>
+                    }
+                    else
+                    {
+                        <span class="no-ingredients">Koostisosad puuduvad</span>
+                    }
+                    <a class="btn-ingredients" href="/GroupProjectPages/userRecipes/create?recipeId=@r.Id">
+                        + Lisa
+                        koostisosa
+                    </a>
+                </div>
+            </div>
+        }
+    }
+    <BottomNav />
+</div>
 
 @code {
+    private IEnumerable<Recipe> recipes;
+    protected override async Task OnInitializedAsync()
+        => recipes = await repo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "100" }));
 }

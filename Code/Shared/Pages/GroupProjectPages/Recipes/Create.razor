@@ -1,19 +1,34 @@
 @page "/GroupProjectPages/Recipe/Create"
 @inject IRecipesRepo repo
-@inject NavigationManager NavigationManager
+@inject NavigationManager Nav
 
-<MyCreatePage
-    Entity="recipe"
-    EntityTitle="Recipe"
-    BasePath="/recipes"
-    OnValidSubmit="add" />
+<div class="recipe-form-page">
+    <div class="form-header">
+        <a href="/GroupProjectPages/Recipes">← Tagasi</a>
+        <h1>Lisa retsept</h1>
+    </div>
+
+    <EditForm Model="recipe" OnValidSubmit="Add" FormName="RecipeCreate">
+        <div class="form-group">
+            <label>Retsepti nimi *</label>
+            <InputText @bind-Value="recipe.Name" placeholder="nt. Pannkoogid" />
+        </div>
+        <div class="form-group">
+            <label>Kirjeldus</label>
+            <InputText @bind-Value="recipe.Details" placeholder="Lühike kirjeldus..." />
+        </div>
+        <button type="submit" class="btn-save">Salvesta</button>
+    </EditForm>
+    <BottomNav />
+</div>
 
 @code {
-    [SupplyParameterFromForm(Name = nameof(Recipe))] private Recipe recipe { get; set; } = default!;
+    [SupplyParameterFromForm(FormName = "RecipeCreate")]
+    private Recipe recipe { get; set; } = default!;
     protected override void OnInitialized() => recipe ??= new();
-    private async Task add()
+    private async Task Add()
     {
         await repo.CreateAsync(recipe);
-        NavigationManager.NavigateTo("/GroupProjectPages/Recipe");
+        Nav.NavigateTo("/GroupProjectPages/Recipes");
     }
 }
