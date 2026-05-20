@@ -1,4 +1,4 @@
-﻿@implements IDisposable
+﻿@* @implements IDisposable
 
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -22,6 +22,7 @@
         <MyNavLink Href="GroupProjectPages/Recipe" IconClass="recipe-icon" Text="Retseptid" />
         <MyNavLink Href="GroupProjectPages/main" IconClass="basket-icon" Text="Products" />
         <MyNavLink Href="GroupProjectPages/Inventory" IconClass="basket-icon" Text="Sahver" />
+        <MyNavLink Href="GroupProjectPages/Notifications" IconClass="list-icon" Text="Teavitused" />
         <MyNavLink Href="scan" IconClass="list-icon" Text="Scan" />
         <MyNavLink Href="counter" IconClass="counter-icon" Text="Counter" />
         <MyNavLink Href="weather" IconClass="list-icon" Text="Weather" />
@@ -72,3 +73,4 @@
     }
 }
 
+ *@

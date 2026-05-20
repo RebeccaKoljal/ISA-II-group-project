@@ -1,0 +1,50 @@
+﻿@page "/GroupProjectPages/Notifications"
+@inject INotificationsRepo repo
+@using Abc.Data.GroupProjectClasses.Robi
+
+<div class="notifications-page">
+    <div class="notifications-header">
+        <h1 class="page-title">Teavitused</h1>
+    </div>
+
+    @if (notifications == null)
+    {
+        <p class="state-text">Laadimine...</p>
+    }
+    else if (!notifications.Any())
+    {
+        <p class="state-text">Teavitusi pole.</p>
+    }
+    else
+    {
+        <div class="notification-list">
+            @foreach (var n in notifications)
+            {
+                <div class="notification-card @(n.IsRead ? "read" : "unread")">
+                    <div class="notification-info">
+                        <span class="notification-message">@n.Name</span>
+                        <span class="notification-time">@n.SentAt?.ToString("dd.MM.yyyy HH:mm")</span>
+                    </div>
+                    @if (!n.IsRead)
+                    {
+                        <button class="btn-read" @onclick="() => MarkAsRead(n)">✓</button>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private IEnumerable<Notifications>? notifications;
+
+    protected override async Task OnInitializedAsync()
+        => notifications = await repo.GetAsync(new Query());
+
+    private async Task MarkAsRead(Notifications n)
+    {
+        n.IsRead = true;
+        await repo.UpdateAsync(n);
+        notifications = await repo.GetAsync(new Query());
+    }
+}

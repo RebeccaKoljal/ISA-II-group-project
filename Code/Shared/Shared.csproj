@@ -36,7 +36,6 @@
 	<ProjectReference Include="..\Jobs\Jobs.csproj" />
   </ItemGroup>
   <ItemGroup>
-	<Folder Include="Code\" />
 	<InternalsVisibleTo Include="Abc.Tests.Shared" />
 
   </ItemGroup>

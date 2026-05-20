@@ -1,8 +1,8 @@
 ﻿using Abc.Data;
 using Abc.Data.GroupProjectClasses.Elizaveta;
+using Abc.Data.GroupProjectClasses.Martin;
 using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Data.GroupProjectClasses.Rebecca;
-using Abc.Data.GroupProjectClasses.Martin;
 using Abc.Data.GroupProjectClasses.Robi;
 using Microsoft.EntityFrameworkCore;
 
@@ -84,6 +84,13 @@ public class ProductInfoRepo(ApplicationDbContext c = null)
 public class CategoryRepo(ApplicationDbContext c = null)
     : EfBaseRepo<ApplicationDbContext, Category>(c), ICategoryRepo
 { }
+
 public class NotificationsRepo(ApplicationDbContext c = null)
     : EfBaseRepo<ApplicationDbContext, Notifications>(c), INotificationsRepo
+{ }
+public class NotificationSettingsRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, NotificationSettings>(c), INotificationSettingsRepo
+{ }
+public class NotificationTypeRepo(ApplicationDbContext c = null)
+    : EfBaseRepo<ApplicationDbContext, NotificationType>(c), INotificationTypeRepo
 { }
