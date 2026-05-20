@@ -6,9 +6,6 @@ using Abc.Data.GroupProjectClasses.Rebecca;
 using Abc.Data.GroupProjectClasses.Robi;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Abc.Data.GroupProjectClasses.Elizaveta;
-using Abc.Data.GroupProjectClasses.Martin;
-using Abc.Data.GroupProjectClasses.Robi;
 
 
 namespace Abc.Infra;
@@ -41,6 +38,4 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(b);
         b.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
-    public DbSet<Notifications> Notifications { get; set; } = default!;
-
 }
