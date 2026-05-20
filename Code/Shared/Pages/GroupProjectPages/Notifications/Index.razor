@@ -39,7 +39,7 @@
     private IEnumerable<Notifications>? notifications;
 
     protected override async Task OnInitializedAsync()
-        => notifications = await repo.GetAsync(new Query());
+    => notifications = await repo.GetAsync(new Query());
 
     private async Task MarkAsRead(Notifications n)
     {

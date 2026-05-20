@@ -1,11 +1,11 @@
 ﻿using Abc.Data.GroupProjectClasses.Robi;
 using Abc.Tests.Aids;
 
-namespace Abc.Tests.Data;
+namespace Abc.Tests.Data.GroupProjectTests.Robi;
 
 [TestClass]
 public sealed class NotificationTypeTests
-    : BaseTests<Abc.Data.GroupProjectClasses.Robi.NotificationType>
+    : BaseTests<NotificationType>
 {
     [TestMethod]
     public void NameTest()
