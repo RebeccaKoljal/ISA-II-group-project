@@ -3,27 +3,44 @@
 @inject NavigationManager Nav
 @using Abc.Data.GroupProjectClasses.Nora
 
-<InventoryDeletePage BasePath="/GroupProjectPages/Inventory"
-                     FormName="DeleteInventory"
-                     Item="item"
-                     IdField="@idField"
-                     OnValidSubmit="DeleteItem" />
+@if (item == null)
+{
+    <p>Laadimine...</p>
+}
+else
+{
+    <div class="delete-page">
+        <div class="delete-header">
+            <a class="back-btn" href="/GroupProjectPages/Inventory">← Tagasi</a>
+            <h1>Kustuta toode</h1>
+        </div>
+
+        <div class="delete-card">
+            <p>Kas oled kindel, et soovid kustutada:</p>
+            <h2>@item.ProductName</h2>
+            <p class="delete-sub">@item.Quantity g · @(item.ExpiryDate?.ToString("dd.MM.yyyy") ?? "–")</p>
+        </div>
+
+        <div class="delete-actions">
+            <a class="btn-cancel" href="/GroupProjectPages/Inventory">Tühista</a>
+            <button class="btn-confirm-delete" @onclick="ConfirmDelete">🗑 Kustuta</button>
+        </div>
+    </div>
+}
 
 @code {
     [SupplyParameterFromQuery] private Guid Id { get; set; }
     private ProductsInUserInventory item;
 
-    private string idField => $"{item?.GetType().Name}.Id";
-
     protected override async Task OnInitializedAsync()
     {
-        item ??= await repo.GetAsync(Id);
-        if (item is null) Nav.NotFound();
+        item = await repo.GetAsync(Id);
+        if (item is null) Nav.NavigateTo("/GroupProjectPages/Inventory");
     }
 
-    private async Task DeleteItem()
+    private async Task ConfirmDelete()
     {
-        await repo.DeleteAsync(item!.Id);
+        await repo.DeleteAsync(item.Id);
         Nav.NavigateTo("/GroupProjectPages/Inventory", forceLoad: true);
     }
 }
