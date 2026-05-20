@@ -56,15 +56,12 @@
  *@
 @page "/GroupProjectPages/Profile"
 @inject INotificationSettingsRepo settingsRepo
-@inject AuthenticationStateProvider AuthStateProvider
 @using Abc.Data.GroupProjectClasses.Robi
-@using Microsoft.AspNetCore.Components.Authorization
 
 <div class="profile-page">
     <div class="profile-card">
         <div class="profile-avatar">👤</div>
         <div>
-            <!-- Kuvame nimed otse muutujatest, mis töötavad igal platvormil -->
             <div class="profile-name">@userName</div>
             <div class="profile-email">@userEmail</div>
         </div>
@@ -74,57 +71,40 @@
 
     @if (settings != null)
     {
-        <EditForm Model="settings" OnValidSubmit="Save">
+        <EditForm Model="settings">
             <div class="setting-row">
                 <label>E-posti teated</label>
-                <InputCheckbox @bind-Value="settings.IsEmailEnabled" />
+                <InputCheckbox @bind-Value="settings.IsEmailEnabled" @bind-Value:after="Save" />
             </div>
             <div class="setting-row">
                 <label>Push-teated</label>
-                <InputCheckbox @bind-Value="settings.IsPushEnabled" />
+                <InputCheckbox @bind-Value="settings.IsPushEnabled" @bind-Value:after="Save" />
             </div>
-            <button type="submit" class="btn-save">Salvesta</button>
         </EditForm>
+    }
+    else
+    {
+        <p>Laadin seadeid...</p>
     }
 </div>
 
 @code {
     private NotificationSettings settings;
     private string userName = "Kasutaja";
-    private string userEmail = "";
+    private string userEmail = "kasutaja@example.com";
 
     protected override async Task OnInitializedAsync()
     {
-        // 1. Hankige kasutaja andmed turvaliselt igal platvormil
         try
         {
-            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-
-            if (user.Identity is { IsAuthenticated: true })
-            {
-                userName = user.Identity.Name ?? "Kasutaja";
-                userEmail = user.FindFirst(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value
-                            ?? user.FindFirst("email")?.Value
-                            ?? "";
-            }
-            else
-            {
-                // Kui on MAUI või sisselogimata Blazor
-                userName = "Kasutaja";
-                userEmail = "name@example.com";
-            }
+            var all = await settingsRepo.GetAsync(new Query());
+            settings = all?.FirstOrDefault() ?? new NotificationSettings();
         }
-        catch
+        catch (Exception ex)
         {
-            // Tagavaraplaan, kui AuthStateProvider viskab MAUI-s erindi
-            userName = "Kasutaja";
-            userEmail = "name@example.com";
+            System.Diagnostics.Debug.WriteLine($"Viga seadete laadimisel: {ex.Message}");
+            settings = new NotificationSettings();
         }
-
-        // 2. Laadi seaded
-        var all = await settingsRepo.GetAsync(new Query());
-        settings = all.FirstOrDefault() ?? new NotificationSettings();
     }
 
     private async Task Save()

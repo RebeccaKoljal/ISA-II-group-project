@@ -6,32 +6,28 @@
 @using Abc.Data.GroupProjectClasses.Nora
 
 <div class="recipes-page">
-<h2>Retseptid</h2>
 
-<div class="filter-row">
-    <button class="filter-btn @(activeFilter == "Sahvris" ? "active" : "")" @onclick='() => activeFilter = "Sahvris"'>Sahvris</button>
-    <button class="filter-btn @(activeFilter == "Kiired" ? "active" : "")" @onclick='() => activeFilter = "Kiired"'>Kiired</button>
-    <button class="filter-btn @(activeFilter == "Tervislik" ? "active" : "")" @onclick='() => activeFilter = "Tervislik"'>Tervislik</button>
-</div>
-
-@if (recipes != null)
-{
-    var count = (recipes ?? []).Count(isAvailable);
-    <div style="background:#e8f8e8;border:1px solid green;padding:8px;margin:8px 0">
-        Saad valmistada <b>@count rooga</b> olemasolevast sahvrist
+    <div class="recipes-header">
+        <h1>🍳 Retseptid</h1>
     </div>
-}
 
-<div class="recipe-page">
-    <div class="ingredient-filter">
-        <h4>Mis sul laos on?</h4>
-        <p class="hint">Kirjuta koostisosa ja vajuta Lisa</p>
-        <div class="ingredient-input">
-            <input @bind="newIngredient" @bind:event="oninput" @onkeydown="onEnter"
-                   placeholder="nt. piim, munad, jahu..." />
-            <button @onclick="addIngredient">Lisa</button>
+    <div class="filter-row">
+        <button class="filter-btn @(activeFilter == "Sahvris" ? "active" : "")" @onclick='() => activeFilter = "Sahvris"'>Sahvris</button>
+        <button class="filter-btn @(activeFilter == "Kiired" ? "active" : "")" @onclick='() => activeFilter = "Kiired"'>Kiired</button>
+        <button class="filter-btn @(activeFilter == "Tervislik" ? "active" : "")" @onclick='() => activeFilter = "Tervislik"'>Tervislik</button>
+    </div>
+
+    @if (recipes != null)
+    {
+        var count = (recipes ?? []).Count(isAvailable);
+        <div class="info-banner">
+            ✨ Saad valmistada <b>@count rooga</b> olemasolevast sahvrist
         </div>
-        <div class="selected-ingredients">
+    }
+
+    <div class="inventory-section">
+        <div class="section-label">🥗 Sinu sahver</div>
+        <div class="ingredient-tags-row">
             @foreach (var ingredient in selectedIngredients)
             {
                 <span class="ingredient-tag">
@@ -40,20 +36,26 @@
                 </span>
             }
         </div>
+
+        <div class="add-ingredient-bar">
+            <input @bind="newIngredient" @bind:event="oninput" @onkeydown="onEnter"
+                   placeholder="Lisa koostisosa käsitsi..." />
+            <button @onclick="addIngredient">+ Lisa</button>
+        </div>
         @if (selectedIngredients.Count > 0)
         {
-            <button class="clear-btn" @onclick="clearIngredients">Tühjenda</button>
+            <button class="clear-btn" @onclick="clearIngredients">Tühjenda kõik</button>
         }
     </div>
 
     <div class="recipe-list">
         @if (recipes is null)
         {
-            <p>Laen retsepte...</p>
+            <p class="state-text">Laen retsepte...</p>
         }
         else if (!filteredRecipes.Any())
         {
-            <p class="no-results">Valitud koostisosadega retsepte ei leitud.</p>
+            <p class="no-results">Retsepte ei leitud.</p>
         }
         else
         {
@@ -128,13 +130,16 @@
             }
         }
     </div>
-</div>
 
-<div class="manage-links">
-    <a href="/GroupProjectPages/Recipes">Halda retsepte</a>
-    <a href="/GroupProjectPages/userRecipes">Halda koostisosasid</a>
-    <a href="/GroupProjectPages/internetRecipes">Halda allikaid</a>
-</div>
+    <div class="manage-section">
+        <div class="manage-label">Halda</div>
+        <div class="manage-buttons">
+            <a class="manage-btn" href="/GroupProjectPages/Recipes">📋 Retseptid</a>
+            <a class="manage-btn" href="/GroupProjectPages/userRecipes">🥕 Koostisosad</a>
+            <a class="manage-btn" href="/GroupProjectPages/internetRecipes">🌐 Allikad</a>
+        </div>
+    </div>
+
     <BottomNav />
 </div>
 
@@ -170,10 +175,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await RecipesRepo.GetAsync(new Query(new Dictionary<string, string>
-        {
-            ["PageSize"] = "100"
-        }));
+        var result = await RecipesRepo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "100" }));
         recipes = result.ToList();
 
         var inventory = await InventoryRepo.GetAsync(new Query());
