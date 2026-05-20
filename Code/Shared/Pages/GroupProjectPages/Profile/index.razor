@@ -1,0 +1,137 @@
+﻿@* @page "/GroupProjectPages/Profile"
+@inject INotificationSettingsRepo settingsRepo
+@using Abc.Data.GroupProjectClasses.Robi
+
+<div class="profile-page">
+    <div class="profile-card">
+        <div class="profile-avatar">👤</div>
+        <div>
+            <AuthorizeView>
+                <Authorized>
+                    <div class="profile-name">@context.User.Identity?.Name</div>
+                    <div class="profile-email">
+                        @context.User.FindFirst(c => c.Type ==
+  System.Security.Claims.ClaimTypes.Email)?.Value
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+    </div>
+
+    <div class="settings-section">Teavitusseaded</div>
+
+    @if (settings != null)
+    {
+        <EditForm Model="settings" OnValidSubmit="Save">
+            <div class="setting-row">
+                <label>E-posti teated</label>
+                <InputCheckbox @bind-Value="settings.IsEmailEnabled" />
+            </div>
+            <div class="setting-row">
+                <label>Push-teated</label>
+                <InputCheckbox @bind-Value="settings.IsPushEnabled" />
+            </div>
+            <button type="submit" class="btn-save">Salvesta</button>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private NotificationSettings settings;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var all = await settingsRepo.GetAsync(new Query());
+        settings = all.FirstOrDefault() ?? new NotificationSettings();
+    }
+
+    private async Task Save()
+    {
+        if (settings.Id == Guid.Empty)
+            await settingsRepo.CreateAsync(settings);
+        else
+            await settingsRepo.UpdateAsync(settings);
+    }
+}
+ *@
+@page "/GroupProjectPages/Profile"
+@inject INotificationSettingsRepo settingsRepo
+@inject AuthenticationStateProvider AuthStateProvider
+@using Abc.Data.GroupProjectClasses.Robi
+@using Microsoft.AspNetCore.Components.Authorization
+
+<div class="profile-page">
+    <div class="profile-card">
+        <div class="profile-avatar">👤</div>
+        <div>
+            <!-- Kuvame nimed otse muutujatest, mis töötavad igal platvormil -->
+            <div class="profile-name">@userName</div>
+            <div class="profile-email">@userEmail</div>
+        </div>
+    </div>
+
+    <div class="settings-section">Teavitusseaded</div>
+
+    @if (settings != null)
+    {
+        <EditForm Model="settings" OnValidSubmit="Save">
+            <div class="setting-row">
+                <label>E-posti teated</label>
+                <InputCheckbox @bind-Value="settings.IsEmailEnabled" />
+            </div>
+            <div class="setting-row">
+                <label>Push-teated</label>
+                <InputCheckbox @bind-Value="settings.IsPushEnabled" />
+            </div>
+            <button type="submit" class="btn-save">Salvesta</button>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private NotificationSettings settings;
+    private string userName = "Kasutaja";
+    private string userEmail = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 1. Hankige kasutaja andmed turvaliselt igal platvormil
+        try
+        {
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is { IsAuthenticated: true })
+            {
+                userName = user.Identity.Name ?? "Kasutaja";
+                userEmail = user.FindFirst(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value
+                            ?? user.FindFirst("email")?.Value
+                            ?? "";
+            }
+            else
+            {
+                // Kui on MAUI või sisselogimata Blazor
+                userName = "Kasutaja";
+                userEmail = "name@example.com";
+            }
+        }
+        catch
+        {
+            // Tagavaraplaan, kui AuthStateProvider viskab MAUI-s erindi
+            userName = "Kasutaja";
+            userEmail = "name@example.com";
+        }
+
+        // 2. Laadi seaded
+        var all = await settingsRepo.GetAsync(new Query());
+        settings = all.FirstOrDefault() ?? new NotificationSettings();
+    }
+
+    private async Task Save()
+    {
+        if (settings.Id == Guid.Empty)
+            await settingsRepo.CreateAsync(settings);
+        else
+            await settingsRepo.UpdateAsync(settings);
+    }
+}
