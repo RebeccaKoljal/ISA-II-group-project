@@ -1,4 +1,4 @@
-﻿page "/GroupProjectPages/Inventory/details"
+﻿@page "/GroupProjectPages/Inventory/details"
 @inject IProductsInUserInventoryRepo repo
 @inject NavigationManager Nav
 @using Abc.Data.GroupProjectClasses.Nora
@@ -42,6 +42,7 @@ else
             <a class="btn-recipes-detail" href="/GroupProjectPages/Recipe">🍳 Retseptid</a>
         </div>
 
+        <BottomNav />
     </div>
 }
 
