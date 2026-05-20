@@ -6,7 +6,12 @@
     align-items: flex-end;
     height: 64px;
     padding-bottom: 8px;
-    margin-top: 2rem;
+    /* FIX: Pin the menu to the bottom of the viewport */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999; /* Keeps the menu layered above scrolling list items */
+    box-sizing: border-box; /* Prevents padding from breaking full-width sizing */
 }
 
 .nav-item {
@@ -60,5 +65,7 @@
 }
 
 .nav-spacer {
-    height: 72px;
+    /* FIX: Changed from height to padding-bottom utility */
+    /* Use this class class on your main body/content wrapper to prevent content from clipping behind the nav */
+    padding-bottom: 80px;
 }
