@@ -1,4 +1,4 @@
-﻿@page "/GroupProjectPages/Inventory"
+@page "/GroupProjectPages/Inventory"
 @inject IProductsInUserInventoryRepo repo
 @using Abc.Data.GroupProjectClasses.Nora
 
@@ -33,12 +33,29 @@
             </div>
         </div>
 
+        @if (items.Any(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days <= 1 && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days >= 0))
+        {
+            var count = items.Count(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days <= 1 && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days >= 0);
+            <div class="warning-banner">
+                ⚠ <b>@count toode(t) aegub(vad) homme</b> —
+                <a href="/GroupProjectPages/Recipe">Vaata retsepte</a>
+            </div>
+        }
+
+        <div class="filter-row">
+            @foreach (var cat in categories)
+            {
+                <button class="filter-btn @(activeCategory == cat ? "active" : "")"
+                        @onclick="() => activeCategory = cat">@cat</button>
+            }
+        </div>
+
         <div class="product-list">
-            @foreach (var item in items)
+            @foreach (var item in filteredItems)
             {
                 <div class="product-card">
                     <div class="product-info">
-                        <span class="product-name">@item.ProductName</span>
+                        <a class="product-name" href="/GroupProjectPages/Inventory/details?Id=@item.Id">@item.ProductName</a>
                         <span class="product-qty">@item.Quantity g</span>
                         <span class="product-expiry @GetExpiryClass(item.ExpiryDate)">
                             @GetExpiryText(item.ExpiryDate)
@@ -52,14 +69,26 @@
             }
         </div>
     }
+    <BottomNav />
 </div>
 
 @code {
     private const string BasePath = "/GroupProjectPages/Inventory";
-    private IEnumerable<ProductsInUserInventory>? items;
+    private IEnumerable<ProductsInUserInventory> items;
+    private string activeCategory = "Kõik";
+
+    private List<string> categories = ["Kõik", "Piimatooted", "Liha", "Köögivili", "Puuviljad", "Joogid", "Leib", "Muu"];
+
+    private IEnumerable<ProductsInUserInventory> filteredItems =>
+        activeCategory == "Kõik"
+            ? items
+            : items.Where(x => x.Category == activeCategory);
 
     protected override async Task OnInitializedAsync()
-        => items = await repo.GetAsync(new Query());
+    {
+        items = (await repo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "1000" })))
+            .OrderBy(x => x.ExpiryDate ?? DateTime.MaxValue);
+    }
 
     private static string GetExpiryClass(DateTime? date)
     {

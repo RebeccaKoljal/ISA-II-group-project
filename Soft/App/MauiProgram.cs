@@ -34,6 +34,12 @@ public static class MauiProgram
         builder.Services.AddScoped<IUsersRepo, UsersRepo>();
         builder.Services.AddScoped<IProductsInUserInventoryRepo, ProductsInUserInventoryRepo>();
         builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
+        builder.Services.AddScoped<IRecipesRepo, RecipesRepo>();
+        builder.Services.AddScoped<IInternetRecipesRepo, InternetRecipesRepo>();
+        builder.Services.AddScoped<IUserRecipesRepo, UserRecipesRepo>();
+        builder.Services.AddScoped<IBarcodesRepo, BarcodesRepo>();
+        builder.Services.AddScoped<IExpiryDatesRepo, ExpiryDatesRepo>();
+        builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

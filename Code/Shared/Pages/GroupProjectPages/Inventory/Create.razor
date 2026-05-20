@@ -1,4 +1,4 @@
-﻿@page "/GroupProjectPages/Inventory/create"
+@page "/GroupProjectPages/Inventory/create"
 @inject IProductsInUserInventoryRepo repo
 @inject NavigationManager Nav
 @using Abc.Data.GroupProjectClasses.Nora
@@ -10,14 +10,12 @@
                    OnValidSubmit="Add" />
 
 @code {
-    [SupplyParameterFromForm(FormName = "InventoryCreate")]
-    private ProductsInUserInventory item { get; set; } = default!;
-
-    protected override void OnInitialized() => item ??= new();
+    private ProductsInUserInventory item = new();
 
     private async Task Add()
     {
+        item.ValidFrom = DateTime.Now;
         await repo.CreateAsync(item);
-        Nav.NavigateTo("/GroupProjectPages/Inventory");
+        Nav.NavigateTo("/GroupProjectPages/Inventory", forceLoad: true);
     }
 }

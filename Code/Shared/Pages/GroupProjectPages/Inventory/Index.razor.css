@@ -1,4 +1,4 @@
-﻿.inventory-page {
+.inventory-page {
     max-width: 800px;
     margin: 2rem auto;
     padding: 0 1rem;
@@ -14,12 +14,12 @@
     align-items: center;
 }
 
-    .inventory-header .page-title {
-        color: white;
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin: 0;
-    }
+.inventory-header .page-title {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+}
 
 .btn-add {
     background: white;
@@ -52,19 +52,51 @@
     color: #1a1a1a;
 }
 
-    .stat-num.warn {
-        color: #BA7517;
-    }
-
-    .stat-num.danger {
-        color: #A32D2D;
-    }
+.stat-num.warn { color: #BA7517; }
+.stat-num.danger { color: #A32D2D; }
 
 .stat-label {
     display: block;
     font-size: 0.7rem;
     color: #888;
     margin-top: 2px;
+}
+
+.warning-banner {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.warning-banner a {
+    color: #2d7a4f;
+    font-weight: 600;
+}
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.filter-btn {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.82rem;
+    background: white;
+    cursor: pointer;
+    color: #555;
+}
+
+.filter-btn.active {
+    background: #2d7a4f;
+    color: white;
+    border-color: #2d7a4f;
 }
 
 .state-text {
@@ -99,8 +131,19 @@
 .product-name {
     font-size: 1rem;
     font-weight: 600;
-    color: #1a
+    color: #1a1a1a;
 }
+
+.product-qty {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.product-expiry {
+    font-size: 0.8rem;
+    color: #888;
+}
+
 .product-expiry.soon {
     color: #BA7517;
     font-weight: 500;
@@ -109,4 +152,19 @@
 .product-expiry.expired {
     color: #A32D2D;
     font-weight: 500;
+}
+
+.product-actions {
+    display: flex;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.product-actions a {
+    color: #2d7a4f;
+    text-decoration: none;
+}
+
+.btn-delete {
+    color: #A32D2D !important;
 }

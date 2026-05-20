@@ -1,3 +1,10 @@
+
+
+.recipes-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
 .recipe-page {
     display: flex;
     gap: 24px;
@@ -177,4 +184,79 @@
 
 .manage-links a:hover {
     text-decoration: underline;
+}
+.filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.filter-btn {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    background: white;
+    cursor: pointer;
+    color: #555;
+}
+.filter-btn.active {
+    background: #2d7a4f;
+    color: white;
+    border-color: #2d7a4f;
+}
+.progress-bar-wrap {
+    background: #eee;
+    border-radius: 6px;
+    height: 8px;
+    margin: 8px 0 4px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.3s;
+}
+
+    .progress-bar.green {
+        background: #2d7a4f;
+    }
+
+    .progress-bar.orange {
+        background: #e07b00;
+    }
+
+    .progress-bar.red {
+        background: #c0392b;
+    }
+
+    .progress-bar.grey {
+        background: #ccc;
+    }
+
+.progress-label {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+}
+
+    .progress-label.green {
+        color: #2d7a4f;
+    }
+
+    .progress-label.orange {
+        color: #e07b00;
+    }
+
+    .progress-label.red {
+        color: #c0392b;
+    }
+
+.missing-it {
+    color: #c0392b;
+}
+
+.have-it {
+    color: #2d7a4f;
+    font-weight: 500;
 }

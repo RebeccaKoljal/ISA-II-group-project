@@ -4,7 +4,6 @@ using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Data.GroupProjectClasses.Rebecca;
 using Abc.Data.GroupProjectClasses.Elizaveta;
 using Abc.Data.GroupProjectClasses.Martin;
-
 namespace Abc.Infra;
 
 public interface IRepo<TEntity> where TEntity : BaseEntity

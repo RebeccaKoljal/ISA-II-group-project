@@ -1,0 +1,52 @@
+﻿.recipe-form-page {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.form-header {
+    margin-bottom: 1.5rem;
+}
+
+    .form-header a {
+        color: #2d7a4f;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .form-header h1 {
+        margin: 0.5rem 0 0 0;
+        font-size: 1.4rem;
+    }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1rem;
+}
+
+    .form-group label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-group input {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+.btn-save {
+    background: #2d7a4f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+}

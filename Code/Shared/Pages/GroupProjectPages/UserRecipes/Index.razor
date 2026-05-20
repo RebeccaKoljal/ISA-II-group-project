@@ -1,13 +1,50 @@
 @page "/GroupProjectPages/userRecipes"
-@inject NavigationManager NavigationManager
 @inject IUserRecipesRepo repo
+@inject IRecipesRepo recipesRepo
+@inject NavigationManager Nav
 
-<MyIndexPage
-    TItem="UserRecipe"
-    PageTitleText="Recipe Ingredients"
-    EntityTitle="Ingredient"
-    Repo="repo"
-    BasePath="/userrecipes" />
+<div class="recipes-manage-page">
+    <div class="recipes-header">
+        <h1>Koostisosad</h1>
+        <a class="btn-add" href="/GroupProjectPages/userRecipes/create">+ Lisa koostisosad</a>
+    </div>
+
+    @if (items == null)
+    {
+        <p>Laadimine...</p>
+    }
+    else if (!items.Any())
+    {
+        <p class="empty-text">Koostisosasid pole lisatud.</p>
+    }
+    else
+    {
+        @foreach (var recipe in recipes.Where(r => items.Any(i => i.RecipeId == r.Id)))
+        {
+            <div class="recipe-manage-card">
+                <div class="recipe-manage-name">@recipe.Name</div>
+                <div class="recipe-ingredients-list">
+                    @foreach (var item in items.Where(i => i.RecipeId == recipe.Id))
+                    {
+                        <div class="ingredient-row">
+                            <span>@item.ProductName</span>
+                            <a href="/GroupProjectPages/userRecipes/delete?Id=@item.Id" class="btn-danger">Kustuta</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+    <BottomNav />
+</div>
 
 @code {
+    private IEnumerable<UserRecipe> items;
+    private IEnumerable<Recipe> recipes = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await repo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "100" }));
+        recipes = await recipesRepo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "100" }));
+    }
 }

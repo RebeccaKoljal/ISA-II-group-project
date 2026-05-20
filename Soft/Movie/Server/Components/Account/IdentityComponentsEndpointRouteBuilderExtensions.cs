@@ -80,7 +80,7 @@ namespace Microsoft.AspNetCore.Routing
                 [FromServices] UserManager<ApplicationUser> userManager,
                 [FromServices] SignInManager<ApplicationUser> signInManager,
                 [FromServices] IAntiforgery antiforgery,
-                [FromQuery] string? username) =>
+                [FromQuery] string username) =>
             {
                 await antiforgery.ValidateRequestAsync(context);
 

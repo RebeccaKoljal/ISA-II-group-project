@@ -9,7 +9,9 @@
   </Folder>
   <Folder Name="/Soft/" />
   <Folder Name="/Soft/App/">
-    <Project Path="Soft/App/App.csproj" />
+    <Project Path="Soft/App/App.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
   </Folder>
   <Folder Name="/Soft/Movie/">
     <Project Path="Soft/Movie/Client/Movie.Client.csproj" />

@@ -1,10 +1,26 @@
 @page "/GroupProjectPages/Recipe"
-@attribute [ExcludeFromInteractiveRouting]
 @inject IRecipesRepo RecipesRepo
 @inject IUserRecipesRepo UserRecipesRepo
 @inject NavigationManager NavigationManager
+@inject IProductsInUserInventoryRepo InventoryRepo
+@using Abc.Data.GroupProjectClasses.Nora
 
+<div class="recipes-page">
 <h2>Retseptid</h2>
+
+<div class="filter-row">
+    <button class="filter-btn @(activeFilter == "Sahvris" ? "active" : "")" @onclick='() => activeFilter = "Sahvris"'>Sahvris</button>
+    <button class="filter-btn @(activeFilter == "Kiired" ? "active" : "")" @onclick='() => activeFilter = "Kiired"'>Kiired</button>
+    <button class="filter-btn @(activeFilter == "Tervislik" ? "active" : "")" @onclick='() => activeFilter = "Tervislik"'>Tervislik</button>
+</div>
+
+@if (recipes != null)
+{
+    var count = (recipes ?? []).Count(isAvailable);
+    <div style="background:#e8f8e8;border:1px solid green;padding:8px;margin:8px 0">
+        Saad valmistada <b>@count rooga</b> olemasolevast sahvrist
+    </div>
+}
 
 <div class="recipe-page">
     <div class="ingredient-filter">
@@ -43,36 +59,61 @@
         {
             @foreach (var recipe in filteredRecipes)
             {
-                <div class="recipe-card @(isAvailable(recipe) ? "available" : "")">
+                <div class="recipe-card @(isAvailable(recipe) ? "available" : "")"
+                     @onclick="() => expandedRecipeId = expandedRecipeId == recipe.Id.ToString() ? string.Empty : recipe.Id.ToString()"
+                     style="cursor:pointer">
                     <div class="recipe-header">
                         <h3>@recipe.Name</h3>
                         @if (isAvailable(recipe))
                         {
-                            <span class="available-badge">Saab teha!</span>
+                            <span class="available-badge">✓ Saab teha!</span>
                         }
                     </div>
                     @if (!string.IsNullOrWhiteSpace(recipe.Details))
                     {
                         <p class="recipe-details">@recipe.Details</p>
                     }
-                    <div class="recipe-ingredients">
-                        <strong>Koostisosad:</strong>
-                        @if (recipe.Ingredients.Any())
-                        {
-                            <ul>
-                                @foreach (var ingredient in recipe.Ingredients)
-                                {
-                                    <li class="@(selectedIngredients.Contains(ingredient.ProductName, StringComparer.OrdinalIgnoreCase) ? "have-it" : "")">
-                                        @ingredient.ProductName
-                                    </li>
-                                }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="no-ingredients">Koostisosad puuduvad</span>
-                        }
-                    </div>
+                    @if (recipe.Ingredients.Any())
+                    {
+                        var total = recipe.Ingredients.Count();
+                        var have = availableCount(recipe);
+                        var missing = total - have;
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar @barColor(recipe)" style="width:@(have * 100 / total)%"></div>
+                        </div>
+                        <div class="progress-label @barColor(recipe)">
+                            @if (missing == 0)
+                            {
+                                <span>Kõik koostisosad olemas</span>
+                            }
+                            else
+                            {
+                                <span>Veel vaja @missing toodet</span>
+                            }
+                        </div>
+                    }
+                    @if (expandedRecipeId == recipe.Id.ToString())
+                    {
+                        <div class="recipe-ingredients">
+                            <strong>Koostisosad:</strong>
+                            @if (recipe.Ingredients.Any())
+                            {
+                                <ul>
+                                    @foreach (var ing in recipe.Ingredients)
+                                    {
+                                        var hasIt = selectedIngredients.Contains(ing.ProductName, StringComparer.OrdinalIgnoreCase);
+                                        <li class="@(hasIt ? "have-it" : "missing-it")">
+                                            @(hasIt ? "✓" : "✗") @ing.ProductName
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="no-ingredients">Koostisosad puuduvad</span>
+                            }
+                        </div>
+                    }
                     @if (recipe.Sources.Any())
                     {
                         <div class="recipe-sources">
@@ -90,26 +131,41 @@
 </div>
 
 <div class="manage-links">
-    <a href="/recipes">Halda retsepte</a>
-    <a href="/userrecipes">Halda koostisosasid</a>
-    <a href="/internetrecipes">Halda allikaid</a>
+    <a href="/GroupProjectPages/Recipes">Halda retsepte</a>
+    <a href="/GroupProjectPages/userRecipes">Halda koostisosasid</a>
+    <a href="/GroupProjectPages/internetRecipes">Halda allikaid</a>
+</div>
+    <BottomNav />
 </div>
 
 @code {
     private List<Recipe> recipes;
     private List<string> selectedIngredients = [];
+    private string activeFilter = "Sahvris";
+    private string expandedRecipeId = "";
     private string newIngredient = "";
 
     private IEnumerable<Recipe> filteredRecipes =>
-        selectedIngredients.Count == 0
-            ? recipes ?? []
-            : (recipes ?? []).Where(isAvailable);
+        activeFilter == "Sahvris"
+            ? (recipes ?? []).Where(isAvailable).Concat((recipes ?? []).Where(r => !isAvailable(r)))
+            : recipes ?? [];
 
     private bool isAvailable(Recipe recipe)
     {
         if (!recipe.Ingredients.Any()) return false;
         return recipe.Ingredients.All(i =>
             selectedIngredients.Contains(i.ProductName, StringComparer.OrdinalIgnoreCase));
+    }
+
+    private int availableCount(Recipe recipe)
+        => recipe.Ingredients.Count(i =>
+            selectedIngredients.Contains(i.ProductName, StringComparer.OrdinalIgnoreCase));
+
+    private string barColor(Recipe recipe)
+    {
+        if (!recipe.Ingredients.Any()) return "grey";
+        var pct = (double)availableCount(recipe) / recipe.Ingredients.Count();
+        return pct >= 1 ? "green" : pct >= 0.5 ? "orange" : "red";
     }
 
     protected override async Task OnInitializedAsync()
@@ -119,6 +175,12 @@
             ["PageSize"] = "100"
         }));
         recipes = result.ToList();
+
+        var inventory = await InventoryRepo.GetAsync(new Query());
+        foreach (var item in inventory)
+            if (!string.IsNullOrWhiteSpace(item.ProductName) &&
+                !selectedIngredients.Contains(item.ProductName, StringComparer.OrdinalIgnoreCase))
+                selectedIngredients.Add(item.ProductName);
     }
 
     private void addIngredient()
@@ -130,7 +192,6 @@
     }
 
     private void removeIngredient(string ingredient) => selectedIngredients.Remove(ingredient);
-
     private void clearIngredients() => selectedIngredients.Clear();
 
     private async Task onEnter(KeyboardEventArgs e)

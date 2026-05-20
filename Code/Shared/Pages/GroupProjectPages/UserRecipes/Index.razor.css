@@ -1,0 +1,109 @@
+﻿.recipes-manage-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.recipes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+    .recipes-header h1 {
+        font-size: 1.4rem;
+        margin: 0;
+    }
+
+.btn-add {
+    background: #2d7a4f;
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.recipe-manage-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 12px;
+    background: white;
+}
+
+.recipe-manage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.recipe-manage-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.recipe-manage-details {
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.recipe-manage-actions {
+    display: flex;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+    .recipe-manage-actions a {
+        color: #2d7a4f;
+        text-decoration: none;
+    }
+
+.btn-danger {
+    color: #c0392b !important;
+}
+
+.recipe-ingredients-list {
+    font-size: 0.85rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 8px;
+}
+
+.no-ingredients {
+    color: #aaa;
+}
+
+.btn-ingredients {
+    color: #2d7a4f;
+    text-decoration: none;
+    font-size: 0.8rem;
+    border: 1px solid #2d7a4f;
+    border-radius: 12px;
+    padding: 2px 10px;
+}
+
+.empty-text {
+    color: #888;
+    text-align: center;
+    padding: 2rem 0;
+}
+.ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.9rem;
+}
+
+    .ingredient-row:last-child {
+        border-bottom: none;
+    }

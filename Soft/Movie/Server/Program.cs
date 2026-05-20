@@ -66,7 +66,6 @@ builder.Services.AddScoped<IAvailableRecipesRepo, AvailableRecipesRepo>();
 builder.Services.AddScoped<IBarcodesRepo, BarcodesRepo>();
 builder.Services.AddScoped<IExpiryDatesRepo, ExpiryDatesRepo>();
 builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
-
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
@@ -113,6 +112,4 @@ app.MapAdditionalIdentityEndpoints();
 app.MapUsersApi();
 app.MapProductsInUserInventoryApi();
 app.MapAvailableRecipesApi();
-
-
 app.Run();
