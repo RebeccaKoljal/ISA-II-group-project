@@ -1,7 +1,7 @@
 ﻿using Abc.Data.GroupProjectClasses.Rebecca;
 using Abc.Tests.Aids;
 
-namespace Abc.Tests.Data.GroupProjectTests;
+namespace Abc.Tests.Data.GroupProjectTests.Rebecca;
 
 [TestClass] public class CategoryTests : BaseTests<Category>
 {
