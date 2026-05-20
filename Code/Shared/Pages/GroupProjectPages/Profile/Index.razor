@@ -71,16 +71,15 @@
 
     @if (settings != null)
     {
-        <EditForm Model="settings" OnSubmit="Save">
+        <EditForm Model="settings">
             <div class="setting-row">
                 <label>E-posti teated</label>
-                <InputCheckbox @bind-Value="settings.IsEmailEnabled" />
+                <InputCheckbox @bind-Value="settings.IsEmailEnabled" @bind-Value:after="Save" />
             </div>
             <div class="setting-row">
                 <label>Push-teated</label>
-                <InputCheckbox @bind-Value="settings.IsPushEnabled" />
+                <InputCheckbox @bind-Value="settings.IsPushEnabled" @bind-Value:after="Save" />
             </div>
-            <button type="submit" class="btn-save">Salvesta</button>
         </EditForm>
     }
     else
@@ -93,22 +92,22 @@
     private NotificationSettings settings;
     private string userName = "Kasutaja";
     private string userEmail = "kasutaja@example.com";
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            // Laadime seaded andmebaasist (töötab nii SQLite-ga MAUI-s kui SQL Serveriga Blazoris)
             var all = await settingsRepo.GetAsync(new Query());
             settings = all?.FirstOrDefault() ?? new NotificationSettings();
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Viga seadete laadimisel: {ex.Message}");
-            // Kui andmebaasist lugemine ebaõnnestub, loome tühja objekti, et leht kokku ei krahhiks
             settings = new NotificationSettings();
         }
     }
-    private async Task Save(EditContext editContext)
+
+    private async Task Save()
     {
         if (settings.Id == Guid.Empty)
             await settingsRepo.CreateAsync(settings);
