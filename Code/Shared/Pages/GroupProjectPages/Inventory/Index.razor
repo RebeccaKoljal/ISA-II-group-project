@@ -39,7 +39,7 @@
         {
             var count = items.Count(x => x.ExpiryDate.HasValue && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days <= 1 && (x.ExpiryDate.Value.Date - DateTime.Now.Date).Days >= 0);
             <div class="warning-banner">
-                ⚠ <b>@count toode(t) aegub(vad) homme</b> —
+                ⚠ <b>@count toode(t) aegub(vad) täna/homme</b> —
                 <a href="/GroupProjectPages/Recipe">Vaata retsepte</a>
             </div>
         }
