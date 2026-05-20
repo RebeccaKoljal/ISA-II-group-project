@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abc.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class v1705 : Migration
+    public partial class v1905 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,6 +104,28 @@ namespace Abc.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExpiryDates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    NotificationTypeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    SentAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    IsRead = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    Code = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -457,6 +479,7 @@ namespace Abc.Infra.Migrations
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ProductName = table.Column<string>(type: "TEXT", nullable: true),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
                     ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ValidTo = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
@@ -738,6 +761,9 @@ namespace Abc.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "ProductCategory");
