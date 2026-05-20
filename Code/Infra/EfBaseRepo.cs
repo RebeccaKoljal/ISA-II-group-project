@@ -25,10 +25,35 @@ public class EfBaseRepo<TContext, TEntity>(TContext c) : IRepo<TEntity>
     public Task DeleteAsync(Guid id) => deleteAsync(id);
     public async Task<TEntity> GetAsync(Guid id) => await Query().FirstOrDefaultAsync(x => x.Id == id);
     public async Task<IEnumerable<TEntity>> GetAsync(Query q) => await getAsync(q);
+    //public async Task<TEntity> UpdateAsync(TEntity e)
+    //{
+    //    db.Update(e);
+    //    await db.SaveChangesAsync();
+    //    return e;
+    //}
     public async Task<TEntity> UpdateAsync(TEntity e)
     {
+        // Try to update the record assuming it exists
         db.Update(e);
-        await db.SaveChangesAsync();
+        db.Entry(e).Property(x => x.Timestamp).IsModified = false;
+
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            // Detach the failed entity track to avoid context conflicts
+            db.Entry(e).State = EntityState.Detached;
+
+            // Wipe out the empty timestamp bracket so the DB can insert it natively
+            e.Timestamp = null;
+
+            // Add it as a clean new record
+            await db.AddAsync(e);
+            await db.SaveChangesAsync();
+        }
+
         return e;
     }
     private async Task deleteAsync(Guid id)
