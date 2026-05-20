@@ -10,8 +10,8 @@
                      OnValidSubmit="DeleteItem" />
 
 @code {
-    [SupplyParameterFromForm(FormName = "DeleteInventory")] private ProductsInUserInventory item { get; set; }
     [SupplyParameterFromQuery] private Guid Id { get; set; }
+    private ProductsInUserInventory item;
 
     private string idField => $"{item?.GetType().Name}.Id";
 
@@ -24,6 +24,6 @@
     private async Task DeleteItem()
     {
         await repo.DeleteAsync(item!.Id);
-        Nav.NavigateTo("/GroupProjectPages/Inventory");
+        Nav.NavigateTo("/GroupProjectPages/Inventory", forceLoad: true);
     }
 }

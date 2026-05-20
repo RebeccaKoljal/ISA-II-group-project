@@ -23,6 +23,20 @@
             <label class="form-label">Aegumiskuupäev</label>
             <InputDate class="form-input" @bind-Value="Item.ExpiryDate" />
         </div>
+        <div class="form-group">
+            <label class="form-label">Kategooria</label>
+            <InputSelect class="form-input" @bind-Value="Item.Category">
+                <option value="">Vali kategooria...</option>
+                <option value="Piimatooted">🥛 Piimatooted</option>
+                <option value="Liha">🥩 Liha</option>
+                <option value="Köögivili">🥬 Köögivili</option>
+                <option value="Puuviljad">🍎 Puuviljad</option>
+                <option value="Joogid">🧃 Joogid</option>
+                <option value="Leib">🍞 Leib & Pagaritooted</option>
+                <option value="Muu">📦 Muu</option>
+            </InputSelect>
+        </div>
+
         <button type="submit" class="btn-save">Salvesta</button>
     </EditForm>
 </div>
