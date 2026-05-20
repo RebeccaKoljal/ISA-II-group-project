@@ -1,0 +1,64 @@
+﻿page "/GroupProjectPages/Inventory/details"
+@inject IProductsInUserInventoryRepo repo
+@inject NavigationManager Nav
+@using Abc.Data.GroupProjectClasses.Nora
+
+  @if (item == null)
+{
+    <p>Laadimine...</p>
+}
+else
+{
+    <div class="detail-page">
+        <div class="detail-header">
+            <a class="back-btn" href="/GroupProjectPages/Inventory">← Tagasi</a>
+            <h1 class="detail-name">@item.ProductName</h1>
+            <span class="detail-category">@item.Category</span>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-card">
+                <span class="detail-label">Aegumiskuupäev</span>
+                <span class="detail-value @(IsExpiringSoon(item.ExpiryDate) ? "text-warn" : "")">
+                    @(item.ExpiryDate?.ToString("dd.MM.yyyy") ?? "–")
+                </span>
+            </div>
+            <div class="detail-card">
+                <span class="detail-label">Lisatud</span>
+                <span class="detail-value">@(item.ValidFrom?.ToString("dd.MM.yyyy") ?? "–")</span>
+            </div>
+            <div class="detail-card">
+                <span class="detail-label">Kategooria</span>
+                <span class="detail-value">@(item.Category ?? "–")</span>
+            </div>
+            <div class="detail-card">
+                <span class="detail-label">Kogus</span>
+                <span class="detail-value">@item.Quantity g</span>
+            </div>
+        </div>
+
+        <div class="detail-actions">
+            <a class="btn-delete-detail" href="/GroupProjectPages/Inventory/delete?Id=@item.Id">🗑 Eemalda</a>
+            <a class="btn-recipes-detail" href="/GroupProjectPages/Recipe">🍳 Retseptid</a>
+        </div>
+
+        <BottomNav />
+    </div>
+}
+
+@code {
+    [SupplyParameterFromQuery] private Guid Id { get; set; }
+    private ProductsInUserInventory item;
+
+    protected override async Task OnInitializedAsync()
+    {
+        item = await repo.GetAsync(Id);
+        if (item is null) Nav.NavigateTo("/GroupProjectPages/Inventory");
+    }
+
+    private static bool IsExpiringSoon(DateTime? date)
+    {
+        if (date == null) return false;
+        return (date.Value.Date - DateTime.Now.Date).Days <= 3;
+    }
+}
