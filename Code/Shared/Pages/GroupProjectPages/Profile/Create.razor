@@ -1,0 +1,86 @@
+﻿@page "/GroupProjectPages/Profile/Create"
+@inject IUsersRepo UserRepo
+@inject INotificationSettingsRepo SettingsRepo
+@inject NavigationManager Nav
+@using Abc.Data.GroupProjectClasses.Nora
+@using Abc.Data.GroupProjectClasses.Robi
+@using Abc.Infra
+
+<div class="create-profile-container">
+    <div class="profile-header-box">
+        <h1 class="page-title">Loo profiil</h1>
+    </div>
+
+    <EditForm Model="@user" OnValidSubmit="HandleSubmit">
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="validation-error-banner">
+                @errorMessage
+            </div>
+        }
+
+        <div class="form-section">
+            <h3 class="section-title">KASUTAJA ANDMED</h3>
+
+            <div class="form-group">
+                <label class="form-label">Kasutajanimi:</label>
+                <InputText class="form-input" @bind-Value="user.Name" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">E-post:</label>
+                <InputText class="form-input" @bind-Value="user.Email" />
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3 class="section-title">TEAVITUSE SEADED</h3>
+
+            <div class="form-group checkbox-row">
+                <label class="checkbox-label">
+                    <InputCheckbox class="form-checkbox" @bind-Value="settings.IsEmailEnabled" />
+                    <span>E-posti teated</span>
+                </label>
+            </div>
+
+            <div class="form-group checkbox-row">
+                <label class="checkbox-label">
+                    <InputCheckbox class="form-checkbox" @bind-Value="settings.IsPushEnabled" />
+                    <span>Push-teated</span>
+                </label>
+            </div>
+
+            <div class="form-group readonly-row">
+                <label class="form-label">Mitu päeva enne aegumist teavitada:</label>
+                <div class="hardcoded-days">3 päeva (Määratud süsteemi poolt)</div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-save">Salvesta ja Jätka</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private User user = new();
+    private NotificationSettings settings = new(); // DaysBeforeExpiry on automaatselt 3
+    private string? errorMessage;
+
+    private async Task HandleSubmit()
+    {
+        errorMessage = null;
+
+        if (!UserValidator.TryValidate(user.Name, user.Email, out errorMessage)) return;
+
+        // Rida eemaldatud, sest see on juba andmemudelis vaikimisi olemas!
+        await UserRepo.CreateAsync(user);
+
+        settings.UserId = user.Id;
+        await SettingsRepo.CreateAsync(settings);
+        Nav.NavigateTo("/GroupProjectPages/Profile/Index");
+    }
+}
+
+

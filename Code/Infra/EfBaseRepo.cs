@@ -42,13 +42,26 @@ public class EfBaseRepo<TContext, TEntity>(TContext c) : IRepo<TEntity>
         await db.SaveChangesAsync();
         return e;
     }
+    //private async Task deleteAsync(Guid id)
+    //{
+    //    var entity = await GetAsync(id);
+    //    if (entity is null) return;
+    //    db.Remove(entity);
+    //    await db.SaveChangesAsync();
+    //}
     private async Task deleteAsync(Guid id)
     {
-        var entity = await GetAsync(id);
+        var existing = await db.Set<TEntity>().FindAsync(id);
+        if (existing != null)
+        {
+            db.Entry(existing).State = EntityState.Detached;
+        }
+        var entity = await db.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         if (entity is null) return;
         db.Remove(entity);
         await db.SaveChangesAsync();
     }
+
     private async Task<IEnumerable<TEntity>> getAsync(Query q)
     {
         var r = addSearch(Query(), q);
