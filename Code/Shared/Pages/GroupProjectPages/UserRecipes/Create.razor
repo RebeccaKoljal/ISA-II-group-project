@@ -45,7 +45,6 @@
     <button class="btn-save" @onclick="SaveAll" disabled="@(!ingredientList.Any() || string.IsNullOrWhiteSpace(selectedRecipeId))">
         Salvesta kõik (@ingredientList.Count)
     </button>
-    <BottomNav />
 </div>
 
 @code {

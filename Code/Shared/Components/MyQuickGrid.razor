@@ -8,11 +8,11 @@
 
 @typeparam TEntity where TEntity : BaseEntity
 
-<QuickGrid Class="table myTable" Items="@Entities">
+<QuickGrid TGridItem="TEntity" class="table myTable" Items="@Entities">
     @foreach (var p in typeof(TEntity).GetProperties())
     {
         @if (!MyGridAids.Show(p)) continue;
-        <TemplateColumn>
+        <TemplateColumn TGridItem="TEntity">
             <HeaderTemplate>
                 @if (ShowHeader && ShowMyHeader)
                 {
@@ -30,12 +30,11 @@
     }
     @if (ShowButtons)
     {
-        <TemplateColumn Context="y">
+        <TemplateColumn TGridItem="TEntity" Context="y">
             <MyTableRowButtons TEntity="TEntity" Item="@y" BasePath="@BasePath" Query="@Query" />
         </TemplateColumn>
     }
 </QuickGrid>
-
 
 @code {
     [Parameter] public IQueryable<TEntity> Entities { get; set; }
