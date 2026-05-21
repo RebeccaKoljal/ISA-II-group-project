@@ -1,117 +1,97 @@
-﻿@* @page "/GroupProjectPages/Profile"
-@inject INotificationSettingsRepo settingsRepo
+﻿@page "/GroupProjectPages/Profile/Index"
+@inject IUsersRepo UserRepo
+@inject INotificationSettingsRepo SettingsRepo
+@inject IProductsInUserInventoryRepo InventoryRepo
+@inject NavigationManager Nav
+@using Abc.Data.GroupProjectClasses.Nora
 @using Abc.Data.GroupProjectClasses.Robi
+@using Abc.Infra
 
-<div class="profile-page">
-    <div class="profile-card">
-        <div class="profile-avatar">👤</div>
-        <div>
-            <AuthorizeView>
-                <Authorized>
-                    <div class="profile-name">@context.User.Identity?.Name</div>
-                    <div class="profile-email">
-                        @context.User.FindFirst(c => c.Type ==
-  System.Security.Claims.ClaimTypes.Email)?.Value
-                    </div>
-                </Authorized>
-            </AuthorizeView>
-        </div>
-    </div>
-
-    <div class="settings-section">Teavitusseaded</div>
-
-    @if (settings != null)
+<div class="profile-container">
+    @if (isLoading)
     {
-        <EditForm Model="settings" OnValidSubmit="Save">
-            <div class="setting-row">
-                <label>E-posti teated</label>
-                <InputCheckbox @bind-Value="settings.IsEmailEnabled" />
-            </div>
-            <div class="setting-row">
-                <label>Push-teated</label>
-                <InputCheckbox @bind-Value="settings.IsPushEnabled" />
-            </div>
-            <button type="submit" class="btn-save">Salvesta</button>
-        </EditForm>
+        <p class="state-text">Laadimine...</p>
     }
-</div>
-
-@code {
-    private NotificationSettings settings;
-
-    protected override async Task OnInitializedAsync()
+    else if (user == null)
     {
-        var all = await settingsRepo.GetAsync(new Query());
-        settings = all.FirstOrDefault() ?? new NotificationSettings();
-    }
-
-    private async Task Save()
-    {
-        if (settings.Id == Guid.Empty)
-            await settingsRepo.CreateAsync(settings);
-        else
-            await settingsRepo.UpdateAsync(settings);
-    }
-}
- *@
-@page "/GroupProjectPages/Profile"
-@inject INotificationSettingsRepo settingsRepo
-@using Abc.Data.GroupProjectClasses.Robi
-
-<div class="profile-page">
-    <div class="profile-card">
-        <div class="profile-avatar">👤</div>
-        <div>
-            <div class="profile-name">@userName</div>
-            <div class="profile-email">@userEmail</div>
-        </div>
-    </div>
-
-    <div class="settings-section">Teavitusseaded</div>
-
-    @if (settings != null)
-    {
-        <EditForm Model="settings">
-            <div class="setting-row">
-                <label>E-posti teated</label>
-                <InputCheckbox @bind-Value="settings.IsEmailEnabled" @bind-Value:after="Save" />
-            </div>
-            <div class="setting-row">
-                <label>Push-teated</label>
-                <InputCheckbox @bind-Value="settings.IsPushEnabled" @bind-Value:after="Save" />
-            </div>
-        </EditForm>
+        <p class="state-text">Viga: Profiili andmeid ei leitud.</p>
     }
     else
     {
-        <p>Laadin seadeid...</p>
+        <div class="user-green-card">
+            <div class="card-left">
+                <div class="user-avatar-circle">
+                    <span class="avatar-icon">👤</span>
+                </div>
+                <div class="user-details">
+                    <h2 class="user-name">@user.Name</h2>
+                    <p class="user-email">@user.Email</p>
+                </div>
+            </div>
+
+            <a href="/GroupProjectPages/Profile/Edit/@user.Id" class="btn-muuda-embed">Muuda</a>
+        </div>
+
+        <div class="overview-section">
+            <h3 class="section-title">SAHVRI ÜLEVAADE</h3>
+            <div class="expired-alert-card">
+                <span class="alert-label">Aegunud toiduaineid sahvris:</span>
+                <span class="alert-count">@expiredCount</span>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3 class="section-title">TEAVITUSSEADED</h3>
+
+            <div class="setting-row">
+                <span class="setting-label">E-posti teated</span>
+                <input type="checkbox" class="setting-checkbox" checked="@settings?.IsEmailEnabled" disabled />
+            </div>
+
+            <div class="setting-row">
+                <span class="setting-label">Push-teated</span>
+                <input type="checkbox" class="setting-checkbox" checked="@settings?.IsPushEnabled" disabled />
+            </div>
+
+            <div class="setting-row">
+                <span class="setting-label">Teavituse ettenägemisaeg</span>
+                <span class="days-badge">@settings?.DaysBeforeExpiry päeva enne aegumist</span>
+            </div>
+        </div>
+
+        <div class="profile-actions-bar">
+            <a href="/GroupProjectPages/Profile/Delete/@user.Id" class="btn btn-delete">Kustuta profiil</a>
+        </div>
     }
 </div>
 
 @code {
-    private NotificationSettings settings;
-    private string userName = "Kasutaja";
-    private string userEmail = "kasutaja@example.com";
+    private bool isLoading = true;
+    private User? user;
+    private NotificationSettings? settings;
+    private int expiredCount = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var all = await settingsRepo.GetAsync(new Query());
-            settings = all?.FirstOrDefault() ?? new NotificationSettings();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Viga seadete laadimisel: {ex.Message}");
-            settings = new NotificationSettings();
-        }
-    }
+		var usersList = await UserRepo.GetAsync(new Query()); // asks for all users and we take the first one, if it exists and not waste resources on asking for count separately
+        user = usersList.FirstOrDefault();
 
-    private async Task Save()
-    {
-        if (settings.Id == Guid.Empty)
-            await settingsRepo.CreateAsync(settings);
-        else
-            await settingsRepo.UpdateAsync(settings);
+        if (user is null)
+        {
+            Nav.NavigateTo("/GroupProjectPages/Profile/Create");
+            return;
+        }
+
+        var settingsList = await SettingsRepo.GetAsync(new Query()); // if the user has profile
+        settings = settingsList.FirstOrDefault(x => x.UserId == user.Id);
+
+        var inventoryItems = await InventoryRepo.GetAsync(new Query(new Dictionary<string, string> { ["PageSize"] = "1000" }));
+
+        if (inventoryItems is not null) // counts the expired items 
+        {
+            expiredCount = inventoryItems.Count(x => x.ExpiryDate < DateTime.Today);
+        }
+
+        isLoading = false;
     }
 }

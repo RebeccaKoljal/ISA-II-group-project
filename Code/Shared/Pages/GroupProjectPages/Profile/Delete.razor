@@ -1,0 +1,74 @@
+﻿@page "/GroupProjectPages/Profile/Delete/{Id:guid}"
+@inject IUsersRepo UserRepo
+@inject INotificationSettingsRepo SettingsRepo
+@inject NavigationManager Nav
+@using Abc.Data.GroupProjectClasses.Nora
+@using Abc.Data.GroupProjectClasses.Robi
+@using Abc.Infra
+
+<div class="delete-profile-container">
+    <div class="profile-header-box">
+        <h1 class="page-title">Kustuta profiil</h1>
+    </div>
+
+    @if (isLoading)
+    {
+        <p class="state-text">Laadimine...</p>
+    }
+    else if (user == null)
+    {
+        <p class="state-text">Viga: Profiili ei leitud.</p>
+    }
+    else
+    {
+        <div class="warning-banner">
+            <span class="warning-icon">⚠️</span>
+            <div class="warning-text">
+                <strong>Hoiatus!</strong> Profiili kustutamine on lõplik tegevus. Kõik sinu seaded eemaldatakse süsteemist.
+            </div>
+        </div>
+
+        <div class="profile-preview-box">
+            <h3 class="section-title">KUSTUTATAVAD KASUTAJA ANDMED</h3>
+            <div class="preview-row">
+                <span class="preview-label">Kasutajanimi:</span>
+                <span class="preview-value">@user.Name</span>
+            </div>
+            <div class="preview-row">
+                <span class="preview-label">E-post:</span>
+                <span class="preview-value">@user.Email</span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button @onclick="HandleDelete" class="btn btn-delete">Jah, kustuta profiil</button>
+            <a href="/GroupProjectPages/Profile/Index" class="btn btn-cancel">Tühista</a>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private bool isLoading = true;
+    private User user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserRepo.GetAsync(Id);
+        isLoading = false;
+    }
+
+    private async Task HandleDelete()
+    {
+        if (user == null) return;
+        var settingsList = await SettingsRepo.GetAsync(new Query());
+		var userSettings = settingsList.FirstOrDefault(x => x.UserId == user.Id); // finds the id in the settings table that matches the user id
+        if (userSettings != null)
+        {
+            await SettingsRepo.DeleteAsync(userSettings.Id);
+        }
+        await UserRepo.DeleteAsync(user.Id);
+        Nav.NavigateTo("/GroupProjectPages/Inventory");
+    }
+}

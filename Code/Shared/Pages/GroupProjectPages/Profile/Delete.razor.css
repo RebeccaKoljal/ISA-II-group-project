@@ -1,0 +1,133 @@
+﻿.delete-profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.state-text {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Roheline ümbriskast pealkirja jaoks, et hoida disain ühtsena */
+.profile-header-box {
+    background-color: #2b6b43;
+    padding: 14px 24px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.page-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
+
+/* Punane hoiatusriba lehe ülaosas */
+.warning-banner {
+    background-color: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.warning-icon {
+    font-size: 1.3rem;
+}
+
+.warning-text {
+    color: #c53030;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Andmete eelvaate kast */
+.profile-preview-box {
+    background-color: #fcfdfc;
+    border: 1px solid #eef2ef;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+}
+
+.section-title {
+    font-size: 0.85rem;
+    color: #2b6b43;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eef2ef;
+    padding-bottom: 6px;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8fbf9;
+}
+
+    .preview-row:last-child {
+        border-bottom: none;
+    }
+
+.preview-label {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.preview-value {
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Nupud */
+.form-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s ease, opacity 0.15s ease;
+}
+
+    .btn:active {
+        opacity: 0.85;
+    }
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+.btn-cancel {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+    .btn-cancel:hover {
+        background-color: #cbd5e1;
+    }

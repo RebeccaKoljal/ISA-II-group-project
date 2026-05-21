@@ -1,0 +1,112 @@
+﻿@page "/GroupProjectPages/Profile/Edit/{Id:guid}"
+@inject IUsersRepo UserRepo
+@inject INotificationSettingsRepo SettingsRepo
+@inject NavigationManager Nav
+@using Abc.Data.GroupProjectClasses.Nora
+@using Abc.Data.GroupProjectClasses.Robi
+@using Abc.Infra
+
+<div class="edit-profile-container">
+    <div class="profile-header-box">
+        <h1 class="page-title">Muuda profiili</h1>
+    </div>
+
+    @if (isLoading)
+    {
+        <p class="state-text">Laadimine...</p>
+    }
+    else if (user == null)
+    {
+        <p class="state-text">Viga: Profiili ei leitud.</p>
+    }
+    else
+    {
+        <EditForm Model="@user" OnValidSubmit="HandleSubmit">
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="validation-error-banner">
+                    @errorMessage
+                </div>
+            }
+
+            <div class="form-section">
+                <h3 class="section-title">KASUTAJA ANDMED</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Kasutajanimi:</label>
+                    <InputText class="form-input" @bind-Value="user.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">E-post:</label>
+                    <InputText class="form-input" @bind-Value="user.Email" />
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">TEAVITUSE SEADED</h3>
+
+                <div class="form-group checkbox-row">
+                    <label class="checkbox-label">
+                        <InputCheckbox class="form-checkbox" @bind-Value="settings.IsEmailEnabled" />
+                        <span>E-posti teated</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-row">
+                    <label class="checkbox-label">
+                        <InputCheckbox class="form-checkbox" @bind-Value="settings.IsPushEnabled" />
+                        <span>Push-teated</span>
+                    </label>
+                </div>
+
+                <div class="form-group readonly-row">
+                    <label class="form-label">Mitu päeva enne aegumist teavitada:</label>
+                    <div class="hardcoded-days">3 päeva (Määratud süsteemi poolt)</div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Salvesta muudatused</button>
+                <a href="/GroupProjectPages/Profile/Index" class="btn btn-cancel">Tühista</a>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private bool isLoading = true;
+    private User? user;
+    private NotificationSettings settings = new();
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserRepo.GetAsync(Id);
+
+        if (user != null)
+        {
+            var settingsList = await SettingsRepo.GetAsync(new Query());
+            settings = settingsList.FirstOrDefault(x => x.UserId == user.Id) ?? new NotificationSettings { UserId = user.Id };
+        }
+        isLoading = false;
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (user == null) return;
+        errorMessage = null;
+
+        if (!UserValidator.TryValidate(user.Name, user.Email, out errorMessage)) return;
+
+        // Rida eemaldatud!
+        await UserRepo.UpdateAsync(user);
+        await SettingsRepo.UpdateAsync(settings);
+        Nav.NavigateTo("/GroupProjectPages/Profile/Index");
+    }
+}
+
+
