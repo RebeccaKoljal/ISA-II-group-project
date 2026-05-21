@@ -1,14 +1,40 @@
-﻿<h3>Index.razor</h3>
-@page "/scan"
-@inject NavigationManager NavigationManager 
-@inject IBarcodesRepo barcodesRepo
-<MyIndexPage
-    TItem="Barcode"
-    PageTitleText="Scanned Barcodes"
-    EntityTitle="Barcode"
-    Repo="barcodesRepo"
-    BasePath="/scan" /> 
-    
-@code {
+﻿@page "/scan"
 
+@inject NavigationManager Nav
+@inject IBarcodesRepo barcodesRepo
+
+<div class="scan-page">
+    <h1>Skanni toode</h1>
+
+    <div class="scan-frame">
+        <div class="scan-line"></div>
+        <p class="scan-hint">Paiguta vöötkood raami sisse</p>
+    </div>
+
+    <button class="manual-button" @onclick="GoToManual">+ Lisa käsitsi toode</button>
+</div>
+
+<section class="barcode-section">
+    <header class="barcode-section-header">
+        <h2 class="barcode-section-title">Skännitud koodid</h2>
+        <button class="add-barcode-button" @onclick="GoToManual">
+            + Lisa vöötkood käsitsi
+        </button>
+    </header>
+
+    <div class="barcode-grid">
+        <MyIndexPage
+            TItem="Barcode"
+            PageTitleText="Skännitud koodid"
+            EntityTitle=""
+            Repo="barcodesRepo"
+            BasePath="/scan" />
+    </div>
+</section>
+
+@code {
+    private void GoToManual()
+    {
+        Nav.NavigateTo("/GroupProjectPages/Inventory/create");
+    }
 }
