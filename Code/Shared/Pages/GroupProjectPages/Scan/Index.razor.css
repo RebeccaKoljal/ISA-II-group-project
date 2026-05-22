@@ -1,3 +1,4 @@
+/* Scan viewfinder UI */
 .scan-page {
     text-align: center;
     padding: 20px;
@@ -54,128 +55,46 @@
     background-color: #218838;
 }
 
+/* Recent scans list */
 .barcode-section {
-    max-width: 1100px;
-    margin: 32px auto 60px;
+    max-width: 600px;
+    margin: 40px auto;
     padding: 0 20px;
 }
 
-.barcode-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
 .barcode-section-title {
-    margin: 0;
+    margin: 0 0 16px;
     font-size: 1.5rem;
     color: #222;
 }
 
-.add-barcode-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.no-scans {
+    color: #888;
+    font-style: italic;
 }
 
-.add-barcode-button:hover { background-color: #218838; }
-.add-barcode-button:active { transform: translateY(1px); }
+.scans-list {
+    list-style: none;     /* removes bullet points */
+    padding: 0;
+    margin: 0;
+}
 
-.barcode-grid {
+.scan-item {
+    display: flex;
+    justify-content: space-between;   /* name left, time right */
+    padding: 12px 16px;
     background: white;
     border: 1px solid #e6e6e6;
-    border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    overflow-x: auto;
+    border-radius: 8px;
+    margin-bottom: 8px;
 }
 
-/* PEIDAME INETU TEKSTI JA LINGI 
-   Kasutame !important, et Blazor seda kindlasti kuulaks.
-*/
-.barcode-grid ::deep h1,
-.barcode-grid ::deep h2 {
-    display: none !important;
-}
-
-.barcode-grid ::deep p:has(a[href$="/create"]) {
-    display: none !important;
-}
-
-/* Tabeli enda disain */
-.barcode-grid ::deep table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 0.9rem;
-}
-
-.barcode-grid ::deep thead th {
-    text-align: left;
-    padding: 10px 12px;
-    background: #f5f7f9;
-    color: #444;
-    font-weight: 600;
-    border-bottom: 2px solid #e2e8f0;
-    white-space: nowrap;
-}
-
-.barcode-grid ::deep tbody td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.barcode-grid ::deep tbody tr:hover {
-    background: #fafafa;
-}
-
-.barcode-grid ::deep input[type="text"],
-.barcode-grid ::deep input[type="search"],
-.barcode-grid ::deep input:not([type]) {
-    width: 100%;
-    padding: 6px 10px;
-    border: 1px solid #d0d7de;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    background: white;
-    box-sizing: border-box;
-}
-
-.barcode-grid ::deep input:focus {
-    outline: none;
-    border-color: #28a745;
-    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
-}
-
-.barcode-grid ::deep a {
-    color: #28a745;
-    text-decoration: none;
+.scan-name {
     font-weight: 500;
+    color: #222;
 }
 
-.barcode-grid ::deep a:hover { 
-    text-decoration: underline; 
-}
-
-/* Lehekülgede (pagination) disain */
-.barcode-grid ::deep nav,
-.barcode-grid ::deep .pagination {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid #eee;
+.scan-time {
+    color: #888;
     font-size: 0.9rem;
-    color: #555;
 }
