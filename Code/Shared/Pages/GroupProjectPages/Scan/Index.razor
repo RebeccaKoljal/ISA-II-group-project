@@ -17,22 +17,36 @@
 <section class="barcode-section">
     <header class="barcode-section-header">
         <h2 class="barcode-section-title">Skännitud koodid</h2>
-        <button class="add-barcode-button" @onclick="GoToManual">
-            + Lisa vöötkood käsitsi
-        </button>
+        
     </header>
+    @if (!recentScans.Any())
+    {
+        <p class="no-scans">Skännitud tooteid pole veel.</p>
+    }
+    else
+    {
+        <ul class="scans-list">
+            @foreach (var scan in recentScans)
+            {
+                <li class="scan-item">
+                    <span class="scan-name">@scan.Name</span>
+                    <span class="scan-time">@scan.ScannedAt.ToString("dd.MM HH:mm")</span>
+                </li>
+            }
+        </ul>
+    }
 
-    <div class="barcode-grid">
-        <MyIndexPage
-            TItem="Barcode"
-            PageTitleText="Skännitud koodid"
-            EntityTitle=""
-            Repo="barcodesRepo"
-            BasePath="/scan" />
-    </div>
+
 </section>
 
-@code {
+@code 
+{
+    private IEnumerable<Barcode> recentScans = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        recentScans = await barcodesRepo.GetAsync(new Query());
+    }
     private void GoToManual()
     {
         Nav.NavigateTo("/GroupProjectPages/Inventory/create");
