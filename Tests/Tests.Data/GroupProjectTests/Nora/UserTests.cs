@@ -1,7 +1,7 @@
 ﻿using Abc.Data.GroupProjectClasses.Nora;
 using Abc.Tests.Aids;
 
-namespace Abc.Tests.Data;
+namespace Abc.Tests.Data.GroupProjectTests.Nora;
 
 [TestClass]
 public sealed class UserTests : BaseTests<User>

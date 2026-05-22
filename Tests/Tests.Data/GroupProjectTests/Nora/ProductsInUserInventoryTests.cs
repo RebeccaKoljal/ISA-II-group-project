@@ -2,7 +2,7 @@
 using Abc.Data.GroupProjectClasses.Rebecca;
 using Abc.Tests.Aids;
 
-namespace Abc.Tests.Data;
+namespace Abc.Tests.Data.GroupProjectTests.Nora;
 
 [TestClass]
 public sealed class ProductsInUserInventoryTests : BaseTests<ProductsInUserInventory>
